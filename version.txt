@@ -1,1 +1,2 @@
 1.0.0
+https://curseforge.com/minecraft/mc-mods/middleearth-tweaks
