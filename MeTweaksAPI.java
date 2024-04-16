@@ -2,10 +2,10 @@ package metweaks;
 
 public class MeTweaksAPI {
     // add vertical manually here...or tell me to add compartility for your Slab class
-	// numberTypes is the amount of types your slab instance supports
-	void addVerticalSlab(Block slab, int numberTypes);
+    // numberTypes is the amount of types your slab instance supports
+    void addVerticalSlab(Block slab, int numberTypes);
 	
-	// set stateValue null if you just wanna output on / off
+    // set stateValue null if you just wanna output on / off
     @SideOnly(Side.CLIENT)
     void actionBar(String message, boolean stateOnOff, int ticks, @Nullable String stateValue);
     
