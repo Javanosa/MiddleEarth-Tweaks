@@ -7,15 +7,14 @@
 
 ### Vertical Slabs
 - Press Keybind V to toggle while holding a Slab
-- Sneak to use facing direction while placement
+- Sneak to use view direction while placement
+- Just one item and no extra crafting needed
 - You can disable this feature completely in `config > General > VerticalSlabs = False`
 - Synchronized with server
 
-### Potion IDs
-- Supposed to relieve issues with other Mods using the same ID
-- Will be synced with server
-- Option can be found in `config > General > KillPotionID`
-- Free IDs usually are: `0, 24, 25, 26, 27, 28, 29, 31`
+### Ally Conquest Spawns
+- Fixed a bug where conquest cant be decreased by fighting allies spawned from conquest
+- Option to disable Allies spawning from conquest `Config > General > allyConquestSpawns`
 
 ### Mount Speeds
 - Speed values can be reverted and changes anytime, they dont affect the world itself.
@@ -36,6 +35,16 @@
 | FlyCreative | 0.25   |
 
 - *Note that speed values shown by the HUD on other entities than mounts are handled differently*
+
+### Trapdoor / Fencegate Placement
+- Now takes view direction into account, so you dont need an adjacent block to place a specific rotation
+- Fencegates dont anymore need a block below them
+
+### Potion IDs
+- Supposed to relieve issues with other Mods using the same ID
+- Will be synced with server
+- Option can be found in `config > General > KillPotionID`
+- Free IDs usually are: `0, 24, 25, 26, 27, 28, 29, 31`
   
 
 
