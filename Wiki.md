@@ -9,6 +9,7 @@
 - Press Keybind V to toggle while holding a Slab
 - Sneak to use view direction while placement
 - Just one item and no extra crafting needed
+- Mirror vertical slab when placed on the side of another VerticalSlab `config > General > MirrorVerticalSlabs = False`
 - You can disable this feature completely in `config > General > VerticalSlabs = False`
 - Synchronized with server
 
