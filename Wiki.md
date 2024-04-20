@@ -13,8 +13,8 @@
 - Synchronized with server
 
 ### Ally Conquest Spawns
-- Fixed a bug where conquest cant be decreased by fighting allies spawned from conquest
-- Option to disable Allies spawning from conquest `Config > General > allyConquestSpawns`
+- THis mod fixes a bug where conquest cant be decreased by fighting allies spawned from conquest aid
+- Option to disable Allies spawning from conquest too `Config > General > allyConquestSpawns`
 
 ### Mount Speeds
 - Speed values can be reverted and changes anytime, they dont affect the world itself.
