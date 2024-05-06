@@ -31,3 +31,36 @@ public class MeTweaksAPI {
     // returns rgba, works with 6 and 8 digit
     int[] parseHexColor(String hex, int[] rgba_defaults, int defaultalpha);
 }
+
+public class NpcReflectionAccess {
+	// Performance Note: All calls in this class use reflection or iteration
+
+	// sets target ai sight check
+	void setCheckSight(LOTREntityNPC npc, boolean checkSight);
+
+	// returns target ai sight check
+	boolean getCheckSight(LOTREntityNPC npc);
+
+	// set projectile range 
+	void setAmmoRange(LOTREntityNPC npc, byte range);
+
+	// returns projectile range
+	byte getAmmoRange(LOTREntityNPC npc);
+
+	// returns ranged attack ai if exists
+	Object getRangedAttack(LOTREntityNPC npc);
+}
+
+public class HiredInfoAccess {
+	void setWanderRange(LOTRHiredNPCInfo info, int wanderRange);
+
+	int getWanderRange(LOTRHiredNPCInfo info);
+
+	LOTREntityNPC getNPC(LOTRHiredNPCInfo info);
+
+	// gets extra data of hired, contains defaults for ammoRange/aiRange, and their current ammoRange/checkTargetInSight values
+	ExtraHiredData getExt(LOTRHiredNPCInfo info);
+
+	// used the set the initialized extra data, 
+	void setExt(LOTRHiredNPCInfo info, ExtraHiredData ext);
+}
