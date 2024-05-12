@@ -14,7 +14,7 @@
 - Synchronized with server
 
 ### Ally Conquest Spawns
-- THis mod fixes a bug where conquest cant be decreased by fighting allies spawned from conquest aid
+- This mod fixes a bug where conquest cant be decreased by fighting allies spawned from conquest aid
 - Option to disable Allies spawning from conquest too `Config > Misc > AllyConquest Spawns`
 
 ### Mount Speeds
@@ -70,3 +70,23 @@
 - Displays Messages like Healthbar ON / OFF or Vertical Slabs ON / OFF
 - Modify `config > HUD Elements > ME-Tweaks Status Message Offset-Y` to move
 - Can be accessed from API as method actionBar(...);
+
+### Guards: Toggle-Guardmode-Horn
+- Can be disabled in `config > Misc > Toggle-Guardmode-Horn`
+- Rightclick-Sneak to open Settings
+- `Keep` means that the values for wander/guard range remain unchanged on use
+- `Automatic Guard Range` sets the guard range to the NPCs AI Range
+
+### Guards: Wander Range
+- Can be disabled in `metweaks-ASM.properties > guardsWanderRange`
+- If disabled, Advanced Settings will be disabled too.
+- Units will only wander within their wander range, and will return to their wander range after fighting their target.
+
+### Guards: Advanced Settings
+- Can be disabled in `metweaks-ASM.properties > guardsAdvancedSettings`
+- Lets you modify their AI Range, Ammo Range (projectile range) and Ignore In Sight (target their enemy even if they cant see them)
+- Settings will be unlocked and increased by levels
+- If you want to unlock everything right away, set `config > guards > AiRange UnlockLvL` to 0 and `config > guards > AiRange UnlockFactor` to 200
+- You can control the limits of AI Range and Ammo Range with `config > guards > Max AI Range`
+- To automatically sync AI, Ammo Range and Ignore Sight with wander and guard range, enable `config > guards > AutoScale AiRange`
+
