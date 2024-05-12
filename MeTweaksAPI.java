@@ -10,6 +10,8 @@ public class MeTweaksAPI {
     void addVerticalSlabFalling(Block slab, int subtypes);
 	
     // set stateValue null if you just wanna output on / off
+    // set disableState true if you just want to show a message
+    // set ticks 0 to clear
     @SideOnly(Side.CLIENT)
     void actionBar(String message, boolean stateOnOff, int ticks, @Nullable String stateValue, boolean disableState);
 
@@ -29,7 +31,9 @@ public class MeTweaksAPI {
     boolean isVerticalMode(EntityPlayer player);
     
     // returns rgba, works with 6 and 8 digit
-    int[] parseHexColor(String hex, int[] rgba_defaults, int defaultalpha);
+    // rgba_defaults if hex is invalid
+    // defaultAlpha if hex is missing alpha (only 6 digit)
+    int[] parseHexColor(String hex, int[] rgba_defaults, int defaultAlpha);
 }
 
 public class NpcReflectionAccess {
