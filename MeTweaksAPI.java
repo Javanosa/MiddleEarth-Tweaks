@@ -9,6 +9,7 @@ public class MeTweaksAPI {
     // subtypes is the amount of types your slab instance supports
     void addVerticalSlabFalling(Block slab, int subtypes);
 	
+    // ME-Tweaks Status Message - Can display Messages like Vertical Slabs ON / OFF
     // set stateValue null if you just wanna output on / off
     // set disableState true if you just want to show a message
     // set ticks 0 to clear
