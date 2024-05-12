@@ -48,8 +48,25 @@
 - Option can be found in `config > Misc > KillPotionID`
 - Free IDs usually are: `0, 24, 25, 26, 27, 28, 29, 31`
 
-### 
-  
+### Bark Blocks
+- Can be crafted of 4 logs
+- Does only add barked variants, no new block IDs
+- Can be disabled in `config > Blocks > BarkBlocks`
 
+### Configurations
+- The config files are:
+- `/config/metweaks.cfg`
+- `/config/metweaks-ASM.properties`
+- In case of major config changes, a backup file will be created automatically. There you can find your old settings.
 
+### LOTR Compass
+- use the options in `config > HUD Elements > Compass...` to move it around.
+- If `Compass Right` is turned off, then the Compass will appear on the left side.
+- If `Compass Bottom` is turned off, then the Compass will appear on the top.
+- To move the compass only slightly, you can modify `Compass X / Y`. The effect of the values move to the left or right / top or bottom depending on `Compass Right / Bottom`
+- If you want to move the compass partically out of the screen or very close to the edge, disable `Auto Adjust Values`
 
+### ME-Tweaks Status Message
+- Displays Messages like Healthbar ON / OFF or Vertical Slabs ON / OFF
+- Modify `config > HUD Elements > ME-Tweaks Status Message Offset-Y` to move
+- Can be accessed from API as method actionBar(...);
