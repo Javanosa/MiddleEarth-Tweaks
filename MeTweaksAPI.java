@@ -35,6 +35,13 @@ public class MeTweaksAPI {
     // rgba_defaults if hex is invalid
     // defaultAlpha if hex is missing alpha (only 6 digit)
     int[] parseHexColor(String hex, int[] rgba_defaults, int defaultAlpha);
+	
+    // since forge one's doesnt properly work
+    void renameConfigProperty(Configuration config, String category, String oldName, String newName);
+
+    // returns [List<Entity results, int newArgsOffset] 		
+    // newArgsOffset == offsetArgsStart indicates that string isnt a selector
+    Object[] selectEntities(int offsetArgsStart, String[] args, ICommandSender sender);
 }
 
 public class NpcReflectionAccess {
