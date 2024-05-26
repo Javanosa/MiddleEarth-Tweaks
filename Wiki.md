@@ -90,3 +90,14 @@
 - You can control the limits of AI Range and Ammo Range with `config > guards > Max AI Range`
 - To automatically sync AI, Ammo Range and Ignore Sight with wander and guard range, enable `config > guards > AutoScale AiRange`
 
+### AI Conquest
+- NPCs can now conquest on their own (default disabled)
+- Options can be found in `Config > AI Conquest`
+- `Factor Enemy` controls the conquest increase done by enemy factions
+- `Factor Ally` does the same but for allies
+- `Global` Ignore players that arent pledged or conquest enabled.
+
+### Fangorn Tree Penalty Alignment Threshold
+- `Config > Misc > Fangorn Tree Penalty Threshold`
+- Allows players to build with wood when reaching that alignment
+- Can be disabled in `metweaks-ASM.properties > fangornTreePenaltyThreshold`
