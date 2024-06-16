@@ -3,7 +3,7 @@
 ### Troubleshooting
 - Set `Config > General > DebugLVL = 3` to enable Log-output `0 = None, 1 = Minor, 2 = Middle, 3 = High`
 - Disable/Enable core modifications in ASM config file `/config/metweaks-ASM.properties`
-- Please contact me if there is any question or problem.
+- Please [contact](https://discord.gg/maHfVhGaah) me if there is any question or problem.
 
 ### Vertical Slabs
 - Press Keybind V to toggle while holding a Slab
