@@ -75,4 +75,7 @@ public class HiredInfoAccess {
 
 	// used the set the initialized extra data, 
 	void setExt(LOTRHiredNPCInfo info, ExtraHiredData ext);
+
+	// field-change only
+	void setGuardRange(LOTRHiredNPCInfo info, int guardRange);
 }
