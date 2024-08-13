@@ -42,6 +42,10 @@ public class MeTweaksAPI {
     // returns [List<Entity results, int newArgsOffset] 		
     // newArgsOffset == offsetArgsStart indicates that string isnt a selector
     Object[] selectEntities(int offsetArgsStart, String[] args, ICommandSender sender);
+
+    // duration in ticks, default is 32
+    // if you have access to the corresponding food class, please override getMaxEatingDuration() instead.
+    void setConsumeDuration(Item food, int duration);
 }
 
 public class NpcReflectionAccess {
