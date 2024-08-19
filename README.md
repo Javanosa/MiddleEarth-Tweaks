@@ -5,7 +5,7 @@ QoL Mod to enhance and expand feature of the LOTR Mod by Mevans
 ## [Developer API](https://github.com/Javanosa/MiddleEarth-Tweaks/blob/main/MeTweaksAPI.java)
 ## [Discord](https://discord.gg/maHfVhGaah)
 
-Features:
+## Features:
 - Vertical Slabs (can be disabled)
 - Bark Blocks (no new block id) 
 - Customize Mountspeeds
@@ -15,27 +15,30 @@ Features:
 - Fix Mounted NPCs getting lost 
 - Riders dont suffocate in Blocks anymore
 - /conquestdecay to control/disable conquest decrease 
-- Fix Ally Aid Conquest unclearable  
-
+- Fix Ally Aid Conquest unclearable
+  
+&nbsp;
 - Hoe's can now harvest hay, thatch, reed and wattle&daub blocks
 - Fix Npc's offering a quest but not showing questoffer-mark
 - Fix Bombardiers destroying blocks within protection  
- 
+  
+&nbsp;
 - Option to prevent ring writing overflowing the edge
 - AI Conquest (NPCs conquest on their own, default disabled)
 - New Commands with lotr specific Features:
- - /entitykill
- - /entitytp
- - /entityeffect
- - /entitystack
+  - /entitykill
+  - /entitytp
+  - /entityeffect
+  - /entitystack
 - Potion ID Config 
 - Improved Trapdoor and Fencegate placement  
- 
+  
+&nbsp;
 - Very Customizable 
 - Every Feature can be disabled, more in metweaks-ASM.properties
   
 
-More Features:
+## More Features:
 
 - Fix Horse Chest Performance 
 - Attacks from NPCs of the Harad Continent are not sluggish anymore
