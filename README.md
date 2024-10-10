@@ -1,6 +1,6 @@
 ## MiddleEarth Tweaks - The Lord of the Rings Addon
 QoL Mod to enhance and expand feature of the LOTR Mod by Mevans
-## [Download](https://www.curseforge.com/minecraft/mc-mods/lotr-middleearth-tweaks)
+## Download: [Curseforge](https://www.curseforge.com/minecraft/mc-mods/lotr-middleearth-tweaks) - [Modrinth](https://modrinth.com/mod/middleearth-tweaks)
 ## [Wiki](https://github.com/Javanosa/MiddleEarth-Tweaks/blob/main/Wiki.md)
 ## [Developer API](https://github.com/Javanosa/MiddleEarth-Tweaks/blob/main/MeTweaksAPI.java)
 ## [Discord](https://discord.gg/maHfVhGaah)
@@ -18,12 +18,19 @@ QoL Mod to enhance and expand feature of the LOTR Mod by Mevans
 - Fix Ally Aid Conquest unclearable
   
 &nbsp;
+- Upgradeable Ranged Weapons for Hireds
+- Unit Overview (U Key) for mass assignment, Summary and Inventory management
 - Hoe's can now harvest hay, thatch, reed and wattle&daub blocks
 - Fix Npc's offering a quest but not showing questoffer-mark
-- Fix Bombardiers destroying blocks within protection  
+- Fix Bombardiers destroying blocks within protection
+- Foods like Berries can be consumed faster to balance their low saturation
   
 &nbsp;
 - Option to prevent ring writing overflowing the edge
+- Ranged AI Improvements
+- Randomly Enchant Ranged NPC Weapons now too
+- NPC's are now able to use plates, spears, termites as ranged weapons
+- Transfer Hired Units to other Players
 - AI Conquest (NPCs conquest on their own, default disabled)
 - New Commands with lotr specific Features:
   - /entitykill
