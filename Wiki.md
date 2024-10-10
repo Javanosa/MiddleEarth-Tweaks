@@ -1,21 +1,5 @@
 ## MiddleEarth-Tweaks Wiki - Press CTRL + F to search
 
-### Ranged Weapon Categories
-- These values are applied if not their default weapon, assuming default config
-- Sorted from weakest to strongest
-
-| Category | Attack Delay Slowdown | Durability \/ Use Amount | Durability by default |
-| --------- | ------- | ------- | ------- |
-| Sling | -   | x8   | no   |
-| Bow | -   | x4   | no   |
-| Blowgun | 10\%   | x4   | no   |
-| Axe | -   | x2   | yes   |
-| Crossbow | 20\%   | x4   | no   |
-| Spear | -   | x0.5   | yes   |
-| Firepot | 170\%   | x16   | yes   |
-| Termite | -   | x16   | yes   |
-| Plate | -   | x8   | yes   |
-
 ### Troubleshooting
 - Set `Config > General > DebugLVL = 3` to enable Log-output `0 = None, 1 = Minor, 2 = Middle, 3 = High`
 - Disable/Enable core modifications in ASM config file `/config/metweaks-ASM.properties`
@@ -117,3 +101,19 @@
 - `Config > Misc > Fangorn Tree Penalty Threshold`
 - Allows players to build with wood when reaching that alignment
 - Can be disabled in `metweaks-ASM.properties > fangornTreePenaltyThreshold`
+
+### Ranged Weapon Categories
+- These values are applied if not their default weapon, assuming default config
+- Sorted from weakest to strongest
+
+| Category | Attack Delay Slowdown | Durability \/ Use Amount | Durability by default |
+| --------- | ------- | ------- | ------- |
+| Sling | -   | x8   | no   |
+| Bow | -   | x4   | no   |
+| Blowgun | 10\%   | x4   | no   |
+| Axe | -   | x2   | yes   |
+| Crossbow | 20\%   | x4   | no   |
+| Spear | -   | x0.5   | yes   |
+| Firepot | 170\%   | x16   | yes   |
+| Termite | -   | x16   | yes   |
+| Plate | -   | x8   | yes   |
