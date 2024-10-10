@@ -46,6 +46,9 @@ public class MeTweaksAPI {
     // duration in ticks, default is 32
     // if you have access to the corresponding food class, please override getMaxEatingDuration() instead.
     void setConsumeDuration(Item food, int duration);
+
+    // updates move range for ranged ai
+    void updateMoveRange(LOTREntityNPC npc, float ammoRange);
 }
 
 public class NpcReflectionAccess {
