@@ -5,6 +5,25 @@ QoL Mod to enhance and expand feature of the LOTR Mod by Mevans
 ## [Developer API](https://github.com/Javanosa/MiddleEarth-Tweaks/blob/main/MeTweaksAPI.java)
 ## [Discord](https://discord.gg/maHfVhGaah)
 
+### Known Issues: *(I currently cannot push updates)*
+1. Crash with ET Futurum > 2.6.1
+  Solutions: 
+   - Use ET Futurum up to 2.6.0
+   - Remove `setHardness()` in constructor of `metweaks.block.VerticalSlab` and add a method to class:
+
+  ```java
+public float getBlockHardness(World world, int x, int y, int z) {
+    return slab.getBlockHardness(world, x, y, z);
+}
+```
+
+2. Error when using guards advanced settings
+ Solutions:
+   - Use MiddeEarth Tweaks 1.4.2 without unit transfer feature
+   - correct last two packet ids from 2,3 to 7,8 in `metweaks.network.NetworkHandler`
+
+*You may use Recaf or recompile the classes and replace them like in a zip archive.*
+
 ## Features:
 - Vertical Slabs (can be disabled)
 - Bark Blocks (no new block id) 
