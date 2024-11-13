@@ -6,8 +6,7 @@ QoL Mod to enhance and expand feature of the LOTR Mod by Mevans
 ## [Discord](https://discord.gg/maHfVhGaah)
 
 ### Known Issues: *(I currently cannot push updates)*
-1. Crash with ET Futurum > 2.6.1
-  Solutions: 
+1. Crash with ET Futurum > 2.6.1. Solutions: 
    - Use ET Futurum up to 2.6.0
    - Remove `setHardness()` in constructor of `metweaks.block.VerticalSlab` and add a method to class:
 
@@ -17,8 +16,7 @@ public float getBlockHardness(World world, int x, int y, int z) {
 }
 ```
 
-2. Error when using guards advanced settings
- Solutions:
+2. Error when using guards advanced settings. Solutions:
    - Use MiddeEarth Tweaks 1.4.2 without unit transfer feature
    - correct last two packet ids from 2,3 to 7,8 in `metweaks.network.NetworkHandler`
 
