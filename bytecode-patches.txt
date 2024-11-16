@@ -1,0 +1,53 @@
+Bytecode Patches
+I have been writing this from hand on my phone, i hope it works
+
+-----------
+Patch #1
+-----------
+in method <init>(Lnet/minecraft/block/Block;II)V
+remove:
+ALOAD this
+DUP
+GETFIELD metweaks/block/VerticalSlab slab Lnet/minecraft/block/Block;
+ACONST_NULL
+ICONST_0
+ICONST_0
+ICONST_0
+INVOKEVIRTUAL net/minecraft/block/Block func_149712_f (Lnet/minecraft/world/World;III)F
+INVOKEVIRTUAL net/minecraft/block/Block func_149711_c (F)V
+
+in class add method:
+public func_149712_f (Lnet/minecraft/world/World;III)F
+ALOAD this
+GETFIELD metweaks/block/VerticalSlab slab Lnet/minecraft/block/Block;
+ALOAD world
+ILOAD x
+ILOAD y
+ILOAD z
+INVOKEVIRTUAL net/minecraft/block/Block func_149712_f (Lnet/minecraft/world/World;III)F
+FRETURN
+
+
+
+-----------
+Patch #2
+-----------
+in method init()V
+change last BIPUSH 2 to 7
+change last BIPUSH 3 to 8
+
+
+
+-----------
+Patch #3
+-----------
+in method isSuffocating()Z
+insert after ISTORE y:
+ILOAD 	y
+BIPUSH 	0
+IFGT 	label
+ILOAD 	y
+BIPUSH 	256
+IFLT 	label
+RETURN
+label
