@@ -20,7 +20,16 @@ public float getBlockHardness(World world, int x, int y, int z) {
    - Use MiddeEarth Tweaks 1.4.2 without unit transfer feature
    - correct last two packet ids from 2,3 to 7,8 in `metweaks.network.NetworkHandler`
 
-*You may use Recaf or recompile the classes and replace them like in a zip archive.*
+3. Crash when Rider out of height limit bounds, Solutions:
+  - This is server side only
+  - Turn off `Config > Misc > Riders Avoid Suffocating in Blocks`
+  - In class `metweaks.guards.DontSuffocateAI` and method `isSuffocating` add after definition of y local variable:
+
+   ```java
+if(y < 0 || y > 256) return false;
+```
+
+*You may use Recaf or recompile the classes and replace them like in a zip archive. See bytecode-patches.txt for more info*
 
 ## Features:
 - Vertical Slabs (can be disabled)
