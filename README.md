@@ -21,11 +21,11 @@ public float getBlockHardness(World world, int x, int y, int z) {
    - correct last two packet ids from 2,3 to 7,8 in `metweaks.network.NetworkHandler`
 
 3. Crash when Rider out of height limit bounds, Solutions:
-  - This is server side only
-  - Turn off `Config > Misc > Riders Avoid Suffocating in Blocks`
-  - In class `metweaks.guards.DontSuffocateAI` and method `isSuffocating` add after definition of y local variable:
+    - This is server side only
+    - Turn off `Config > Misc > Riders Avoid Suffocating in Blocks`
+    - In class `metweaks.guards.DontSuffocateAI` and method `isSuffocating` add after definition of y local variable:
 
-   ```java
+  ```java
 if(y < 0 || y > 256) return false;
 ```
 
