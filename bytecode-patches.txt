@@ -33,8 +33,8 @@ FRETURN
 Patch #2
 -----------
 in method init()V
-change last BIPUSH 2 to 7
-change last BIPUSH 3 to 8
+change last ICONST_2 to BIPUSH 7
+change last ICONST_3 to BIPUSH 8
 
 
 
