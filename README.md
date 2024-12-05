@@ -5,32 +5,6 @@ QoL Mod to enhance and expand feature of the LOTR Mod by Mevans
 ## [Developer API](https://github.com/Javanosa/MiddleEarth-Tweaks/blob/main/MeTweaksAPI.java)
 ## [Discord](https://discord.gg/maHfVhGaah)
 
-### Known Issues: *(I currently cannot push updates)*
-1. Crash with ET Futurum > 2.6.1. Solutions: 
-   - Use ET Futurum up to 2.6.0
-   - Remove `setHardness()` in constructor of `metweaks.block.VerticalSlab` and add a method to class:
-
-  ```java
-public float getBlockHardness(World world, int x, int y, int z) {
-    return slab.getBlockHardness(world, x, y, z);
-}
-```
-
-2. Error when using guards advanced settings. Solutions:
-   - Use MiddeEarth Tweaks 1.4.2 without unit transfer feature
-   - correct last two packet ids from 2,3 to 7,8 in `metweaks.network.NetworkHandler`
-
-3. Crash when Rider out of height limit bounds, Solutions:
-    - This is server side only
-    - Turn off `Config > Misc > Riders Avoid Suffocating in Blocks`
-    - In class `metweaks.guards.DontSuffocateAI` and method `isSuffocating` add after definition of y local variable:
-
-  ```java
-if(y < 0 || y > 256) return false;
-```
-
-*You may use Recaf or recompile the classes and replace them like in a zip archive. See bytecode-patches.txt for more info*
-
 ## Features:
 - Vertical Slabs (can be disabled)
 - Bark Blocks (no new block id) 
@@ -57,6 +31,8 @@ if(y < 0 || y > 256) return false;
 - Randomly Enchant Ranged NPC Weapons now too
 - NPC's are now able to use plates, spears, termites as ranged weapons
 - Transfer Hired Units to other Players
+- Warg Mounts no more die quickly from Falldamage
+- Fixed Mounts running away or keep walking
 - AI Conquest (NPCs conquest on their own, default disabled)
 - New Commands with lotr specific Features:
   - /entitykill
