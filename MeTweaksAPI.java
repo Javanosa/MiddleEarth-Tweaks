@@ -49,6 +49,12 @@ public class MeTweaksAPI {
 
     // updates move range for ranged ai
     void updateMoveRange(LOTREntityNPC npc, float ammoRange);
+
+    // whether an entity will show only a ranged weapon in the unit overview (currently)
+    Set<Class<? extends Entity>> getRangedOnlyEntities();
+	
+    // whether an entity is ranged
+    Set<Class<? extends Entity>> getRangedEntities();
 }
 
 public class NpcReflectionAccess {
