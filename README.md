@@ -33,6 +33,8 @@ QoL Mod to enhance and expand feature of the LOTR Mod by Mevans
 - Transfer Hired Units to other Players
 - Warg Mounts no more die quickly from Falldamage
 - Fixed Mounts running away or keep walking
+- Reduced Loss, Exceptions or Duping of units upon teleporting to their Owner
+- Unit Tracker to avoid loss of units during travel (F7 + U key)
 - AI Conquest (NPCs conquest on their own, default disabled)
 - New Commands with lotr specific Features:
   - /entitykill
