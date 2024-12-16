@@ -34,6 +34,9 @@ QoL Mod to enhance and expand feature of the LOTR Mod by Mevans
 - Warg Mounts no more die quickly from Falldamage
 - Fixed Mounts running away or keep walking
 - Reduced Loss, Exceptions or Duping of units upon teleporting to their Owner
+- Fixes several issues with Ent-Draughts, Mugs and Stews when stacked
+- Ability to stack effects (configurable)
+- Enhanced Stew Stacksizes
 - Unit Tracker to avoid loss of units during travel (F7 + U key)
 - AI Conquest (NPCs conquest on their own, default disabled)
 - New Commands with lotr specific Features:
