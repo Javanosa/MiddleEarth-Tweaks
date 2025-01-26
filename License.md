@@ -1,6 +1,6 @@
 **All Rights Reserved** except Textures and such visible on screenshots
 
-Copyright 2024 Jonosa/Verse
+Copyright 2024-2025 Jonosa/Verse
 
 Project Origin: https://curseforge.com/minecraft/mc-mods/lotr-middleearth-tweaks
 
