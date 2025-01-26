@@ -7,6 +7,7 @@ QoL Mod to enhance and expand feature of the LOTR Mod by Mevans
 
 ## Features:
 - Vertical Slabs (can be disabled)
+- Wool, Bark and Beam Slabs (can be disabled)
 - Bark Blocks (no new block id) 
 - Customize Mountspeeds
 - Healthbar and Attribute Info 
