@@ -1,0 +1,262 @@
+# LOTRFA Block extensions
+tile.log.12.name=Elm Wood Bark
+tile.log.13.name=Rowan Wood Bark
+tile.beamFaction1.12.name=Closed Brethil Wood Beam
+tile.beamFaction1.13.name=Closed House Bor Wood Beam
+tile.beamFaction1.14.name=Closed House Ulfang Wood Beam
+tile.beamFaction1.15.name=Closed Laegrim Wood Beam
+tile.beamFaction2.12.name=Closed Dwarven Wood Beam
+tile.beamWood.12.name=Closed Elm Wood Beam
+tile.beamWood.13.name=Closed Rowan Wood Beam
+
+metweaks.unittracking.near=Near
+metweaks.unittracking.display=Unit Tracking
+
+# whitespaces matter!
+metweaks.verticalprefix=Vertical 
+metweaks.slabprefix= Slab
+
+gui.transfer.btn=Transfer
+gui.transfer.title=Transfer to Player
+gui.transfer.sent=%1$s sent %3$s to you
+gui.transfer.sentMany=%1$s sent %2$s Units to you
+gui.transfer.sentCompany=%1$s sent Company "%3$s" with %2$s Units to you
+gui.transfer.warning=Are you sure you want to transfer this unit?
+gui.transfer.warning.mount=This unit's mount will be transferred too
+gui.transfer.warning.rider=This unit's rider will be transferred too
+gui.transfer.reply1=Invalid Player
+gui.transfer.reply2=Cannot be the same Player
+gui.transfer.reply3=Failed Command Requirements
+gui.transfer.reply4=No Units found
+gui.transfer.page0=This Unit
+gui.transfer.page2=Selection
+gui.transfer.choose=Choose
+gui.transfer.selected=%1$s Units selected
+
+gui.unitoverview.title=Unit Overview  §7(Leftclick on Inv = Open, Rightclick = Show)
+gui.unitoverview.filters=Filters: Company
+gui.unitoverview.columns=Columns:
+gui.unitoverview.warriors=Warriors
+gui.unitoverview.farmers=Farmers
+gui.unitoverview.showNpc=Showing %1$s
+
+gui.unitoverview.cIndex=Index
+gui.unitoverview.cBlocks=Blocks
+gui.unitoverview.cInv=Inventory
+gui.unitoverview.cLvl=Lvl
+gui.unitoverview.cName=Name
+gui.unitoverview.cType=Type
+gui.unitoverview.cCompany=Company
+gui.unitoverview.cArmor=Armor
+
+gui.configconfirm.title=MiddleEarth-Tweaks Config Change Confirm
+gui.configconfirm.info=The following settings will be adjusted to play on this server
+gui.configconfirm.config=Config
+gui.configconfirm.server=Server
+gui.configconfirm.you=You
+
+# first part, like "home set to [coords]"
+lotr.gui.warrior.notifyhome=Home set to
+gui.guardmodehorn.tip=[Rightclick + Sneak] for settings
+gui.guardmodehorn.keep=Keep
+gui.guardmodehorn.change=Change
+gui.guardmodehorn.title=Guardmode Horn Settings
+gui.guardmodehorn.info=Values to apply at Hireds on Use
+gui.guardmodehorn.display=Guardmode - 
+
+lotr.gui.warrior.performanceWarn=High ranges are very demanding
+lotr.gui.warrior.requireGuardmode=Guard Mode needs to be enabled
+lotr.gui.warrior.setHomeTip=[Rightclick + Sneak] to set home
+
+metweaks.updateAvaible=§7MiddleEarth Tweaks §a%1$s§7 is available §f§n[Click to Download]
+tile.bed.respawnSet=respawn point set
+
+commands.guardmodehorn.requireHorn=You need to hold a Horn of Command
+commands.guardmodehorn.converted=Converted§7 - Install §aMiddleEarth-Tweaks §7for more options
+commands.entityeffect.requireAlive=Entity needs to be alive
+commands.entityeffect.notFound=Effect '%1$s' not found
+commands.generic.notAnEntity=Can only use this at yourself as an entity
+commands.selector.selfRequireEntity=@s (@self) needs to be an entity
+commands.selector.missingCloseBracket=Missing closing square brackets [] at: %1$s
+commands.selector.missingOpenBracket=Expected opening square brackets [] at: %1$s
+commands.selector.unknownGroup=Unknown Entity Group "%1$s"
+metweaks.healthbar.tip=Press %1$s to toggle HealthBar
+metweaks.healthbar.display=HealthBar
+metweaks.healthbar.speed=Speed
+metweaks.healthbar.jump=Jump
+metweaks.verticalslabs.tip=Sneak to use facing
+metweaks.verticalslabs.tooltip=Press %1$s for vertical
+metweaks.verticalslabs.display=Vertical Slabs
+commands.entitystack.cancel=Aborting stacking...
+commands.entitystack.defmount=Click at entity to define mount
+commands.entitystack.defrider=Click at entity to define rider
+commands.entitystack.requirePlayer=Sender needs to be a player
+commands.entitystack.dimChange=Dimension change detected, aborting...
+commands.entitystack.missing=The entity appears to be missing or unloaded, aborting...
+commands.entitystack.success=Stacked %1$s + %2$s
+commands.entitystack.dismount=Click at entity to disattach
+commands.entitystack.failDismount=Unable to disattach entity
+commands.entitystack.successDismount=Dismounted %1$s
+
+
+commands.generic.entity.notFound=No Entity found
+commands.generic.dim.notFound=Dimension %1$s doesn't exists
+commands.selector.unknownArgValue=Unknown Argument Value "%1$s" at: %2$s
+commands.selector.unknownArg=Unknown Argument "%1$s" at: %2$s, valid args: %3$s
+commands.selector.unknown=Unknown Entity Type "%1$s"
+commands.selector.invalid=Invalid Entity Type Selector at: %1$s
+
+commands.conqdecay.disable=Disabled conquest decay
+commands.conqdecay.set=Set Conquest decay to %1$s minutes
+commands.conqdecay.info=Conquest decay is %1$s minutes
+gui.confirm.restart=Confirm & Restart Game
+key.togglehealth=Toggle Health
+key.toggleverticalslabs=Toggle Vertical Slabs
+key.openUnitOverview=Open Unit Overview
+
+metweaks.config.individual-mountspeeds=Individual Mountspeeds
+metweaks.config.general=General
+metweaks.config.healthbar=Health Bar
+metweaks.config.guards=Guards
+metweaks.config.mountspeed=Mountspeed
+metweaks.config.blocks=Blocks
+metweaks.config.misc=Misc
+metweaks.config.hudelements=HUD Elements
+metweaks.config.aiconquest=AI Conquest
+
+
+tile.log.oak.bark.name=Oak Bark
+tile.log.spruce.bark.name=Spruce Bark
+tile.log.birch.bark.name=Birch Bark
+tile.log.jungle.bark.name=Jungle Bark
+tile.log.acacia.bark.name=Acacia Bark
+tile.log.big_oak.bark.name=Dark Oak Bark
+
+tile.lotr:wood.12.name=Shire Pine Bark
+tile.lotr:wood.13.name=Mallorn Bark
+tile.lotr:wood.14.name=Mirk-oak Bark
+tile.lotr:wood.15.name=Charred Bark
+
+tile.lotr:fruitWood.12.name=Apple Bark
+tile.lotr:fruitWood.13.name=Pear Bark
+tile.lotr:fruitWood.14.name=Cherry Bark
+tile.lotr:fruitWood.15.name=Mango Bark
+
+tile.lotr:wood2.12.name=Lebethron Bark
+tile.lotr:wood2.13.name=Beech Bark
+tile.lotr:wood2.14.name=Holly Bark
+tile.lotr:wood2.15.name=Banana Bark
+
+tile.lotr:wood3.12.name=Maple Bark
+tile.lotr:wood3.13.name=Larch Bark
+tile.lotr:wood3.14.name=Date Palm Bark
+tile.lotr:wood3.15.name=Mangrove Bark
+
+tile.lotr:wood4.12.name=Chestnut Bark
+tile.lotr:wood4.13.name=Baobab Bark
+tile.lotr:wood4.14.name=Cedar Bark
+tile.lotr:wood4.15.name=Fir Bark
+
+tile.lotr:wood5.12.name=Pine Bark
+tile.lotr:wood5.13.name=Lemon Bark
+tile.lotr:wood5.14.name=Orange Bark
+tile.lotr:wood5.15.name=Lime Bark
+
+tile.lotr:wood6.12.name=Mahogany Bark
+tile.lotr:wood6.13.name=Willow Bark
+tile.lotr:wood6.14.name=Cypress Bark
+tile.lotr:wood6.15.name=Olive Bark
+
+tile.lotr:wood7.12.name=Aspen Bark
+tile.lotr:wood7.13.name=Green-oak Bark
+tile.lotr:wood7.14.name=Lairelosse Bark
+tile.lotr:wood7.15.name=Almond Bark
+
+tile.lotr:wood8.12.name=Plum Bark
+tile.lotr:wood8.13.name=Redwood Bark
+tile.lotr:wood8.14.name=Pomegranate Bark
+tile.lotr:wood8.15.name=Palm Bark
+
+tile.lotr:wood9.12.name=Dragonblood Bark
+tile.lotr:wood9.13.name=Kanuka Bark
+
+tile.lotr:rottenLog.12.name=Rotten Bark
+
+
+tile.lotr:woodBeamV1.12.name=Closed Oak Wood Beam
+tile.lotr:woodBeamV1.13.name=Closed Spruce Wood Beam
+tile.lotr:woodBeamV1.14.name=Closed Birch Wood Beam
+tile.lotr:woodBeamV1.15.name=Closed Jungle Wood Beam
+tile.lotr:woodBeamV2.12.name=Closed Acacia Wood Beam
+tile.lotr:woodBeamV2.13.name=Closed Dark Oak Wood Beam
+tile.lotr:woodBeam1.12.name=Closed Shire Pine Wood Beam
+tile.lotr:woodBeam1.13.name=Closed Mallorn Wood Beam
+
+tile.lotr:woodBeam1.14.name=Closed Mirk Oak Wood Beam
+tile.lotr:woodBeam1.15.name=Closed Charred Wood Beam
+tile.lotr:woodBeam2.12.name=Closed Lebethron Wood Beam
+tile.lotr:woodBeam2.13.name=Closed Beech Wood Beam
+tile.lotr:woodBeam2.14.name=Closed Holly Wood Beam
+tile.lotr:woodBeam2.15.name=Closed Banana Wood Beam
+
+tile.lotr:woodBeamFruit.12.name=Closed Apple Wood Beam
+tile.lotr:woodBeamFruit.13.name=Closed Pear Wood Beam
+tile.lotr:woodBeamFruit.14.name=Closed Cherry Wood Beam
+tile.lotr:woodBeamFruit.15.name=Closed Mango Wood Beam
+
+
+tile.lotr:woodBeam3.12.name=Closed Maple Wood Beam
+tile.lotr:woodBeam3.13.name=Closed Larch Wood Beam
+tile.lotr:woodBeam3.14.name=Closed Date Wood Beam
+tile.lotr:woodBeam3.15.name=Closed Mangrove Wood Beam
+
+tile.lotr:woodBeam4.12.name=Closed Chestnut Wood Beam
+tile.lotr:woodBeam4.13.name=Closed Baobab Wood Beam
+tile.lotr:woodBeam4.14.name=Closed Cedar Wood Beam
+tile.lotr:woodBeam4.15.name=Closed Fir Wood Beam
+
+tile.lotr:woodBeam5.12.name=Closed Pine Wood Beam
+tile.lotr:woodBeam5.13.name=Closed Lemon Wood Beam
+tile.lotr:woodBeam5.14.name=Closed Orange Wood Beam
+tile.lotr:woodBeam5.15.name=Closed Lime Wood Beam
+
+tile.lotr:woodBeam6.12.name=Closed Mahogany Wood Beam
+tile.lotr:woodBeam6.13.name=Closed Willow Wood Beam
+tile.lotr:woodBeam6.14.name=Closed Cypress Wood Beam
+tile.lotr:woodBeam6.15.name=Closed Olive Wood Beam
+
+tile.lotr:woodBeamRotten.12.name=Closed Rotten Wood Beam
+
+tile.lotr:woodBeam7.12.name=Closed Aspen Wood Beam
+tile.lotr:woodBeam7.13.name=Closed Green-oak Wood Beam
+tile.lotr:woodBeam7.14.name=Closed Lairelossë Wood Beam
+tile.lotr:woodBeam7.15.name=Closed Almond Wood Beam
+
+tile.lotr:woodBeam8.12.name=Closed Plum Wood Beam
+tile.lotr:woodBeam8.13.name=Closed Redwood Wood Beam
+tile.lotr:woodBeam8.14.name=Closed Pomegranate Wood Beam
+tile.lotr:woodBeam8.15.name=Closed Palm Wood Beam
+
+tile.lotr:woodBeamS.12.name=Closed Rohan Wood Beam
+tile.lotr:woodBeamS.13.name=Closed Gold-trimmed Rohan Wood Beam
+tile.lotr:woodBeam9.12.name=Closed Dragonblood Wood Beam
+tile.lotr:woodBeam9.13.name=Closed Kanuka Wood Beam
+
+
+
+tile.bed.notSafe=You may not rest now, there are enemies nearby
+
+commands.metweaks.conqclear=Cleared Conquest for %1$s at (%2$s, %3$s)
+commands.metweaks.conqclear.radial=Cleared Conquest radial for %1$s around (%2$s, %3$s)
+
+lotr.gui.warrior.wanderRange=Wander Range
+lotr.gui.warrior.followRange=AI Range
+lotr.gui.warrior.ammoRange=Ammo Range
+lotr.gui.warrior.advanced=Advanced Settings
+lotr.gui.warrior.sethome=Set/Show Home Location
+lotr.gui.warrior.ignoreSight=Ignore Target In Sight
+lotr.gui.warrior.unlockSettings=Needs Level %1$s to unlock
+lotr.gui.warrior.unlockSettings2=Limits increase with level
+
+lotr.gui.hornSelect.guardMode=Toggle Guardmode
+gui.guardmodehorn.autoGuardRange=Automatic Guard Range

@@ -1,0 +1,16 @@
+[
+{
+  "modid": "metweaks",
+  "name": "MiddleEarth Tweaks",
+  "description": "Vertical Slabs, /conquestDecay, Ally Conquest Fix, Better Guardmode, Healthbar, Control Mountspeeds, very customizable\n\nSupport for The Lord of The Rings Mod Legacy",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Jonosa/Verse"],
+  "credits": " ",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

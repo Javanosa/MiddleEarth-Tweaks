@@ -1,0 +1,259 @@
+# yet untranslated
+tile.lotr:woodBeamS.12.name=Closed Rohan Wood Beam
+tile.lotr:woodBeamS.13.name=Closed Gold-trimmed Rohan Wood Beam
+
+metweaks.unittracking.near=Near
+metweaks.unittracking.display=Unit Tracking
+
+# whitespaces matter!
+metweaks.verticalprefix=Vertical 
+metweaks.slabprefix= Slab
+
+gui.transfer.btn=Transfer
+gui.transfer.title=Transfer to Player
+gui.transfer.sent=%1$s sent %3$s to you
+gui.transfer.sentMany=%1$s sent %2$s Units to you
+gui.transfer.sentCompany=%1$s sent Company "%3$s" with %2$s Units to you
+gui.transfer.warning=Are you sure you want to transfer this unit?
+gui.transfer.warning.mount=This unit's mount will be transferred too
+gui.transfer.warning.rider=This unit's rider will be transferred too
+gui.transfer.reply1=Invalid Player
+gui.transfer.reply2=Cannot be the same Player
+gui.transfer.reply3=Failed Command Requirements
+gui.transfer.reply4=No Units found
+gui.transfer.page0=This Unit
+gui.transfer.page2=Selection
+gui.transfer.choose=Choose
+gui.transfer.selected=%1$s Units selected
+
+key.openUnitOverview=Open Unit Overview
+gui.unitoverview.title=Unit Overview  §7(Leftclick on Inv = Open, Rightclick = Show)
+gui.unitoverview.filters=Filters: Company
+gui.unitoverview.columns=Columns:
+gui.unitoverview.warriors=Warriors
+gui.unitoverview.farmers=Farmers
+gui.unitoverview.showNpc=Showing %1$s
+
+gui.unitoverview.cIndex=Index
+gui.unitoverview.cBlocks=Blocks
+gui.unitoverview.cInv=Inventory
+gui.unitoverview.cLvl=Lvl
+gui.unitoverview.cName=Name
+gui.unitoverview.cType=Type
+gui.unitoverview.cCompany=Company
+gui.unitoverview.cArmor=Armor
+
+gui.configconfirm.title=MiddleEarth-Tweaks Config Change Confirm
+gui.configconfirm.info=The following settings will be adjusted to play on this server
+gui.configconfirm.config=Config
+gui.configconfirm.server=Server
+gui.configconfirm.you=You
+
+# first part, like "home set to [coords]"
+lotr.gui.warrior.notifyhome=Home set to
+gui.guardmodehorn.tip=[Rightclick + Sneak] for settings
+gui.guardmodehorn.keep=Keep
+gui.guardmodehorn.change=Change
+gui.guardmodehorn.title=Guardmode Horn Settings
+gui.guardmodehorn.info=Values to apply at Hireds on Use
+gui.guardmodehorn.display=Guardmode - 
+
+lotr.gui.warrior.performanceWarn=High ranges are very demanding
+lotr.gui.warrior.requireGuardmode=Guard Mode needs to be enabled
+lotr.gui.warrior.setHomeTip=[Rightclick + Sneak] to set home
+
+metweaks.updateAvaible=§7MiddleEarth Tweaks §a%1$s§7 is available §f§n[Click to Download]
+tile.bed.respawnSet=respawn point set
+
+commands.guardmodehorn.requireHorn=You need to hold a Horn of Command
+commands.guardmodehorn.converted=Converted§7 - Install §aMiddleEarth-Tweaks §7for more options
+commands.entityeffect.requireAlive=Entity needs to be alive
+commands.entityeffect.notFound=Effect '%1$s' not found
+commands.generic.notAnEntity=Can only use this at yourself as an entity
+commands.selector.selfRequireEntity=@s (@self) needs to be an entity
+commands.selector.missingCloseBracket=Missing closing square brackets [] at: %1$s
+commands.selector.missingOpenBracket=Expected opening square brackets [] at: %1$s
+commands.selector.unknownGroup=Unknown Entity Group "%1$s"
+metweaks.healthbar.tip=Press %1$s to toggle HealthBar
+metweaks.healthbar.display=HealthBar
+metweaks.healthbar.speed=Скорост
+metweaks.healthbar.jump=Скок
+metweaks.verticalslabs.tip=Sneak to use facing
+metweaks.verticalslabs.tooltip=Press %1$s for vertical
+metweaks.verticalslabs.display=Vertical Slabs
+commands.entitystack.cancel=Aborting stacking...
+commands.entitystack.defmount=Click at entity to define mount
+commands.entitystack.defrider=Click at entity to define rider
+commands.entitystack.requirePlayer=Sender needs to be a player
+commands.entitystack.dimChange=Dimension change detected, aborting...
+commands.entitystack.missing=The entity appears to be missing or unloaded, aborting...
+commands.entitystack.success=Stacked %1$s + %2$s
+commands.entitystack.dismount=Click at entity to dismount
+commands.entitystack.failDismount=Unable to dismount entity
+commands.entitystack.successDismount=Dismounted %1$s
+
+
+
+
+
+Commands.generic.entity.notFound=Моб не найден
+Commands.generic.dim.notFound=Измерение %1$s не существует
+Commands.selector.unknownArgValue=Неизвестное значение аргумента "%1$s" по адресу: %2$s
+Commands.selector.unknownArg=Неизвестный аргумент "%1$s" по адресу: %2$s, допустимые аргументы: %3$s
+Commands.selector.unknown=Неизвестный тип объекта "%1$s"
+Commands.selector.invalid=Неверный выбор типа объекта: %1$s
+
+Commands.conqdecay.disable=Отключено затухание завоеваний
+Commands.conqdecay.set=Установить задержку завоевания на %1$s минут
+Commands.conqdecay.info=Спад завоевания составляет %1$s минут
+gui.confirm.restart=Подтвердить и перезапустить игру
+key.togglehealth=Переключить здоровье
+key.toggleverticalslabs=Переключить вертикальные плиты
+
+
+metweaks.config.individual-mountspeeds=Изменить скорость мобов
+metweaks.config.general=Общие
+metweaks.config.healthbar=Полоса здоровья
+metweaks.config.guards=Стражи
+metweaks.config.mountspeed=Скорость передвижения
+metweaks.config.blocks=Блоки
+metweaks.config.misc=Разное
+metweaks.config.hudelements=Элементы HUD
+metweaks.config.aiconquest=Завоевание наемных НПС
+
+
+tile.log.oak.bark.name=Кора дуба
+tile.log.spruce.bark.name=Кора ели
+tile.log.birch.bark.name=Кора березы
+tile.log.jungle.bark.name=Кора тропического дерева
+tile.log.acacia.bark.name=Кора акации
+tile.log.big_oak.bark.name=Кора темного дуба
+
+tile.lotr:wood.12.name=Кора ширской сосны
+tile.lotr:wood.13.name=Кора мэллорна
+tile.lotr:wood.14.name=Кора лиходуба
+tile.lotr:wood.15.name=Обгоревшая кора
+
+tile.lotr:fruitWood.12.name=Кора яблони
+tile.lotr:fruitWood.13.name=Кора груши
+tile.lotr:fruitWood.14.name=Кора вишни
+tile.lotr:fruitWood.15.name=Кора манго
+
+tile.lotr:wood2.12.name=Кора лебетрона
+tile.lotr:wood2.13.name=Кора бука
+tile.lotr:wood2.14.name=Кора падуба
+tile.lotr:wood2.15.name=Кора банана
+
+tile.lotr:wood3.12.name=Кора клена
+tile.lotr:wood3.13.name=Кора лиственницы
+tile.lotr:wood3.14.name=Кора финиковой пальмы
+tile.lotr:wood3.15.name=Кора мангрового дерева
+
+tile.lotr:wood4.12.name=Кора каштана
+tile.lotr:wood4.13.name=Кора баобаба
+tile.lotr:wood4.14.name=Кора кедра
+tile.lotr:wood4.15.name=Кора пихты
+
+tile.lotr:wood5.12.name=Кора сосны
+tile.lotr:wood5.13.name=Кора лимона
+tile.lotr:wood5.14.name=Кора апельсина
+tile.lotr:wood5.15.name=Кора лайма
+
+tile.lotr:wood6.12.name=Кора красного дерева
+tile.lotr:wood6.13.name=Кора ивы
+tile.lotr:wood6.14.name=Кора кипариса
+tile.lotr:wood6.15.name=Кора оливы
+
+tile.lotr:wood7.12.name=Кора осины
+tile.lotr:wood7.13.name=Кора зеленодуба
+tile.lotr:wood7.14.name=Кора лайрелоссе
+tile.lotr:wood7.15.name=Кора миндаля
+
+tile.lotr:wood8.12.name=Кора сливы
+tile.lotr:wood8.13.name=Кора красного дерева
+tile.lotr:wood8.14.name=Кора граната
+tile.lotr:wood8.15.name=Кора пальмы
+
+tile.lotr:wood9.12.name=Кора драконового дерева
+tile.lotr:wood9.13.name=Кора кунцового дерева
+
+tile.lotr:rottenLog.12.name=Гнилая кора
+
+
+tile.lotr:woodBeamV1.12.name=Закрытая балка из дуба
+tile.lotr:woodBeamV1.13.name=Закрытая балка из ели
+tile.lotr:woodBeamV1.14.name=Закрытая балка из березы
+tile.lotr:woodBeamV1.15.name=Закрытая балка из тропического дерева
+tile.lotr:woodBeamV2.12.name=Закрытая балка из акации
+tile.lotr:woodBeamV2.13.name=Закрытая балка из темного дуба
+tile.lotr:woodBeam1.12.name=Закрытая балка из ширской ели
+tile.lotr:woodBeam1.13.name=Закрытая балка из мэллорна
+
+tile.lotr:woodBeam1.14.name=Закрытая балка из лиходуба
+tile.lotr:woodBeam1.15.name=Закрытая обгорелая балка
+tile.lotr:woodBeam2.12.name=Закрытая балка из лебетрона
+tile.lotr:woodBeam2.13.name=Закрытая балка из бука
+tile.lotr:woodBeam2.14.name=Закрытая балка из падуба
+tile.lotr:woodBeam2.15.name=Закрытая балка из банана
+
+tile.lotr:woodBeamFruit.12.name=Закрытая балка из яблони
+tile.lotr:woodBeamFruit.13.name=Закрытая балка из груши
+tile.lotr:woodBeamFruit.14.name=Закрытая балка из вишни
+tile.lotr:woodBeamFruit.15.name=Закрытая балка из манго
+
+
+tile.lotr:woodBeam3.12.name=Закрытая балка из клена
+tile.lotr:woodBeam3.13.name=Закрытая балка из лиственницы
+tile.lotr:woodBeam3.14.name=Закрытая балка из финиковой пальмы
+tile.lotr:woodBeam3.15.name=Закрытая балка из мангры
+
+tile.lotr:woodBeam4.12.name=Закрытая балка из каштана
+tile.lotr:woodBeam4.13.name=Закрытая балка из баобаба
+tile.lotr:woodBeam4.14.name=Закрытая балка из кедра
+tile.lotr:woodBeam4.15.name=Закрытая балка из пихты
+
+tile.lotr:woodBeam5.12.name=Закрытая балка из сосны
+tile.lotr:woodBeam5.13.name=Закрытая балка из лимона
+tile.lotr:woodBeam5.14.name=Закрытая балка из апельсина
+tile.lotr:woodBeam5.15.name=Закрытая балка из лайма
+
+tile.lotr:woodBeam6.12.name=Закрытая балка из красного дерева
+tile.lotr:woodBeam6.13.name=Закрытая балка из ивы
+tile.lotr:woodBeam6.14.name=Закрытая балка из кипариса
+tile.lotr:woodBeam6.15.name=Закрытая балка из оливы
+
+tile.lotr:woodBeamRotten.12.name=Закрытая гнилая балка
+
+tile.lotr:woodBeam7.12.name=Закрытая балка из осины
+tile.lotr:woodBeam7.13.name=Закрытая балка из зеленодуба
+tile.lotr:woodBeam7.14.name=Закрытая балка из лайрелоссэ
+tile.lotr:woodBeam7.15.name=Закрытая балка из миндаля
+
+tile.lotr:woodBeam8.12.name=Закрытая балка из сливы
+tile.lotr:woodBeam8.13.name=Закрытая балка из красного дерева
+tile.lotr:woodBeam8.14.name=Закрытая балка из граната
+tile.lotr:woodBeam8.15.name=Балка из пальмы
+
+tile.lotr:woodBeam9.12.name=Закрытая балка из драконового дерева
+tile.lotr:woodBeam9.13.name=Закрытая балка из кунцового дерева
+
+
+
+tile.bed.notSafe=Вы не можете сейчас поспать, рядом враги
+
+Commands.metweaks.conqclear=Захват для %1$s пройден в (%2$s, %3$s)
+Commands.metweaks.conqclear.radial=Очищен радиальный захват для %1$s вокруг (%2$s, %3$s)
+
+lotr.gui.warrior.wanderRange=Диапазон передвижения
+lotr.gui.warrior.followRange=Диапазон ИИ
+lotr.gui.warrior.ammoRange=Дальность атаки
+lotr.gui.warrior.advanced=Дополнительные настройки
+lotr.gui.warrior.sethome=Установить/показать местоположение дома
+lotr.gui.warrior.ignoreSight=Игнорировать в поле зрения
+lotr.gui.warrior.unlockSettings=Для разблокировки требуется уровень %1$s
+lotr.gui.warrior.unlockSettings2=Пределы увеличиваются с уровнем
+
+lotr.gui.hornSelect.guardMode=Переключить режим охраны
+gui.guardmodehorn.autoGuardRange=Диапазон автоматической защиты
+
+# Здесь был Костя

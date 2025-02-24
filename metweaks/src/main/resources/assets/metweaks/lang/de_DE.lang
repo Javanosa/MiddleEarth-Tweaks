@@ -1,0 +1,260 @@
+metweaks.unittracking.near=Nah
+metweaks.unittracking.display=Einheiten Überwachung
+
+# Leerzeichen sind wichtig!
+metweaks.verticalprefix=Vertikale 
+metweaks.slabprefix= Stufe
+
+gui.transfer.sentMany=%1$s hat dir %2$s Einheiten gesendet
+gui.transfer.sentCompany=%1$s hat dir Kompanie "%3$s" mit %2$s Einheiten gesendet
+gui.transfer.reply4=Keine Einheiten gefunden
+gui.transfer.page0=Diese Einheit
+gui.transfer.page2=Auswahl
+gui.transfer.choose=Auswählen
+gui.transfer.selected=%1$s Einheiten ausgewählt
+
+gui.transfer.btn=Senden
+gui.transfer.title=An Spieler übertragen
+gui.transfer.sent=%1$s hat dir %2$s gesendet
+gui.transfer.warning=Bist du sicher, dass du diese Einheit übertragen möchtest?
+gui.transfer.warning.mount=Das Reittier dieser Einheit wird ebenfalls übertragen
+gui.transfer.warning.rider=Der Reiter dieser Einheit wird ebenfalls übertragen
+gui.transfer.reply1=Ungültiger Spieler
+gui.transfer.reply2=Kann nicht der gleiche Spieler sein
+gui.transfer.reply3=Unzureichende Befehl's Anforderungen
+
+
+
+
+gui.unitoverview.title=Einheiten Übersicht  §7(Linksklick ins Inv = Öffnen, Rechtsklick = Zeigen)
+gui.unitoverview.filters=Filter: Company
+gui.unitoverview.columns=Spalten:
+gui.unitoverview.warriors=Krieger
+gui.unitoverview.farmers=Bauern
+gui.unitoverview.showNpc=%1$s wird angezeigt
+
+gui.unitoverview.cIndex=Index
+gui.unitoverview.cBlocks=Abstand
+gui.unitoverview.cInv=Inventar
+gui.unitoverview.cLvl=Lvl
+gui.unitoverview.cName=Name
+gui.unitoverview.cType=Typ
+gui.unitoverview.cCompany=Company
+gui.unitoverview.cArmor=Rüstung
+
+gui.configconfirm.title=MiddleEarth-Tweaks Konfigurationsänderung bestätigen
+gui.configconfirm.info=Die folgenden Einstellungen werden angepasst, um auf diesem Server zu spielen
+gui.configconfirm.config=Konfig
+gui.configconfirm.server=Server
+gui.configconfirm.you=Du
+
+# first part, like "home set to [coords]"
+lotr.gui.warrior.notifyhome=Zuhause gesetzt bei
+gui.guardmodehorn.tip=[Rechtsklick + Umschalt] für Einstellungen
+gui.guardmodehorn.keep=Beibehalten
+gui.guardmodehorn.change=Ändern
+gui.guardmodehorn.title=Wachmodus-Horn Einstellugen
+gui.guardmodehorn.info=Welche Werte sollen auf Wachen angewendet werden?
+gui.guardmodehorn.display=Wachmodus - 
+
+lotr.gui.warrior.performanceWarn=Hohe Reichweiten sind anspruchsvoll
+lotr.gui.warrior.requireGuardmode=Bewachen-Modus muss aktiviert sein
+lotr.gui.warrior.setHomeTip=[Rechtsklick + Umschalt] zum Zuhause setzen
+
+metweaks.updateAvaible=§7MiddleEarth Tweaks §a%1$s§7 ist verfügbar §f§n[Herunterladen]
+tile.bed.respawnSet=Wiedereinstiegspunkt gesetzt
+
+commands.guardmodehorn.requireHorn=Du musst ein Horn des Befehls halten
+commands.guardmodehorn.converted=Fertig§7 - Installiere §aMiddleEarth-Tweaks §7für mehr Optionen
+commands.entityeffect.requireAlive=Entity muss lebendig sein
+commands.entityeffect.notFound=Effekt '%1$s' nicht gefunden
+commands.generic.notAnEntity=Du kannst das nur als Entity auf dich anwenden
+commands.selector.selfRequireEntity=@s (@selbst) muss ein Entity sein
+commands.selector.missingCloseBracket=Fehlende schließende eckige Klammern [] bei: %1$s
+commands.selector.missingOpenBracket=Erwartete öffnende eckige Klammern [] bei: %1$s
+commands.selector.unknownGroup=Unbekannte Entity Gruppe "%1$s"
+
+metweaks.healthbar.tip=Drücke %1$s zum Umschalten der Gesundheits Anzeige
+metweaks.healthbar.display=Gesundheits Anzeige
+metweaks.healthbar.speed=Tempo
+metweaks.healthbar.jump=Sprung
+metweaks.verticalslabs.tip=Schleiche, um nach Sichtrichtung zu platzieren
+metweaks.verticalslabs.tooltip=Drücke %1$s für vertikal
+metweaks.verticalslabs.display=Vertikale Stufen
+commands.entitystack.cancel=Stapeln abgebrochen...
+commands.entitystack.defmount=Klicke auf das Reittier
+commands.entitystack.defrider=Klicke auf den Reiter
+commands.entitystack.requirePlayer=Ausführer muss ein Spieler sein
+commands.entitystack.dimChange=Dimension Änderung festgestellt, abgebrochen...
+commands.entitystack.missing=Die Entität fehlt oder ist nicht geladen, abgebrochen...
+commands.entitystack.success=%1$s + %2$s gestapelt
+commands.entitystack.dismount=Klicke auf die zu trennende Entity
+commands.entitystack.failDismount=Entity kann nicht getrennt werden
+commands.entitystack.successDismount=Entity %1$s getrennt
+
+
+lotr.gui.warrior.guardRange=Bewachreichweite
+lotr.gui.hornSelect.haltReady=Stoppen/Vorbeiten
+
+
+commands.generic.entity.notFound=Keine Entity gefunden
+commands.generic.dim.notFound=Dimension %1$s existiert nicht
+commands.selector.unknownArgValue=Unbekannter Argument Wert "%1$s" bei: %2$s
+commands.selector.unknownArg=Unbekanntes Argument "%1$s" bei: %2$s, gültige Argumente: %3$s
+commands.selector.unknown=Unbekannter Entity Typ "%1$s"
+commands.selector.invalid=Ungültige Entity Typ Suche bei: %1$s
+
+commands.conqdecay.disable=Eroberungsverfall wurde deaktiviert
+commands.conqdecay.set=Eroberungsverfall wurde auf %1$s Minuten gesetzt
+commands.conqdecay.info=Eroberungsverfall ist %1$s Minuten
+gui.confirm.restart=Bestätigen & Spiel neustarten
+key.togglehealth=Gesundheits Anzeige umschalten
+key.toggleverticalslabs=Vertikale Stufen umschalten
+key.openUnitOverview=Öffne Einheiten Übersicht
+
+metweaks.config.individual-mountspeeds=Individuelle Reitgeschwindigkeiten
+metweaks.config.general=Allgemein
+metweaks.config.healthbar=Gesundheits Anzeige
+metweaks.config.guards=Wächter
+metweaks.config.mountspeed=Reitgeschwindigkeit
+metweaks.config.blocks=Blöcke
+metweaks.config.misc=Sonstiges
+metweaks.config.hudelements=HUD Elemente
+metweaks.config.aiconquest=AI Eroberung
+
+
+tile.log.oak.bark.name=Eichenrinde
+tile.log.spruce.bark.name=Fichtenrinde
+tile.log.birch.bark.name=Birkenrinde
+tile.log.jungle.bark.name=Tropenrinde
+tile.log.acacia.bark.name=Akazienrinde
+tile.log.big_oak.bark.name=Schwarzeichenrinde
+
+tile.lotr:wood.12.name=Föhrenrinde
+tile.lotr:wood.13.name=Mallorn-Rinde
+tile.lotr:wood.14.name=Düstereichenrinde
+tile.lotr:wood.15.name=Verkohlte Rinde
+
+tile.lotr:fruitWood.12.name=Apfelbaumrinde
+tile.lotr:fruitWood.13.name=Birnbaumrinde
+tile.lotr:fruitWood.14.name=Kirschbaumrinde
+tile.lotr:fruitWood.15.name=Mangobaumrinde
+
+tile.lotr:wood2.12.name=Lebethronrinde
+tile.lotr:wood2.13.name=Buchenrinde
+tile.lotr:wood2.14.name=Hulstbaumrinde
+tile.lotr:wood2.15.name=Bananenpalmenrinde
+
+tile.lotr:wood3.12.name=Ahornrinde
+tile.lotr:wood3.13.name=Lärchenrinde
+tile.lotr:wood3.14.name=Dattelpalmenrinde
+tile.lotr:wood3.15.name=Mangrovenrinde
+
+tile.lotr:wood4.12.name=Kastanienrinde
+tile.lotr:wood4.13.name=Baobabrinde
+tile.lotr:wood4.14.name=Zedernrinde
+tile.lotr:wood4.15.name=Tannenrinde
+
+tile.lotr:wood5.12.name=Kiefernrinde
+tile.lotr:wood5.13.name=Zitronenbaumrinde
+tile.lotr:wood5.14.name=Orangenbaumrinde
+tile.lotr:wood5.15.name=Limettenbaumrinde
+
+tile.lotr:wood6.12.name=Mahagonirinde
+tile.lotr:wood6.13.name=Weidenrinde
+tile.lotr:wood6.14.name=Zypressenrinde
+tile.lotr:wood6.15.name=Olivenbaumrinde
+
+tile.lotr:wood7.12.name=Espenrinde
+tile.lotr:wood7.13.name=Grüneichenrinde
+tile.lotr:wood7.14.name=Lairelossë-Rinde
+tile.lotr:wood7.15.name=Mandelbaumrinde
+
+tile.lotr:wood8.12.name=Pflaumenbaumrinde
+tile.lotr:wood8.13.name=Mûmak-Baumrinde
+tile.lotr:wood8.14.name=Granatapfelbaumrinde
+tile.lotr:wood8.15.name=Palmenrinde
+
+tile.lotr:wood9.12.name=Drachenblutrinde
+tile.lotr:wood9.13.name=Kunzearinde
+
+tile.lotr:rottenLog.12.name=Morsche Rinde
+
+
+tile.lotr:woodBeamV1.12.name=Geschlossener Eichenholzbalken
+tile.lotr:woodBeamV1.13.name=Geschlossener Fichtenholzbalken
+tile.lotr:woodBeamV1.14.name=Geschlossener Birkenholzbalken
+tile.lotr:woodBeamV1.15.name=Geschlossener Tropenholzbalken
+tile.lotr:woodBeamV2.12.name=Geschlossener Akazienholzbalken
+tile.lotr:woodBeamV2.13.name=Geschlossener Schwarzeichenholzbalken
+tile.lotr:woodBeam1.12.name=Geschlossener Föhrenholzbalken
+tile.lotr:woodBeam1.13.name=Geschlossener Mallorn-Holzbalken
+
+tile.lotr:woodBeam1.14.name=Geschlossener Düstereichenholzbalken
+tile.lotr:woodBeam1.15.name=Geschlossener Verkohlter Holzbalken
+tile.lotr:woodBeam2.12.name=Geschlossener Lebethron-Holzbalken
+tile.lotr:woodBeam2.13.name=Geschlossener Buchenholzbalken
+tile.lotr:woodBeam2.14.name=Geschlossener Hulstbaumholzbalken
+tile.lotr:woodBeam2.15.name=Geschlossener Bananenpalmenholzbalken
+
+tile.lotr:woodBeamFruit.12.name=Geschlossener Apfelbaumholzbalken
+tile.lotr:woodBeamFruit.13.name=Geschlossener Birnbaumholzbalken
+tile.lotr:woodBeamFruit.14.name=Geschlossener Kirschbaumholzbalken
+tile.lotr:woodBeamFruit.15.name=Geschlossener Mangobaumholzbalken
+
+
+tile.lotr:woodBeam3.12.name=Geschlossener Ahornholzbalken
+tile.lotr:woodBeam3.13.name=Geschlossener Lärchenholzbalken
+tile.lotr:woodBeam3.14.name=Geschlossener Dattelpalmenholzbalken
+tile.lotr:woodBeam3.15.name=Geschlossener Mangrovenholzbalken
+
+tile.lotr:woodBeam4.12.name=Geschlossener Kastanienholzbalken
+tile.lotr:woodBeam4.13.name=Geschlossener Baobabholzbalken
+tile.lotr:woodBeam4.14.name=Geschlossener Zedernholzbalken
+tile.lotr:woodBeam4.15.name=Geschlossener Tannenholzbalken
+
+tile.lotr:woodBeam5.12.name=Geschlossener Kiefernholzbalken
+tile.lotr:woodBeam5.13.name=Geschlossener Zitronenbaumholzbalken
+tile.lotr:woodBeam5.14.name=Geschlossener Orangenbaumholzbalken
+tile.lotr:woodBeam5.15.name=Geschlossener Limettenbaumholzbalken
+
+tile.lotr:woodBeam6.12.name=Geschlossener Mahagoniholzbalken
+tile.lotr:woodBeam6.13.name=Geschlossener Weidenholzbalken
+tile.lotr:woodBeam6.14.name=Geschlossener Zypressenholzbalken
+tile.lotr:woodBeam6.15.name=Geschlossener Olivenbaumholzbalken
+
+tile.lotr:woodBeamRotten.12.name=Geschlossener Morscher Holzbalken
+
+tile.lotr:woodBeam7.12.name=Geschlossener Espenholzbalken
+tile.lotr:woodBeam7.13.name=Geschlossener Grüneichenholzbalken
+tile.lotr:woodBeam7.14.name=Geschlossener Lairelossë-Holzbalken
+tile.lotr:woodBeam7.15.name=Geschlossener Mandelbaumholzbalken
+
+tile.lotr:woodBeam8.12.name=Geschlossener Pflaumenbaumholzbalken
+tile.lotr:woodBeam8.13.name=Geschlossener Mûmak-Baumholzbalken
+tile.lotr:woodBeam8.14.name=Geschlossener Granatapfelbaumholzbalken
+tile.lotr:woodBeam8.15.name=Geschlossener Palmenholzbalken
+
+tile.lotr:woodBeamS.12.name=Geschlossener Rohan-Holzbalken
+tile.lotr:woodBeamS.13.name=Geschlossener Verzierte Rohan-Holzbalken (Gold)
+tile.lotr:woodBeam9.12.name=Geschlossener Drachenblutholzbalken
+tile.lotr:woodBeam9.13.name=Geschlossener Kunzeaholzbalken
+
+
+
+tile.bed.notSafe=Du kannst jetzt nicht schlafen, es sind Feinde in der Nähe
+
+commands.metweaks.conqclear=Eroberung wurde entfernt für %1$s bei (%2$s, %3$s)
+commands.metweaks.conqclear.radial=Eroberung wurde radial entfernt für %1$s um (%2$s, %3$s) herum
+
+lotr.gui.warrior.wanderRange=Wander-Reichweite
+lotr.gui.warrior.followRange=AI Reichweite
+lotr.gui.warrior.ammoRange=Fernangriff Reichweite
+lotr.gui.warrior.advanced=Erweiterte Einstellungen
+lotr.gui.warrior.sethome=Setze/Zeige Zuhause
+lotr.gui.warrior.ignoreSight=Ignoriere Ziel Sichtbar
+lotr.gui.warrior.unlockSettings=Level %1$s erforderlich
+lotr.gui.warrior.unlockSettings2=Die Limits steigen mit dem Level an
+
+lotr.gui.hornSelect.guardMode=WachModus Umschalten
+gui.guardmodehorn.autoGuardRange=Auto Wach-Reichweite

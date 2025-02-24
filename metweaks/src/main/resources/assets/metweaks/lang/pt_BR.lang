@@ -1,0 +1,257 @@
+# yet untranslated
+metweaks.unittracking.near=Near
+metweaks.unittracking.display=Unit Tracking
+
+# whitespaces matter!
+metweaks.verticalprefix=Vertical 
+metweaks.slabprefix= Slab
+
+gui.transfer.btn=Transfer
+gui.transfer.title=Transfer to Player
+gui.transfer.sent=%1$s sent %3$s to you
+gui.transfer.sentMany=%1$s sent %2$s Units to you
+gui.transfer.sentCompany=%1$s sent Company "%3$s" with %2$s Units to you
+gui.transfer.warning=Are you sure you want to transfer this unit?
+gui.transfer.warning.mount=This unit's mount will be transferred too
+gui.transfer.warning.rider=This unit's rider will be transferred too
+gui.transfer.reply1=Invalid Player
+gui.transfer.reply2=Cannot be the same Player
+gui.transfer.reply3=Failed Command Requirements
+gui.transfer.reply4=No Units found
+gui.transfer.page0=This Unit
+gui.transfer.page2=Selection
+gui.transfer.choose=Choose
+gui.transfer.selected=%1$s Units selected
+
+
+
+
+gui.unitoverview.title=Visão geral de unidades  §7(Botão esquerdo no Inv = Abrir, Botão direito = Mostrar)
+gui.unitoverview.filters=Filtros: Esquadrão
+gui.unitoverview.columns=Colunas:
+gui.unitoverview.warriors=Tropas
+gui.unitoverview.farmers=Peões
+gui.unitoverview.showNpc=Mostrando %1$s
+
+gui.unitoverview.cIndex=Index
+gui.unitoverview.cBlocks=Distância
+gui.unitoverview.cInv=Inventário
+gui.unitoverview.cLvl=Lvl
+gui.unitoverview.cName=Nome
+gui.unitoverview.cType=Tipo
+gui.unitoverview.cCompany=Esquadrão
+gui.unitoverview.cArmor=Armadura
+
+gui.configconfirm.title=MiddleEarth-Tweaks Configurar Mudar Confirmar
+gui.configconfirm.info=As seguintes configurações serão ajustadas para jogar nesse servidor
+gui.configconfirm.config=Configuração
+gui.configconfirm.server=Servidor
+gui.configconfirm.you=Você
+
+# first part, like "home set to [coords]"
+lotr.gui.warrior.notifyhome=Definir Home para
+gui.guardmodehorn.tip=[Botão direito + Shift] para configurações
+gui.guardmodehorn.keep=Manter
+gui.guardmodehorn.change=Mudar
+gui.guardmodehorn.title=Configurações da trompa em 'modo guarda'
+gui.guardmodehorn.info=Valores a aplicar nos contratados em uso
+gui.guardmodehorn.display=Modo guarda - 
+
+lotr.gui.warrior.performanceWarn=Alcance alto demanda bastante
+lotr.gui.warrior.requireGuardmode=O Modo Guarda precisa estar ativo
+lotr.gui.warrior.setHomeTip=[Botão direito + Shift] para definir Home
+
+metweaks.updateAvaible=§7MiddleEarth Tweaks §a%1$s§7 está disponível §f§n[Clique para Baixar]
+tile.bed.respawnSet=Ponto de renascimento definido
+
+commands.guardmodehorn.requireHorn=Você precisa estar segurando uma Trompa de Comando
+commands.guardmodehorn.converted=Convertido§7 - Instale §aMiddleEarth-Tweaks §7para mais opções
+commands.entityeffect.requireAlive=A entidade precisa estar viva
+commands.entityeffect.notFound=Efeito '%1$s' não encontrado
+commands.generic.notAnEntity=Só pode usar isso em você mesmo como uma entidade 
+commands.selector.selfRequireEntity=@s (@self) precisa ser uma entidade
+commands.selector.missingCloseBracket=Faltam colchetes de fechamento [] em: %1$s
+commands.selector.missingOpenBracket=Colchetes de abertura esperados [] em: %1$s
+commands.selector.unknownGroup=Grupo de Entidades Desconhecido "%1$s"
+metweaks.healthbar.tip=Pressione %1$s para alternar Barra de Vida
+metweaks.healthbar.display=Barra de Vida
+metweaks.healthbar.speed=Velocidade
+metweaks.healthbar.jump=Pulo
+metweaks.verticalslabs.tip=Esgueirar-se para usar de frente
+metweaks.verticalslabs.tooltip=Pressione %1$s para verticais
+metweaks.verticalslabs.display=Lajes Verticais
+commands.entitystack.cancel=Abortando empilhamento...
+commands.entitystack.defmount=Clique na entidade para definir a montagem
+commands.entitystack.defrider=Clique na entidade para definir o passageiro
+commands.entitystack.requirePlayer=O remetente precisa ser um jogador
+commands.entitystack.dimChange=Alteração de dimensão detectada, abortando...
+commands.entitystack.missing=A entidade parece estar ausente ou descarregada, abortando...
+commands.entitystack.success=Empilhado %1$s + %2$s
+commands.entitystack.dismount=Clique na entidade para desanexar
+commands.entitystack.failDismount=Não é possível desvincular a entidade
+commands.entitystack.successDismount=Desmontado %1$s
+
+
+commands.generic.entity.notFound=Nenhuma entidade encontrada
+commands.generic.dim.notFound=Dimensão %1$s não existe
+commands.selector.unknownArgValue=Valor de argumento desconhecido "%1$s" em: %2$s
+commands.selector.unknownArg=Argumento Desconhecido "%1$s" em: %2$s, args válidos: %3$s
+commands.selector.unknown=Tipo de Entidade desconhecida "%1$s"
+commands.selector.invalid=Seletor de tipo de Entidade inválido em: %1$s
+
+commands.conqdecay.disable=Decadência de conquista desabilitada
+commands.conqdecay.set=Defina a decadência de Conquista para %1$s minutos
+commands.conqdecay.info=Decadência de conquista é %1$s minutos
+gui.confirm.restart=Confirmar e Reiniciar o jogo
+key.togglehealth=Alternar Vida
+key.toggleverticalslabs=Alternar Lajes Verticais
+key.openUnitOverview=Abrir Visão geral de unidades
+
+metweaks.config.individual-mountspeeds=Velocidade de Montaria Individual
+metweaks.config.general=Geral
+metweaks.config.healthbar=Barra de Vida
+metweaks.config.guards=Guardas
+metweaks.config.mountspeed=Velocidade de Montaria
+metweaks.config.blocks=Blocos
+metweaks.config.misc=Miscelânea
+metweaks.config.hudelements=Elementos do HUD
+metweaks.config.aiconquest=Conquista por IA
+
+
+tile.log.oak.bark.name=Casca de Carvalho
+tile.log.spruce.bark.name=Casca de Pinheiro
+tile.log.birch.bark.name=Casca de Eucalipto
+tile.log.jungle.bark.name=Casca de Madeira da Selva
+tile.log.acacia.bark.name=Casca de Acácia
+tile.log.big_oak.bark.name=Casca de Carvalho Escuro
+
+tile.lotr:wood.12.name=Casca de Pinheiro do Condado
+tile.lotr:wood.13.name=Casca de Mallorn
+tile.lotr:wood.14.name=Casca de Carvalho-das-Trevas
+tile.lotr:wood.15.name=Casca de Madeira Carbonizada
+
+tile.lotr:fruitWood.12.name=Casca de Macieira
+tile.lotr:fruitWood.13.name=Casca de Pereira
+tile.lotr:fruitWood.14.name=Casca de Cerejeira
+tile.lotr:fruitWood.15.name=Casca de Mangueira
+
+tile.lotr:wood2.12.name=Casca de Lebethron
+tile.lotr:wood2.13.name=Casca de Faia
+tile.lotr:wood2.14.name=Casca de Azevim
+tile.lotr:wood2.15.name=Casca de Bananeira
+
+tile.lotr:wood3.12.name=Casca de Bordo
+tile.lotr:wood3.13.name=Casca de Lariço
+tile.lotr:wood3.14.name=Casca de Tamareira
+tile.lotr:wood3.15.name=Casca de Árvore de Mangue
+
+tile.lotr:wood4.12.name=Casca de Castanheira
+tile.lotr:wood4.13.name=Casca de Baobá
+tile.lotr:wood4.14.name=Casca de Cedro
+tile.lotr:wood4.15.name=Casca de Abeto
+
+tile.lotr:wood5.12.name=Casca de Pinho
+tile.lotr:wood5.13.name=Casca de Limoeiro
+tile.lotr:wood5.14.name=Casca de Laranjeira
+tile.lotr:wood5.15.name=Casca de Limeira
+
+tile.lotr:wood6.12.name=Casca de Mogno
+tile.lotr:wood6.13.name=Casca de Salgueiro
+tile.lotr:wood6.14.name=Casca de Cipreste
+tile.lotr:wood6.15.name=Casca de Oliveira
+
+tile.lotr:wood7.12.name=Casca de Álamo
+tile.lotr:wood7.13.name=Casca de Carvalho-verde
+tile.lotr:wood7.14.name=Casca de Lairelossë
+tile.lotr:wood7.15.name=Casca de Amendoeira
+
+tile.lotr:wood8.12.name=Casca de Ameixeira
+tile.lotr:wood8.13.name=Casca de Sequoia
+tile.lotr:wood8.14.name=Casca de Romãzeira
+tile.lotr:wood8.15.name=Casca de Palmeira
+
+tile.lotr:wood9.12.name=Casca de Dragoeiro
+tile.lotr:wood9.13.name=Casca de Kanuka
+
+tile.lotr:rottenLog.12.name=Casca de Madeira Podre
+
+
+tile.lotr:woodBeamV1.12.name=Viga de Carvalho Fechada
+tile.lotr:woodBeamV1.13.name=Viga de Pinheiro Fechada
+tile.lotr:woodBeamV1.14.name=Viga de Eucalipto Fechada
+tile.lotr:woodBeamV1.15.name=Viga de Madeira da Selva Fechada
+tile.lotr:woodBeamV2.12.name=Viga de Acácia Fechada
+tile.lotr:woodBeamV2.13.name=Viga de Carvalho Escuro Fechada
+tile.lotr:woodBeam1.12.name=Viga de Pinheiro do Condado Fechada
+tile.lotr:woodBeam1.13.name=Viga de  Mallorn Fechada
+
+tile.lotr:woodBeam1.14.name=Viga de Carvalho-das-Trevas Fechada
+tile.lotr:woodBeam1.15.name=Viga de Madeira Carbonizada Fechada
+tile.lotr:woodBeam2.12.name=Viga de Lebethron Fechada
+tile.lotr:woodBeam2.13.name=Viga de Faia Fechada
+tile.lotr:woodBeam2.14.name=Viga de Azevim Fechada
+tile.lotr:woodBeam2.15.name=Viga de Bananeira Fechada
+
+tile.lotr:woodBeamFruit.12.name=Viga de Macieira Fechada
+tile.lotr:woodBeamFruit.13.name=Viga de Pereira Fechada
+tile.lotr:woodBeamFruit.14.name=Viga de Cerejeira
+tile.lotr:woodBeamFruit.15.name=Viga de Mangueira Fechada
+
+
+tile.lotr:woodBeam3.12.name=Viga de Bordo Fechada
+tile.lotr:woodBeam3.13.name=Viga de Lariço Fechada
+tile.lotr:woodBeam3.14.name=Viga de Tamareira Fechada
+tile.lotr:woodBeam3.15.name=Viga de Árvore do Mangue Fechada
+
+tile.lotr:woodBeam4.12.name=Viga de Castanheira Fechada
+tile.lotr:woodBeam4.13.name=Viga de Baobá Fechada
+tile.lotr:woodBeam4.14.name=Viga de Cedro Fechada
+tile.lotr:woodBeam4.15.name=Viga de Abeto Fechada
+
+tile.lotr:woodBeam5.12.name=Viga de Pinho Fechada
+tile.lotr:woodBeam5.13.name=Viga de Limoeiro Fechada
+tile.lotr:woodBeam5.14.name=Viga de Laranjeira Fechada
+tile.lotr:woodBeam5.15.name=Viga de Limeira Fechada
+
+tile.lotr:woodBeam6.12.name=Viga de Mogno Fechada
+tile.lotr:woodBeam6.13.name=Viga de Salgueiro Fechada
+tile.lotr:woodBeam6.14.name=Viga de Cipreste Fechada
+tile.lotr:woodBeam6.15.name=Viga de Oliveira Fechada
+
+tile.lotr:woodBeamRotten.12.name=Viga de Madeira Podre Fechada
+
+tile.lotr:woodBeam7.12.name=Viga de Álamo Fechada
+tile.lotr:woodBeam7.13.name=Viga de Carvalho-verde Fechada
+tile.lotr:woodBeam7.14.name=Viga de Lairelossë Fechada
+tile.lotr:woodBeam7.15.name=Viga de Amendoeira Fechada
+
+tile.lotr:woodBeam8.12.name=Viga de Ameixeira Fechada
+tile.lotr:woodBeam8.13.name=Viga de Sequoia Fechada
+tile.lotr:woodBeam8.14.name=Viga de Romãzeira Fechada
+tile.lotr:woodBeam8.15.name=Viga de Palmeira Fechada
+
+tile.lotr:woodBeamS.12.name=Viga de Rohan Fechada
+tile.lotr:woodBeamS.13.name=Viga de Rohan Adornada em Ouro Fechada
+tile.lotr:woodBeam9.12.name=Viga de Dragoeiro Fechada
+tile.lotr:woodBeam9.13.name=Viga de Kanuka Fechada
+
+
+
+tile.bed.notSafe=Você não pode dormir agora, há inimigos por perto
+
+commands.metweaks.conqclear=Apagada a Conquista de %1$s em (%2$s, %3$s)
+commands.metweaks.conqclear.radial=Apagado o raio de Conquista de %1$s entorno de (%2$s, %3$s)
+
+lotr.gui.warrior.wanderRange=Alcence de Vagueio
+lotr.gui.warrior.followRange=Alcance IA
+lotr.gui.warrior.ammoRange=Alcance de Munição
+lotr.gui.warrior.advanced=Configurações Avançadas
+lotr.gui.warrior.sethome=Setar/Mostrar Local da Home
+lotr.gui.warrior.ignoreSight=Ignorar alvo a vista
+lotr.gui.warrior.unlockSettings=Precisa do level %1$s para destravar
+lotr.gui.warrior.unlockSettings2=Limites aumentam com level
+
+lotr.gui.hornSelect.guardMode=Alternar Modo Guarda
+gui.guardmodehorn.autoGuardRange=Área de Guarda (Auto)
+
+// by Juh
