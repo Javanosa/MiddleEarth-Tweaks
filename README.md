@@ -28,6 +28,9 @@ QoL Mod to enhance and expand feature of the LOTR Mod by Mevans
   
 &nbsp;
 - Option to prevent ring writing overflowing the edge
+- Many Projectile BugFixes like unpickable or hovering projectiles
+- New /give command to accept multiple players
+- Allied NPC projectiles pass through allied NPC's (configurable)
 - Ranged AI Improvements
 - Randomly Enchant Ranged NPC Weapons now too
 - NPC's are now able to use plates, spears, termites as ranged weapons
