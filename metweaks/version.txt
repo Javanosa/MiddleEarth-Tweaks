@@ -1,2 +1,2 @@
-1.6.0
-https://curseforge.com/minecraft/mc-mods/lotr-middleearth-tweaks/files/6241706
+1.6.2
+https://curseforge.com/minecraft/mc-mods/lotr-middleearth-tweaks/files/6324264
