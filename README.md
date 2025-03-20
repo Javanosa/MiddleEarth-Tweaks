@@ -29,6 +29,10 @@ QoL Mod to enhance and expand feature of the LOTR Mod by Mevans
 &nbsp;
 - Option to prevent ring writing overflowing the edge
 - Many Projectile BugFixes like unpickable or hovering projectiles
+- Option to make Hireds conquer for their own Faction
+- Fix Entities not hitable after respawn (Vanilla Bug)
+- Fix Deathscreen buttons unclickable after rescaling window (Vanilla Bug)
+- Half Troll Additions like Stone Thrower Unit and additional Alignment Area (configurable)
 - New /give command to accept multiple players
 - Allied NPC projectiles pass through allied NPC's (configurable)
 - Ranged AI Improvements
