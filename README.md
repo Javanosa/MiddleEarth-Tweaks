@@ -1,7 +1,7 @@
 ## MiddleEarth Tweaks - The Lord of the Rings Addon
-QoL Mod to enhance and expand feature of the LOTR Mod by Mevans
+QoL Mod to enhance and expand features of the LOTR Mod by Mevans
 ## Download: [Curseforge](https://www.curseforge.com/minecraft/mc-mods/lotr-middleearth-tweaks) - [Modrinth](https://modrinth.com/mod/middleearth-tweaks)
-## [Wiki](https://github.com/Javanosa/MiddleEarth-Tweaks/blob/main/Wiki.md)
+## Feature Details: [Wiki](https://javanosa.github.io/wiki/)
 ## [Developer API](https://github.com/Javanosa/MiddleEarth-Tweaks/blob/main/MeTweaksAPI.java)
 ## [Discord](https://discord.gg/maHfVhGaah)
 
@@ -17,6 +17,9 @@ QoL Mod to enhance and expand feature of the LOTR Mod by Mevans
 - Riders dont suffocate in Blocks anymore
 - /conquestdecay to control/disable conquest decrease 
 - Fix Ally Aid Conquest unclearable
+- /cfarview to view farther than the server distance
+- Hired Unit Count Overlay
+- Banner Protection Improvements
   
 &nbsp;
 - Upgradeable Ranged Weapons for Hireds
