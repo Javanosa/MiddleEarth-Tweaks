@@ -1,7 +1,7 @@
 ## MiddleEarth Tweaks - The Lord of the Rings Addon
 QoL Mod to enhance and expand features of the LOTR Mod by Mevans
 ## Download: [Curseforge](https://www.curseforge.com/minecraft/mc-mods/lotr-middleearth-tweaks) - [Modrinth](https://modrinth.com/mod/middleearth-tweaks)
-## Feature Details: [Wiki](https://javanosa.github.io/wiki/)
+## [Open Wiki](https://javanosa.github.io/wiki/)
 ## [Developer API](https://github.com/Javanosa/MiddleEarth-Tweaks/blob/main/MeTweaksAPI.java)
 ## [Discord](https://discord.gg/maHfVhGaah)
 
