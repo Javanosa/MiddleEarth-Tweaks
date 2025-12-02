@@ -51,6 +51,14 @@ QoL Mod to enhance and expand features of the LOTR Mod by Mevans
 - FastTravel Improvements
 - PlayerTabList Improvements
 - Unit Tracker to avoid loss of units during travel (F7 + U key)
+- Draught Effects can be stacked now (+50% increase)
+- Enhanced Stacksizes for Draughts and Stews
+- Mounted Banner Bearers
+- Explosion Physics
+- Fixed LOTR Weather Performance
+- Option to make Mercenary Captains aggressive
+- Option to increase max miniquest tasks per faction
+- LOTR Chandeliers can now be placed on the bottom of iron bars and et futurum chains
 - AI Conquest (NPCs conquest on their own, default disabled)
 - New Commands with lotr specific Features:
   - /entitykill
