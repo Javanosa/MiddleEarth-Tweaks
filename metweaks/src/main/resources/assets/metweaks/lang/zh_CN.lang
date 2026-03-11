@@ -1,0 +1,261 @@
+# LOTRFA Block extensions 第一纪元方块扩展
+tile.log.12.name=榆树树根
+tile.log.13.name=花楸树根
+tile.beamFaction1.12.name=封闭布瑞希尔木梁 
+tile.beamFaction1.13.name=封闭玻尔家族木梁
+tile.beamFaction1.14.name=封闭乌方家族木梁
+tile.beamFaction1.15.name=封闭绿精灵木梁
+tile.beamFaction2.12.name=封闭矮人木梁
+tile.beamWood.12.name=封闭榆木梁
+tile.beamWood.13.name=封闭花楸木梁
+
+metweaks.unittracking.near=附近
+metweaks.unittracking.display=单位追踪
+
+# whitespaces matter! 空格很重要！
+metweaks.verticalprefix=竖
+metweaks.slabprefix=台阶
+
+gui.transfer.btn=单位转让
+gui.transfer.title=转让给玩家
+gui.transfer.sent=%1$s将%3$s转让给了你
+gui.transfer.sentMany=%1$s将%2$s个单位转让给了你
+gui.transfer.sentCompany=%1$s将包含%2$s个单位的“%3$s”中队转让给了你
+gui.transfer.warning=你确定要转让这个单位吗？
+gui.transfer.warning.mount=这个单位的坐骑也会被转让
+gui.transfer.warning.rider=这个单位的骑手也会被转让
+gui.transfer.reply1=无效的玩家
+gui.transfer.reply2=不能是同一个玩家
+gui.transfer.reply3=指令要求未满足
+gui.transfer.reply4=未找到单位
+gui.transfer.page0=此单位
+gui.transfer.page2=多选
+gui.transfer.choose=选择
+gui.transfer.selected=已选择%1$s个单位
+
+gui.unitoverview.title=单位总览 §7(左键点击背包=打开，右键=显示)
+gui.unitoverview.filters=筛选：中队
+gui.unitoverview.columns=列：
+gui.unitoverview.warriors=战士
+gui.unitoverview.farmers=农工
+gui.unitoverview.showNpc=显示%1$s
+
+gui.unitoverview.cIndex=索引
+gui.unitoverview.cBlocks=方块
+gui.unitoverview.cInv=背包
+gui.unitoverview.cLvl=等级
+gui.unitoverview.cName=名称
+gui.unitoverview.cType=类型
+gui.unitoverview.cCompany=中队
+gui.unitoverview.cArmor=护甲
+
+gui.configconfirm.title=中洲微调配置更改确认
+gui.configconfirm.info=以下设置将被调整以在此服务器上游玩
+gui.configconfirm.config=配置
+gui.configconfirm.server=服务器
+gui.configconfirm.you=你
+
+# first part, like "home set to [coords]" 第一部分，如“家设置为[坐标]”
+lotr.gui.warrior.notifyhome=Home set to
+gui.guardmodehorn.tip=使用[潜行+右键]来设置
+gui.guardmodehorn.keep=Keep
+gui.guardmodehorn.change=更改
+gui.guardmodehorn.title=护卫模式号角设置
+gui.guardmodehorn.info=Values to apply at Hireds on Use
+gui.guardmodehorn.display=护卫模式 -
+
+lotr.gui.warrior.performanceWarn=高范围值会非常消耗性能
+lotr.gui.warrior.requireGuardmode=需要启用护卫模式
+lotr.gui.warrior.setHomeTip=使用[潜行+右键]来设置家
+
+metweaks.updateAvaible=§7中洲微调§a%1$s§7已可用 §f§n[点击下载]
+tile.bed.respawnSet=respawn point set
+
+commands.guardmodehorn.requireHorn=你需要持有命令号角
+commands.guardmodehorn.converted=已转换§7 - 安装§a中洲微调§7以获得更多选项
+commands.entityeffect.requireAlive=Entity needs to be alive
+commands.entityeffect.notFound=Effect '%1$s' not found
+commands.generic.notAnEntity=Can only use this at yourself as an entity
+commands.selector.selfRequireEntity=@s (@self) needs to be an entity
+commands.selector.missingCloseBracket=Missing closing square brackets [] at: %1$s
+commands.selector.missingOpenBracket=Expected opening square brackets [] at: %1$s
+commands.selector.unknownGroup=Unknown Entity Group "%1$s"
+metweaks.healthbar.tip=按%1$s切换生命条
+metweaks.healthbar.display=生命条
+metweaks.healthbar.speed=速度
+metweaks.healthbar.jump=跳跃
+metweaks.verticalslabs.tip=Sneak to use facing
+metweaks.verticalslabs.tooltip=按%1$s切换竖直
+metweaks.verticalslabs.display=竖台阶
+commands.entitystack.cancel=Aborting stacking...
+commands.entitystack.defmount=Click at entity to define mount
+commands.entitystack.defrider=Click at entity to define rider
+commands.entitystack.requirePlayer=Sender needs to be a player
+commands.entitystack.dimChange=Dimension change detected, aborting...
+commands.entitystack.missing=The entity appears to be missing or unloaded, aborting...
+commands.entitystack.success=Stacked %1$s + %2$s
+commands.entitystack.dismount=Click at entity to disattach
+commands.entitystack.failDismount=Unable to disattach entity
+commands.entitystack.successDismount=Dismounted %1$s
+
+
+commands.generic.entity.notFound=未找到实体
+commands.generic.dim.notFound=维度%1$s不存在
+commands.selector.unknownArgValue=Unknown Argument Value "%1$s" at: %2$s
+commands.selector.unknownArg=Unknown Argument "%1$s" at: %2$s, valid args: %3$s
+commands.selector.unknown=Unknown Entity Type "%1$s"
+commands.selector.invalid=Invalid Entity Type Selector at: %1$s
+
+commands.conqdecay.disable=已禁用征服衰减
+commands.conqdecay.set=已将征服衰减设置为%1$s分钟
+commands.conqdecay.info=征服衰减为%1$s分钟
+gui.confirm.restart=确认并重启游戏
+key.togglehealth=切换生命条显示
+key.toggleverticalslabs=切换竖台阶
+key.openUnitOverview=打开单位总览
+
+metweaks.config.individual-mountspeeds=单独坐骑速度
+metweaks.config.general=常规
+metweaks.config.healthbar=生命条
+metweaks.config.guards=护卫
+metweaks.config.mountspeed=坐骑速度
+metweaks.config.blocks=方块
+metweaks.config.misc=杂项
+metweaks.config.hudelements=HUD元素
+metweaks.config.aiconquest=AI征服
+
+tile.log.oak.bark.name=橡树树根
+tile.log.spruce.bark.name=云杉树根
+tile.log.birch.bark.name=白桦树根
+tile.log.jungle.bark.name=丛林树根
+tile.log.acacia.bark.name=金合欢树根
+tile.log.big_oak.bark.name=深色橡树树根
+
+tile.lotr:wood.12.name=夏尔松树根
+tile.lotr:wood.13.name=瑁珑树根
+tile.lotr:wood.14.name=黑橡树树根
+tile.lotr:wood.15.name=焦树根
+
+tile.lotr:fruitWood.12.name=苹果树根
+tile.lotr:fruitWood.13.name=梨树树根
+tile.lotr:fruitWood.14.name=樱桃树根
+tile.lotr:fruitWood.15.name=芒果树根
+
+tile.lotr:wood2.12.name=莱贝斯隆树根
+tile.lotr:wood2.13.name=山毛榉树根
+tile.lotr:wood2.14.name=冬青树根
+tile.lotr:wood2.15.name=香蕉树根
+
+tile.lotr:wood3.12.name=枫树树根
+tile.lotr:wood3.13.name=落叶松树根
+tile.lotr:wood3.14.name=椰枣树根
+tile.lotr:wood3.15.name=红树树根
+
+tile.lotr:wood4.12.name=栗树树根
+tile.lotr:wood4.13.name=猴面包树根
+tile.lotr:wood4.14.name=雪松树根
+tile.lotr:wood4.15.name=冷杉树根
+
+tile.lotr:wood5.12.name=松树树根
+tile.lotr:wood5.13.name=柠檬树根
+tile.lotr:wood5.14.name=橙树树根
+tile.lotr:wood5.15.name=酸橙树根
+
+tile.lotr:wood6.12.name=桃花心木树根
+tile.lotr:wood6.13.name=柳树树根
+tile.lotr:wood6.14.name=柏树树根
+tile.lotr:wood6.15.name=橄榄树根
+
+tile.lotr:wood7.12.name=白杨树根
+tile.lotr:wood7.13.name=绿橡树树根
+tile.lotr:wood7.14.name=莱瑞洛雪树根
+tile.lotr:wood7.15.name=杏树树根
+
+tile.lotr:wood8.12.name=李树树根
+tile.lotr:wood8.13.name=红杉树根
+tile.lotr:wood8.14.name=石榴树根
+tile.lotr:wood8.15.name=棕榈树根
+
+tile.lotr:wood9.12.name=龙血木树根
+tile.lotr:wood9.13.name=卡奴卡树根
+
+tile.lotr:rottenLog.12.name=朽树根
+
+
+tile.lotr:woodBeamV1.12.name=封闭橡木梁
+tile.lotr:woodBeamV1.13.name=封闭云杉木梁
+tile.lotr:woodBeamV1.14.name=封闭白桦木梁
+tile.lotr:woodBeamV1.15.name=封闭丛林木梁
+tile.lotr:woodBeamV2.12.name=封闭金合欢木梁
+tile.lotr:woodBeamV2.13.name=封闭深色橡木梁
+tile.lotr:woodBeam1.12.name=封闭夏尔松木梁
+tile.lotr:woodBeam1.13.name=封闭瑁珑木梁
+
+tile.lotr:woodBeam1.14.name=封闭黑橡木梁
+tile.lotr:woodBeam1.15.name=封闭焦木梁
+tile.lotr:woodBeam2.12.name=封闭莱贝斯隆木梁
+tile.lotr:woodBeam2.13.name=封闭山毛榉木梁
+tile.lotr:woodBeam2.14.name=封闭冬青木梁
+tile.lotr:woodBeam2.15.name=封闭香蕉木梁
+
+tile.lotr:woodBeamFruit.12.name=封闭苹果木梁
+tile.lotr:woodBeamFruit.13.name=封闭梨木梁
+tile.lotr:woodBeamFruit.14.name=封闭樱桃木梁
+tile.lotr:woodBeamFruit.15.name=封闭芒果木梁
+
+
+tile.lotr:woodBeam3.12.name=封闭枫木梁
+tile.lotr:woodBeam3.13.name=封闭落叶松木梁
+tile.lotr:woodBeam3.14.name=封闭椰枣木梁
+tile.lotr:woodBeam3.15.name=封闭红树木梁
+
+tile.lotr:woodBeam4.12.name=封闭栗木梁
+tile.lotr:woodBeam4.13.name=封闭猴面包木梁
+tile.lotr:woodBeam4.14.name=封闭雪松木梁
+tile.lotr:woodBeam4.15.name=封闭冷杉木梁
+
+tile.lotr:woodBeam5.12.name=封闭松木梁
+tile.lotr:woodBeam5.13.name=封闭柠檬木梁
+tile.lotr:woodBeam5.14.name=封闭橙木梁
+tile.lotr:woodBeam5.15.name=封闭酸橙木梁
+
+tile.lotr:woodBeam6.12.name=封闭桃花心木梁
+tile.lotr:woodBeam6.13.name=封闭柳木梁
+tile.lotr:woodBeam6.14.name=封闭柏木梁
+tile.lotr:woodBeam6.15.name=封闭橄榄木梁
+
+tile.lotr:woodBeamRotten.12.name=封闭朽木梁
+
+tile.lotr:woodBeam7.12.name=封闭白杨木梁
+tile.lotr:woodBeam7.13.name=封闭绿橡木梁
+tile.lotr:woodBeam7.14.name=封闭莱瑞洛雪木梁
+tile.lotr:woodBeam7.15.name=封闭杏木梁
+
+tile.lotr:woodBeam8.12.name=封闭李木梁
+tile.lotr:woodBeam8.13.name=封闭红杉木梁
+tile.lotr:woodBeam8.14.name=封闭石榴木梁
+tile.lotr:woodBeam8.15.name=封闭棕榈木梁
+
+tile.lotr:woodBeamS.12.name=封闭洛汗木梁
+tile.lotr:woodBeamS.13.name=封闭镶金洛汗木梁
+tile.lotr:woodBeam9.12.name=封闭龙血木梁
+tile.lotr:woodBeam9.13.name=封闭卡奴卡木梁
+
+
+
+tile.bed.notSafe=你现在无法休息，附近有敌人
+
+commands.metweaks.conqclear=已清除%1$s在(%2$s, %3$s)的征服值
+commands.metweaks.conqclear.radial=已清除%1$s在(%2$s, %3$s)周围的征服半径
+
+lotr.gui.warrior.wanderRange=漫游范围
+lotr.gui.warrior.followRange=AI范围
+lotr.gui.warrior.ammoRange=射击范围
+lotr.gui.warrior.advanced=高级设置
+lotr.gui.warrior.sethome=设置/显示家位置
+lotr.gui.warrior.ignoreSight=忽略视线内目标
+lotr.gui.warrior.unlockSettings=需要等级%1$s来解锁
+lotr.gui.warrior.unlockSettings2=限制随等级提升
+
+lotr.gui.hornSelect.guardMode=切换护卫模式
+gui.guardmodehorn.autoGuardRange=自动护卫范围
