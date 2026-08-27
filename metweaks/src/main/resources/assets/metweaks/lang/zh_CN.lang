@@ -1,7 +1,41 @@
-# LOTRFA Block extensions 第一纪元方块扩展
+gui.closeDontShowAgain=不再显示
+gui.openConfig=打开设置
+gui.openConfig2=打开%1$s
+
+lotr.achievement.hireEnt.title=恩特的最后一次进军
+lotr.achievement.hireEnt.desc=使用金色恩特饮料雇佣恩特
+chat.lotr.requirePledge=你需要向%s派系宣誓才能这样做
+
+metweaks.throwablespear.display=矛可以投掷
+key.togglethrowablespear=切换矛是否可投掷
+
+lotr.unit.RohirrimBanner_Horse=骑马洛汗旗手
+lotr.unit.RangerNorthBanner_Horse=骑马北方游民旗手
+lotr.unit.SouthronChampionBanner_Horse=骑马哈拉德冠军旗手
+lotr.unit.EasterlingGoldWarriorBanner_Horse=骑马金煌鲁德尔旗手
+
+entity.lotr.ChampionBannerBearer.name=骑马哈拉德冠军旗手
+entity.lotr.RhunGoldBannerBearer.name=骑马金煌鲁德尔旗手
+
+commands.metweaks.invalidbiome=无效的生物群系“%1$s”
+commands.metweaks.invalidchance=无效的几率值“%1$s”
+commands.metweaks.invalidtrader=无效的商人类型“%1$s”
+commands.metweaks.travellingtrader.add=已将旅行商人%1$s添加到%2$s生物群系
+commands.metweaks.travellingtrader.addfail=无法添加旅行商人
+commands.metweaks.travellingtrader.remove=已将旅行商人%1$s从%2$s生物群系中移除
+commands.metweaks.travellingtrader.removefail=无法移除旅行商人
+commands.metweaks.travellingtrader.list=--- 生物群系“%1$s”的商人列表 ---
+commands.metweaks.lotrinvasions.list=--- 生物群系“%1$s”的入侵列表 ---
+commands.metweaks.banditchance.set=已将生物群系“%1$s”的土匪生成几率设置为“%2$s”
+commands.metweaks.banditchance.get=生物群系“%1$s”的土匪生成几率为“%2$s”
+
+entity.lotr.HalfTrollStoneThrower.name=半食人妖投石手
+lotr.unit.HalfTrollStoneThrower_Rhino=半食人妖犀牛投石骑手
+
+# 第一纪元方块扩展
 tile.log.12.name=榆树树根
 tile.log.13.name=花楸树根
-tile.beamFaction1.12.name=封闭布瑞希尔木梁 
+tile.beamFaction1.12.name=封闭布瑞希尔木梁
 tile.beamFaction1.13.name=封闭玻尔家族木梁
 tile.beamFaction1.14.name=封闭乌方家族木梁
 tile.beamFaction1.15.name=封闭绿精灵木梁
@@ -12,9 +46,11 @@ tile.beamWood.13.name=封闭花楸木梁
 metweaks.unittracking.near=附近
 metweaks.unittracking.display=单位追踪
 
-# whitespaces matter! 空格很重要！
+# 空格很重要！
 metweaks.verticalprefix=竖
 metweaks.slabprefix=台阶
+metweaks.wallprefix=墙
+metweaks.stairsprefix=楼梯
 
 gui.transfer.btn=单位转让
 gui.transfer.title=转让给玩家
@@ -26,7 +62,7 @@ gui.transfer.warning.mount=这个单位的坐骑也会被转让
 gui.transfer.warning.rider=这个单位的骑手也会被转让
 gui.transfer.reply1=无效的玩家
 gui.transfer.reply2=不能是同一个玩家
-gui.transfer.reply3=指令要求未满足
+gui.transfer.reply3=命令要求未满足
 gui.transfer.reply4=未找到单位
 gui.transfer.page0=此单位
 gui.transfer.page2=多选
@@ -55,56 +91,57 @@ gui.configconfirm.config=配置
 gui.configconfirm.server=服务器
 gui.configconfirm.you=你
 
-# first part, like "home set to [coords]" 第一部分，如“家设置为[坐标]”
-lotr.gui.warrior.notifyhome=Home set to
+# 第一部分，如“驻扎点设置为[坐标]”
+lotr.gui.warrior.notifyhome=驻扎点设置为
 gui.guardmodehorn.tip=使用[潜行+右键]来设置
-gui.guardmodehorn.keep=Keep
+gui.guardmodehorn.keep=保存
 gui.guardmodehorn.change=更改
 gui.guardmodehorn.title=护卫模式号角设置
-gui.guardmodehorn.info=Values to apply at Hireds on Use
+gui.guardmodehorn.info=使用后，将雇佣单位的护卫参数设置为以下值
 gui.guardmodehorn.display=护卫模式 -
 
-lotr.gui.warrior.performanceWarn=高范围值会非常消耗性能
+lotr.gui.warrior.performanceWarn=高范围半径值会非常消耗性能
 lotr.gui.warrior.requireGuardmode=需要启用护卫模式
+lotr.gui.farmer.requireFarmmode=需要启用耕作模式
 lotr.gui.warrior.setHomeTip=使用[潜行+右键]来设置家
 
 metweaks.updateAvaible=§7中洲微调§a%1$s§7已可用 §f§n[点击下载]
-tile.bed.respawnSet=respawn point set
+tile.bed.respawnSet=已设置重生点
 
 commands.guardmodehorn.requireHorn=你需要持有命令号角
 commands.guardmodehorn.converted=已转换§7 - 安装§a中洲微调§7以获得更多选项
-commands.entityeffect.requireAlive=Entity needs to be alive
-commands.entityeffect.notFound=Effect '%1$s' not found
-commands.generic.notAnEntity=Can only use this at yourself as an entity
-commands.selector.selfRequireEntity=@s (@self) needs to be an entity
-commands.selector.missingCloseBracket=Missing closing square brackets [] at: %1$s
-commands.selector.missingOpenBracket=Expected opening square brackets [] at: %1$s
-commands.selector.unknownGroup=Unknown Entity Group "%1$s"
-metweaks.healthbar.tip=按%1$s切换生命条
+commands.entityeffect.requireAlive=实体必须是存活状态
+commands.entityeffect.notFound=无法找到药水效果“%1$s”
+commands.generic.notAnEntity=该命令只能将你自己作为一个实体来使用
+commands.selector.selfRequireEntity=@s (@self) 必须是一个实体
+commands.selector.missingCloseBracket=%1$s 处检测到存在未闭合的方括号[]
+commands.selector.missingOpenBracket=%1$s 处检测到存在未闭合的方括号[]
+commands.selector.unknownGroup=未知的实体组：“%1$s”
+metweaks.healthbar.tip=按 %1$s 切换生命条
 metweaks.healthbar.display=生命条
 metweaks.healthbar.speed=速度
 metweaks.healthbar.jump=跳跃
-metweaks.verticalslabs.tip=Sneak to use facing
-metweaks.verticalslabs.tooltip=按%1$s切换竖直
+metweaks.verticalslabs.tip=潜行以改变朝向
+metweaks.verticalslabs.tooltip=按 %1$s 切换竖台阶
 metweaks.verticalslabs.display=竖台阶
-commands.entitystack.cancel=Aborting stacking...
-commands.entitystack.defmount=Click at entity to define mount
-commands.entitystack.defrider=Click at entity to define rider
-commands.entitystack.requirePlayer=Sender needs to be a player
-commands.entitystack.dimChange=Dimension change detected, aborting...
-commands.entitystack.missing=The entity appears to be missing or unloaded, aborting...
-commands.entitystack.success=Stacked %1$s + %2$s
-commands.entitystack.dismount=Click at entity to disattach
-commands.entitystack.failDismount=Unable to disattach entity
-commands.entitystack.successDismount=Dismounted %1$s
+commands.entitystack.cancel=骑乘操作取消…
+commands.entitystack.defmount=右键一个实体作为被骑乘者
+commands.entitystack.defrider=右键一个实体作为骑乘者
+commands.entitystack.requirePlayer=命令执行者必须为玩家
+commands.entitystack.dimChange=检测到维度已改变，操作取消…
+commands.entitystack.missing=该实体不存在或已经未骑乘，操作取消…
+commands.entitystack.success=已将 %1$s + %2$s 设置骑乘
+commands.entitystack.dismount=右键一个实体以取消骑乘
+commands.entitystack.failDismount=无法取消实体骑乘
+commands.entitystack.successDismount=已取消%1$s的骑乘
 
 
 commands.generic.entity.notFound=未找到实体
 commands.generic.dim.notFound=维度%1$s不存在
-commands.selector.unknownArgValue=Unknown Argument Value "%1$s" at: %2$s
-commands.selector.unknownArg=Unknown Argument "%1$s" at: %2$s, valid args: %3$s
-commands.selector.unknown=Unknown Entity Type "%1$s"
-commands.selector.invalid=Invalid Entity Type Selector at: %1$s
+commands.selector.unknownArgValue=%2$s 中存在无效的参数值“%1$s”
+commands.selector.unknownArg=%2$s 中存在无效的参数值“%1$s”，有效参数应为：%3$s
+commands.selector.unknown=未知的实体类型：“%1$s”
+commands.selector.invalid=无效的实体类型选择器：“%1$s”
 
 commands.conqdecay.disable=已禁用征服衰减
 commands.conqdecay.set=已将征服衰减设置为%1$s分钟
@@ -123,6 +160,8 @@ metweaks.config.blocks=方块
 metweaks.config.misc=杂项
 metweaks.config.hudelements=HUD元素
 metweaks.config.aiconquest=AI征服
+metweaks.config.explosionphysics=爆炸物理效果
+
 
 tile.log.oak.bark.name=橡树树根
 tile.log.spruce.bark.name=云杉树根
@@ -248,14 +287,16 @@ tile.bed.notSafe=你现在无法休息，附近有敌人
 commands.metweaks.conqclear=已清除%1$s在(%2$s, %3$s)的征服值
 commands.metweaks.conqclear.radial=已清除%1$s在(%2$s, %3$s)周围的征服半径
 
-lotr.gui.warrior.wanderRange=漫游范围
+lotr.gui.warrior.wanderRange=游荡范围半径
 lotr.gui.warrior.followRange=AI范围
-lotr.gui.warrior.ammoRange=射击范围
+lotr.gui.warrior.ammoRange=射击范围半径
 lotr.gui.warrior.advanced=高级设置
-lotr.gui.warrior.sethome=设置/显示家位置
+lotr.gui.warrior.sethome=设置/显示驻扎点位置
 lotr.gui.warrior.ignoreSight=忽略视线内目标
 lotr.gui.warrior.unlockSettings=需要等级%1$s来解锁
 lotr.gui.warrior.unlockSettings2=限制随等级提升
 
 lotr.gui.hornSelect.guardMode=切换护卫模式
-gui.guardmodehorn.autoGuardRange=自动护卫范围
+gui.guardmodehorn.autoGuardRange=自动护卫范围半径
+
+# by 彼梦ArchiDreamZ
