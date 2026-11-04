@@ -8,6 +8,6 @@ You are allowed to add this mod to your modpack _(avoid file redistribution)_
 
 If this project ever remains inactive for an extended period of time (>1 year), it may get treat as GNU GPLv3 licensed. Please attempt to contact me first. *_Inactive not only means no updates, but also errors and important change requests that have not been processed._
 
-Credits: Translators: ArchiDreamZ (Chinese), Kostya (Russian), Juh (Portuguese)
+_Credits: Translators: ArchiDreamZ (Chinese), Kostya (Russian), Juh (Portuguese)_
 
 _(All Rights of the Lord of the Rings Mod go to Mevans)_
