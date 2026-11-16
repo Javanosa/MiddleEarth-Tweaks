@@ -1,6 +1,7 @@
 package metweaks.command;
 
 import java.lang.reflect.Field;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -506,7 +507,7 @@ public class CommandEntitySelector extends CommandBase {
 					worlds = new World[] {world};
 				}	
 				
-				boolean distanceCheck = (players && radius > 0) || radius > 500;
+				boolean distanceCheck = (players && radius >= 0) || radius > 500;
 				
 				for(World world : worlds) {
 					
@@ -768,10 +769,24 @@ public class CommandEntitySelector extends CommandBase {
 			}
 			
 			if(VERBOSE == 1) {
-				Object[] keys = group.keys();
-				for(int i = 0; i < keys.length; i++) {
-					Object key = keys[i];
-					int amount = group.get(key);
+				List<SimpleEntry<String, Integer>> sortable = new ArrayList<>();
+				
+				for(Object key : group.keys()) {
+					int value = group.get(key);
+					sortable.add(new SimpleEntry<>((String) key, value));
+				}
+				Comparator<SimpleEntry<String, Integer>> comperator = Comparator.comparingInt(SimpleEntry::getValue);
+				sortable.sort(comperator.reversed());
+				
+				int length = sortable.size();
+				
+				//Object[] keys = group.keys();
+				for(int i = 0; i < length/*keys.length*/; i++) {
+					//Object key = keys[i];
+					//int amount = group.get(key);
+					SimpleEntry<String, Integer> entry = sortable.get(i);
+					Object key = entry.getKey();
+					int amount = entry.getValue();
 					if(amount > 1) {
 						if(color)
 							builder.append("\u00a7f");
@@ -793,7 +808,7 @@ public class CommandEntitySelector extends CommandBase {
 					
 					builder.append(key);
 					
-					if(i+1 != keys.length)
+					if(i+1 != length/*keys.length*/)
 						builder.append(", ");
 				}
 			}

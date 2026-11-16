@@ -1,9 +1,34 @@
+gui.close=Schließen
+gui.closeDontShowAgain=Nicht mehr anzeigen
+gui.openConfig=Config Öffnen
+gui.openConfig2=%1$s Öffnen
+
+lotr.achievement.hireEnt.title=Der letzte Marsch der Ents
+lotr.achievement.hireEnt.desc=Heuere einen Ent mit einem Goldenen Enttrank an
+chat.lotr.requirePledge=Du must %s einen Schwur leisten um das zu tun
+
+metweaks.throwablespear.display=Werfbare Speere
+key.togglethrowablespear=Werfbare Speere umschalten
+
+lotr.unit.RohirrimBanner_Horse=Rohan Banner Reiter
+lotr.unit.RangerNorthBanner_Horse=Dúnedain Banner Reiter
+lotr.unit.SouthronChampionBanner_Horse=Meister Banner Reiter
+lotr.unit.EasterlingGoldWarriorBanner_Horse=Goldener Banner Reiter
+
+entity.lotr.ChampionBannerBearer.name=Bannerträger des Klingenmeisters
+entity.lotr.RhunGoldBannerBearer.name=Bannerträger der Goldenen Ostlinge
+
+entity.lotr.HalfTrollStoneThrower.name=Stein Werfer der Halbtrolle
+lotr.unit.HalfTrollStoneThrower_Rhino=Berittener Stein Werfer
+
 metweaks.unittracking.near=Nah
 metweaks.unittracking.display=Einheiten Überwachung
 
 # Leerzeichen sind wichtig!
 metweaks.verticalprefix=Vertikale 
 metweaks.slabprefix= Stufe
+metweaks.wallprefix= Mauer
+metweaks.stairsprefix= Treppe
 
 gui.transfer.sentMany=%1$s hat dir %2$s Einheiten gesendet
 gui.transfer.sentCompany=%1$s hat dir Kompanie "%3$s" mit %2$s Einheiten gesendet
@@ -41,6 +66,7 @@ gui.unitoverview.cName=Name
 gui.unitoverview.cType=Typ
 gui.unitoverview.cCompany=Company
 gui.unitoverview.cArmor=Rüstung
+gui.unitoverview.cMount=Reiter
 
 gui.configconfirm.title=MiddleEarth-Tweaks Konfigurationsänderung bestätigen
 gui.configconfirm.info=Die folgenden Einstellungen werden angepasst, um auf diesem Server zu spielen
@@ -59,6 +85,7 @@ gui.guardmodehorn.display=Wachmodus -
 
 lotr.gui.warrior.performanceWarn=Hohe Reichweiten sind anspruchsvoll
 lotr.gui.warrior.requireGuardmode=Bewachen-Modus muss aktiviert sein
+lotr.gui.farmer.requireFarmmode=Farm-Modus muss aktiviert sein
 lotr.gui.warrior.setHomeTip=[Rechtsklick + Umschalt] zum Zuhause setzen
 
 metweaks.updateAvaible=§7MiddleEarth Tweaks §a%1$s§7 ist verfügbar §f§n[Herunterladen]
@@ -121,6 +148,7 @@ metweaks.config.blocks=Blöcke
 metweaks.config.misc=Sonstiges
 metweaks.config.hudelements=HUD Elemente
 metweaks.config.aiconquest=AI Eroberung
+metweaks.config.explosionphysics=Explosions Physik
 
 
 tile.log.oak.bark.name=Eichenrinde

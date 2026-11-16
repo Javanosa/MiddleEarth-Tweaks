@@ -11,6 +11,7 @@ import metweaks.ASMConfig;
 import metweaks.MeTweaks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityTNTPrimed;
+import net.minecraft.entity.projectile.EntityLargeFireball;
 import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
@@ -26,17 +27,32 @@ public class NpcExplosionProtection {
 	@SubscribeEvent
 	public void onExplosionDetonateProtect(ExplosionEvent.Detonate event) {
 		if(ASMConfig.npcExplosionProtection && MeTweaks.lotr) {
+			
+			
 			// if tnt primed explodes with valid epxloder but exploder has access
 			// fireball = exploder null
 			World world = event.world;
 			Explosion ex = event.explosion;
 			Entity exploder = ex.exploder;
-			if(!world.isRemote && exploder instanceof EntityTNTPrimed) {
-				if(((EntityTNTPrimed) exploder).getTntPlacedBy() instanceof LOTREntityNPC) {
+			if(!world.isRemote) {
+				IFilter filter = null;
+				if(exploder instanceof EntityLargeFireball) {
+					filter = LOTRBannerProtection.anyBanner();
+					// absorbing the ball causes the shooter to change, may be better to block all fireballs zherefore
+					
+				}
+				
+				if(!ASMConfig.permNpcAllowDestroyNonLiving && exploder instanceof EntityTNTPrimed) {
+					if(((EntityTNTPrimed) exploder).getTntPlacedBy() instanceof LOTREntityNPC) {
+						filter = LOTRBannerProtection.anyBanner();
+						
+					}
+				}
+				
+				if(filter != null) {
 					@SuppressWarnings("unchecked")
 					List<ChunkPosition> blocks = ex.affectedBlockPositions;
 					List<ChunkPosition> toRemove = new ArrayList<ChunkPosition>();
-					IFilter filter = LOTRBannerProtection.anyBanner();
 					for(ChunkPosition pos : blocks) {
 						if(LOTRBannerProtection.isProtected(world, pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ, filter, false))
 							toRemove.add(pos); 
@@ -47,4 +63,6 @@ public class NpcExplosionProtection {
 			}
 		}
 	}
+	
+	
 }

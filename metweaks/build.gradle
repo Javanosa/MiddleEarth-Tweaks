@@ -17,7 +17,7 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.5.2"
+version = "1.6.22"
 group= "metweaks" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "MiddleEarth-Tweaks"
 
@@ -71,3 +71,12 @@ processResources
 
 srcCompat = JavaVersion.VERSION_1_8
 targetCompat = JavaVersion.VERSION_1_8
+
+task deobfJar(type: Jar) {
+    classifier = 'dev'
+    from sourceSets.main.output
+}
+
+artifacts {
+    archives deobfJar
+}

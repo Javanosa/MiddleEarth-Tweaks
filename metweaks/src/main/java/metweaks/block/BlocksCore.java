@@ -4,10 +4,11 @@ import java.lang.reflect.Field;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.ReflectionHelper;
+import ganymedes01.etfuturum.blocks.ISubBlocksBlock;
+import lotr.common.LOTRCreativeTabs;
 import lotr.common.block.LOTRBlockSlabBase;
 import lotr.common.block.LOTRBlockSlabFalling;
 import lotr.common.block.LOTRBlockWoodBase;
@@ -19,6 +20,7 @@ import net.minecraft.block.BlockNewLog;
 import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.BlockSlab;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemMultiTexture;
@@ -28,7 +30,51 @@ import team.chisel.block.BlockCarvableSlab;
 
 public class BlocksCore {
 	
+	private static String debug = "";
+	public static boolean skipLog;
+	
+	public static void addInfo(String string) {
+		if(!skipLog) debug += "\n	"+string;
+	}
+	
+	public static String getRegName(String prefix, Block fullBlock, boolean removeMETPrefix) {
+		String name = GameData.getBlockRegistry().getNameForObject(fullBlock);
+		name = name.replaceFirst("^minecraft\\:", "");
+		if(removeMETPrefix)
+			name = name.replaceFirst("^"+MeTweaks.MODID+"\\:", "");
+		name = name.replaceFirst("\\:tile\\.", "_");
+		name = name.replace(':', '_');
+		return prefix+name;
+		
+		/*
+		String unlocalized = null;
+		try {
+			unlocalized = (String) field_unlocalizedName.get(fullBlocks[0]);
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		if(unlocalized != null) {
+			return add + unlocalized.replace(":", "_");
+		}
+		return null;*/
+	}
+	
+	private static CreativeTabs tabTemp;
+	
+	public static CreativeTabs getBlocksTabLOTR() {
+		if(tabTemp == null)
+		try {
+			tabTemp = ReflectionHelper.getPrivateValue(LOTRCreativeTabs.class, null, "tabBlock");
+		} catch (Exception e) {}
+		return tabTemp;
+	}
+	
 	public static void setupBlocks() {
+		
+		skipLog = true;
 		if(MeTweaksConfig.woolSlabs) {
 			MeTweaksSlab woolSlab1 = new MeTweaksSlabShearable(8, 0, 1, Blocks.wool);
 			MeTweaksSlab woolSlab2 = new MeTweaksSlabShearable(8, 8, 2, Blocks.wool);
@@ -40,6 +86,18 @@ public class BlocksCore {
 			}
 		}
 		
+		if(MeTweaksConfig.woolStairs) {
+			// register every second meta
+			for(int i = 0; i < 16; i += 2) {
+				MeTweaksStairs stairs = new MeTweaksStairsShearable(Blocks.wool, i, i >> 1, 2); // we know we will always have 2 subtypes
+				stairs.setHarvestLevel("shears", 0);
+				for(int k = i; k < (i + 2); k++) {
+					//												0 or 8																	
+					GameRegistry.addRecipe(new ItemStack(stairs, 4, (k & 1) << 3), new Object[] {"#  ", "## ", "###", '#', new ItemStack(Blocks.wool, 1, k)});
+				}
+			}
+		}
+		skipLog = false;
 		
 		
 		LinkedHashSet<Block> slabs = new LinkedHashSet<>();
@@ -55,7 +113,7 @@ public class BlocksCore {
 				if(!slab.isOpaqueCube()) {
 					slabs.add(block);
 					if(MeTweaksConfig.debug >= 1)
-						FMLLog.info("Found Slab ... "+block.getUnlocalizedName()+" "+Block.getIdFromBlock(block));
+						BlocksCore.addInfo("Found Slab ... "+block.getUnlocalizedName()+" "+Block.getIdFromBlock(block));
 				}
 			}
 			else if(MeTweaks.chisel && block instanceof BlockCarvableSlab) {
@@ -65,7 +123,7 @@ public class BlocksCore {
 					slabs.add(block);
 					
 					if(MeTweaksConfig.debug >= 1)
-						FMLLog.info("Found Slab ... "+block.getUnlocalizedName()+" "+Block.getIdFromBlock(block));
+						BlocksCore.addInfo("Found Slab ... "+block.getUnlocalizedName()+" "+Block.getIdFromBlock(block));
 				}
 			}
 			else if(block instanceof BlockRotatedPillar) {
@@ -143,26 +201,57 @@ public class BlocksCore {
 				
 				
 				
+				boolean isBeam = MeTweaks.lotr && log instanceof LOTRBlockWoodBeam;
 				
-				
-				if(MeTweaks.lotr && MeTweaksConfig.beamSlabs && log instanceof LOTRBlockWoodBeam) {
-					if(beamAndMeta == null) beamAndMeta = new LinkedHashMap<>();
-					beamAndMeta.put(log, subtypes);
-					
-					
-					
-					
-				}
-				else if(MeTweaksConfig.barkSlabs/* && log instanceof BlockLog*/) {
-					MeTweaksSlab slab = new MeTweaksSlab(subtypes, 12, 1, log);
-					slabs.add(slab);
-					if(MeTweaks.lotr && log instanceof LOTRBlockWoodBase) {
-						slab.setCreativeTabsLOTR();
-					}
-					for(int i = 0; i < subtypes; i++) {
-						GameRegistry.addRecipe(new ItemStack(slab, 6, i), new Object[] {"###", '#', new ItemStack(log, 1, 12 + i)});
+				if(isBeam) {
+					if(MeTweaksConfig.beamSlabs) {
+						if(beamAndMeta == null) beamAndMeta = new LinkedHashMap<>();
+						
+						beamAndMeta.put(log, subtypes);
 					}
 				}
+				else {
+					boolean isLotrWood = MeTweaks.lotr && log instanceof LOTRBlockWoodBase;
+					if(MeTweaksConfig.barkSlabs/* && log instanceof BlockLog*/) {
+						MeTweaksSlab slab = new MeTweaksSlab(subtypes, 12, 1, log);
+						slabs.add(slab);
+						if(isLotrWood) {
+							slab.setCreativeTab(getBlocksTabLOTR());
+						}
+						for(int i = 0; i < subtypes; i++) {
+							GameRegistry.addRecipe(new ItemStack(slab, 6, i), new Object[] {"###", '#', new ItemStack(log, 1, 12 + i)});
+						}
+					}
+					
+					if(MeTweaksConfig.barkWalls) {
+					
+						MeTweaksWall wall = new MeTweaksWall(log, subtypes);
+						if(isLotrWood) {
+							wall.setCreativeTab(getBlocksTabLOTR());
+						}
+						for(int i = 0; i < subtypes; i++) {
+							GameRegistry.addRecipe(new ItemStack(wall, 6, i), new Object[] {"###", "###", '#', new ItemStack(log, 1, 12 + i)});
+						}
+					}
+					
+					if(MeTweaksConfig.barkStairs) {
+						// processing every 2 subtypes
+						for(int i = 0; i < subtypes; i += 2) {
+							//									render offset of 12,		i is always 1 smaller than subtypes plus it need to be smaller so <=
+							MeTweaksStairs stairs = new MeTweaksStairs(log, i + 12, i >> 1, (i + 1) < subtypes ? 2 : 1);
+							if(isLotrWood) {
+								stairs.setCreativeTab(getBlocksTabLOTR());
+							}
+							
+							for(int k = i; k < (i + 2); k++) {
+								// 												0 or 8														render offset of 12
+								GameRegistry.addRecipe(new ItemStack(stairs, 4, (k & 1) << 3), new Object[] {"#  ", "## ", "###", '#', new ItemStack(log, 1, k + 12)});
+							}
+						}
+					}
+				}
+				
+				
 				
 				
 				
@@ -188,8 +277,8 @@ public class BlocksCore {
 				// chain
 				slab2.secondary = slab;
 				slab.secondary = slab2;
-				slab2.setCreativeTabsLOTR();
-				slab.setCreativeTabsLOTR();
+				slab2.setCreativeTab(getBlocksTabLOTR());
+				slab.setCreativeTab(getBlocksTabLOTR());
 				
 				
 				for(int i = 0; i < subtypes; i++) {
@@ -231,6 +320,19 @@ public class BlocksCore {
 				
 				if(MeTweaks.chisel && block instanceof BlockCarvableSlab) {
 					subtypes = 16;
+					new VerticalChiselSlab(block, subtypes, 0);
+					continue;
+				}
+				
+				if(MeTweaks.etfuturum && block instanceof ISubBlocksBlock) {
+					subtypes = ((ISubBlocksBlock) block).getTypes().length;
+				}
+				
+				if(MeTweaks.netherEnderLicious) {
+					int types = NetherEnderLiciousSlabs.getNumTypes(block);
+					if(types != 8) {
+						subtypes = types;
+					}
 				}
 				
 				if(VerticalSlab.isMeTweaksSlab(block)) {
@@ -250,7 +352,11 @@ public class BlocksCore {
 				
 			}
 			
-			System.out.println("Registered "+VerticalSlab.allverticals.size()+" Vertical-Slab-Containers");
+			addInfo("Registered "+VerticalSlab.allverticals.size()+" Vertical-Slab-Containers");
+			
 		}
+		
+		if(debug.length() > 0) System.out.println(debug);
+		debug = null;
 	}
 }

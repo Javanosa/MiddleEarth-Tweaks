@@ -2,6 +2,8 @@ package metweaks.block;
 
 import java.util.Random;
 
+import metweaks.ASMConfig;
+import metweaks.physics.PhysicsEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.entity.item.EntityFallingBlock;
@@ -37,7 +39,9 @@ public class VerticalSlabFalling extends VerticalSlab {
 			int range = 32;
 			if(!BlockFalling.fallInstantly && world.checkChunksExist(x - range, y - range, z - range, x + range, y + range, z + range)) {
 				if(!world.isRemote) {
-					EntityFallingBlock fallingBlock = new EntityFallingBlock(world, x + 0.5, y + 0.5, z + 0.5, this, world.getBlockMetadata(x, y, z));
+					int meta = world.getBlockMetadata(x, y, z);
+					EntityFallingBlock fallingBlock = ASMConfig.explosionPhysics ? new PhysicsEntity(world, x + 0.5, y + 0.5, z + 0.5, this, meta) : new EntityFallingBlock(world, x + 0.5, y + 0.5, z + 0.5, this, meta);
+					
 					world.spawnEntityInWorld(fallingBlock);
 				} 
 			}

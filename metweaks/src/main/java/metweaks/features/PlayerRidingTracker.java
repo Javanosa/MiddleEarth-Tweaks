@@ -21,7 +21,7 @@ public class PlayerRidingTracker {
 	
 	public static void processEvent(boolean server) {
 		long current = System.currentTimeMillis();
-		// server or notintregratedserver 
+		// server or not-intregrated-server 
 		
 		if(nextRun < current && (server || (MinecraftServer.getServer() == null || !MinecraftServer.getServer().isServerRunning()))) {
 			nextRun = current + 500;

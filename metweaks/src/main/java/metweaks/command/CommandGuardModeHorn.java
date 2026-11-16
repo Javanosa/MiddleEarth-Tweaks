@@ -21,7 +21,7 @@ public class CommandGuardModeHorn extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender sender) {
-		return null;
+		return "";
 	}
 	
 	@Override
@@ -36,6 +36,7 @@ public class CommandGuardModeHorn extends CommandBase {
 	
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
+		
 		if(!(sender instanceof EntityPlayer)) 
 			throw new WrongUsageException(StatCollector.translateToLocal("commands.entitystack.requirePlayer"));
 		

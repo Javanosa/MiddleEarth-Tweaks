@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.google.common.base.Charsets;
 import com.mojang.authlib.GameProfile;
 
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
@@ -28,6 +29,7 @@ import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.entity.npc.LOTRHiredNPCInfo;
 import lotr.common.entity.npc.LOTRUnitTradeEntry.PledgeType;
 import lotr.common.fac.LOTRFaction;
+import metweaks.ASMConfig;
 import metweaks.client.gui.GuiHiredTransfer;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.Entity;
@@ -323,6 +325,10 @@ public class HiredTransferPacket implements IMessage {
 	    	            	  transferHired(riderNPC, transferUUID);
 	    	            }
     				}
+	    			
+	    			if(ASMConfig.logHiredTransfer) {
+	    				FMLLog.getLogger().info(player.getCommandSenderName()+" sent "+entities.size()+" units to "+packet.playerName);
+	    			}
     				
     	            EntityPlayerMP playerTransferTo = MinecraftServer.getServer().getConfigurationManager().func_152612_a(packet.playerName);
     	            if(playerTransferTo != null) {

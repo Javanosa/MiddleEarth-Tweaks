@@ -1,18 +1,24 @@
 package metweaks.block;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
+import org.lwjgl.opengl.GL11;
+
+import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
+import metweaks.ASMConfig;
 import metweaks.MeTweaks;
 import metweaks.MeTweaksConfig;
 import net.minecraft.block.Block;
@@ -35,6 +41,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class VerticalSlab extends Block {
+	
+	public static final Map<String, String> localizedToRegistry = new HashMap<>();
+	public static final Map<String, String> MET_To_NoMET = new HashMap<>();
 	
 	/*static IdentityHashMap<Block, Object> blockInfo;
 	static Field field_encouragement;
@@ -179,6 +188,7 @@ public class VerticalSlab extends Block {
 		//setResistance((getExplosionResistance(null) * 5) / 3);
 		
 		try {
+			// only for compat with mods that access this field
 			setHardness(field_blockHardness.getFloat(block));
 	        setResistance(field_blockResistance.getFloat(block) / 3F);
 		}
@@ -187,11 +197,47 @@ public class VerticalSlab extends Block {
 		}
 		
 		
+		String prefix = index > 0 ? "v"+(index+1) : "v_";
+		String name = BlocksCore.getRegName(prefix, block, true);
 		
 		
+		if(name == null) {
+			BlocksCore.addInfo("Skipped VerticalSlab..."+getIdFromBlock(slab)+" "+slab.getUnlocalizedName()+" "+GameData.getBlockRegistry().getNameForObject(block));
+			return;
+		}
 		
+		String registryLog = name + '/';
+		String localizedName = name;
+		String namePrefixMET = name;
 		
-		String name = getRegName(index);
+		if(ASMConfig.versionCompat) {
+			localizedName = getRegName(index);
+			
+			boolean anyMETslab = MeTweaksConfig.barkSlabs || MeTweaksConfig.beamSlabs || MeTweaksConfig.woolSlabs;
+			
+			if(anyMETslab) {
+				namePrefixMET = BlocksCore.getRegName(prefix, block, false);
+				if(!name.equals(namePrefixMET)) {
+					MET_To_NoMET.put(namePrefixMET, name);
+					registryLog += namePrefixMET;
+				}
+			}
+			registryLog += '/';
+			if(localizedName != null && !name.equals(localizedName)) {
+				localizedToRegistry.put(localizedName, name);
+				registryLog += localizedName;
+			}
+			
+		}
+			
+		
+		setBlockName(name);
+		GameRegistry.registerBlock(this, VerticalSlabItem.class, name);
+		
+		//String registryDBG = ASMConfig.versionCompat ? localizedName+"/"+namePrefixMET+"/"+name : name;
+		//System.out.println("Registering..."+name+" "+getIdFromBlock(this)+" > "+registryDBG+" "+block.getMaterial().isSolid());
+		BlocksCore.addInfo(registryLog);
+		/*String name = getRegName(index);
 		
 		if(name == null) {
 			System.out.println("Skipping Registering VerticalSlab..."+getIdFromBlock(slab)+" "+slab.getUnlocalizedName());
@@ -200,7 +246,7 @@ public class VerticalSlab extends Block {
 		
 		setBlockName(name);
 		GameRegistry.registerBlock(this, VerticalSlabItem.class, name);
-		System.out.println("Registering..."+name+" "+getIdFromBlock(this)+" > "+slab.getUnlocalizedName()+" "+block.getMaterial().isSolid());
+		System.out.println("Registering..."+name+" "+getIdFromBlock(this)+" > "+slab.getUnlocalizedName()+" "+block.getMaterial().isSolid());*/
 		
 		allverticals.put(index(block, index * 4), this); // index * 4
 		
@@ -596,14 +642,23 @@ public class VerticalSlab extends Block {
 	
 	@Override
 	public void setBlockBoundsForItemRender() {
-		float offsetX = -0.2f;
+		/*float offsetX = -0.2f;
 		float offsetY = 0.2f;
     	
     	setBlockBounds(
 				// minX, minY, minZ
 				offsetX, offsetY, 0.5F, 
 				// maxX, maxY, maxZ
-				1+offsetX, 1+offsetY, 1);
+				1+offsetX, 1+offsetY, 1);*/
+    	
+    	float offsetX = -0.2f;//0.05f;
+		//float offsetY = 0.2f;//0.1f;
+		GL11.glTranslatef(offsetX, 0, 0); // 0.03125f
+		setBlockBounds(
+				// minX, minY, minZ
+				0, 0, 0.5F, 
+				// maxX, maxY, maxZ
+				1, 1, 1);
     }
 	
 	@Override

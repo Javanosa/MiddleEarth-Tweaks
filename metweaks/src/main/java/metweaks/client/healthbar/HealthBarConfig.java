@@ -45,6 +45,7 @@ public class HealthBarConfig {
 	public static boolean showDesc = true;
 	
 	public static double offsetY = 0.5;
+	public static float scaleFactor = 1.0F;
 	public static int maxDistance = 25;
 	public static int maxDistanceSq;
 	
@@ -53,6 +54,7 @@ public class HealthBarConfig {
 	public static int[] color_health;
 	public static int[] color_mount;
 	public static int[] color_player;
+	//public static int[] color_rule;
 	
 	public static Item icon_speed;
 	public static int icon_speed_meta;
@@ -65,6 +67,9 @@ public class HealthBarConfig {
 	public static Set<Class> blacklist = new HashSet<>();
 	
 	public static boolean speedAsMeters = true;
+	
+	public static String fellowship;
+	public static boolean blackListFellowship = true;
 	
 	
 	
@@ -176,11 +181,31 @@ public class HealthBarConfig {
 		
 		speedAsMeters = config.get(CATEGORY_HUD, "Show Speed & Jump as Meters", speedAsMeters).getBoolean();
 		
+		scaleFactor = (float) config.get(CATEGORY_HUD, "Scale", scaleFactor).getDouble();
+		// adjust offset for scale
+		offsetY += Math.max(0F, (scaleFactor - 1F)) * 0.5F * offsetY;
+		
+		fellowship = config.get(CATEGORY_HUD, "Fellowship Rule", "", "Whitelist. Use \"!\" at the beginning to blacklist instead").getString();
+		//String color_fellowshipRule = config.get(CATEGORY_HUD, "Fellowship Rule Color", "#A134FADD", colordesc, hexcolorPattern).getString();
+		
+		
+		if(fellowship == null || fellowship.length() < 1) {
+			fellowship = null;
+		}
+		else {
+			blackListFellowship = fellowship.length() > 1 && fellowship.charAt(0) == '!';
+			fellowship = fellowship.substring(blackListFellowship ? 1 : 0);
+			
+			//color_rule = MeTweaksAPI.parseHexColor(color_fellowshipRule, color_rule, 128);
+			
+		}
+		
+		
 		
 	}
 	
 	// returns [item, meta]
-	private static Object[] parseIcon(Property property, Item fallback, int fallbackMeta) {
+	public static Object[] parseIcon(Property property, Item fallback, int fallbackMeta) {
 		String key = property.getString();
 		String[] data = key.split(":", 3);
 		String mod = "minecraft";

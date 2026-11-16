@@ -2,20 +2,10 @@ package metweaks.core;
 
 import static org.objectweb.asm.Opcodes.*;
 
-import java.io.PrintWriter;
-
-import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.Label;
 import org.objectweb.asm.Type;
 
 import static metweaks.core.ClassTransformer.*;
-import static metweaks.core.ClassHandler.*;
-
 import org.objectweb.asm.tree.*;
-import org.objectweb.asm.tree.analysis.Frame;
-import org.objectweb.asm.util.TraceClassVisitor;
-
-import metweaks.ASMConfig;
 
 public class TCallsBlocks {
 	static void transformItemSlab(ClassNode classNode) {
@@ -158,6 +148,7 @@ public class TCallsBlocks {
      	for(MethodNode method : classNode.methods) {
      		if((method.name.equals(name) && method.desc.equals(desc))) {
      			method.instructions.clear();
+     			method.localVariables.clear();
      			InsnList list = new InsnList();
     	    	list.add(new VarInsnNode(ILOAD, 5)); // side
     	    	list.add(new VarInsnNode(FLOAD, 7)); // hitY
@@ -377,5 +368,127 @@ public class TCallsBlocks {
      			return;
      		}
         }
+	}
+	
+	static void transformLOTRTileEntityAlloyForgeBase(ClassNode classNode) {
+		for(MethodNode method : classNode.methods) {
+			if(method.name.equals("getSmeltingResult") && method.desc.equals("(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/item/ItemStack;")) {
+				for(AbstractInsnNode node : method.instructions.toArray()) {
+					// after if(MinecraftServer.getServer() != null)
+					if(node.getOpcode() == IFNE) {
+						AbstractInsnNode prev = node.getPrevious();
+						if(prev.getOpcode() == ILOAD && ((VarInsnNode) prev).var == 2) { // isStoneMaterial
+							JumpInsnNode jump = (JumpInsnNode) node;
+							InsnList list = new InsnList();
+							list.add(new VarInsnNode(ALOAD, 1)); // itemstack
+							list.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canAlloySmelt", "(Lnet/minecraft/item/ItemStack;)Z", false));
+							list.add(new JumpInsnNode(IFNE, jump.label));
+							method.instructions.insert(node, list);
+							log.info(coreprefix+": Patched LOTRTileEntityAlloyForgeBase.getSmeltingResult()");
+							return;
+						}
+					}
+				}
+				
+			}
+		}
+		
+		
+	}
+	
+	static void transformLoader(ClassNode classNode) {
+		for(MethodNode method : classNode.methods) {
+			if(method.name.equals("fireMissingMappingEvent") && method.desc.equals("(Ljava/util/LinkedHashMap;ZLcpw/mods/fml/common/registry/GameData;Ljava/util/Map;)Ljava/util/List;")) {
+				for(AbstractInsnNode node : method.instructions.toArray()) {
+					if(node.getOpcode() == ASTORE && ((VarInsnNode) node).var == 9) { // missingEvent
+						InsnList list = new InsnList();
+						list.add(new VarInsnNode(ALOAD, 3)); // new gameData
+						list.add(new FieldInsnNode(PUTSTATIC, Type.getInternalName(Hooks.class), "temp_gameData", "Lcpw/mods/fml/common/registry/GameData;"));
+						method.instructions.insert(node, list);
+						log.info(coreprefix+": Patched Loader.fireMissingMappingEvent()");
+						return;
+					}
+					
+				}
+				
+			}
+		}
+		
+		
+	}
+	
+	static void transformCTMRenderer(ClassNode classNode) {
+		for(MethodNode method : classNode.methods) {
+			if(method.name.equals("renderInventoryBlock") && method.desc.equals("(Lnet/minecraft/block/Block;IILnet/minecraft/client/renderer/RenderBlocks;)V")) {
+				InsnList list = new InsnList();
+				list.add(new VarInsnNode(ALOAD, 1)); // block
+				list.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "preRenderInvCTM", "(Lnet/minecraft/block/Block;)V", false));
+				method.instructions.insert(list);
+				log.info(coreprefix+": Patched CTMRenderer.renderInventoryBlock()");
+				return;
+			}
+		}
+	}
+	
+	static void transformLOTRBlockChandelier(ClassNode classNode) {
+		for(MethodNode method : classNode.methods) {
+			if(method.name.equals(obf ? "func_149718_j" : "canBlockStay") && method.desc.equals("(Lnet/minecraft/world/World;III)Z")) {
+				
+				for(AbstractInsnNode node : method.instructions.toArray()) {
+					if(node.getOpcode() == INSTANCEOF && ((TypeInsnNode) node).desc.equals("lotr/common/block/LOTRBlockOrcChain")) {
+						JumpInsnNode jumpnode = (JumpInsnNode) node.getNext();
+						InsnList list = new InsnList();
+						list.add(new VarInsnNode(ALOAD, 5)); // block
+						list.add(new VarInsnNode(ILOAD, 6)); // meta
+						list.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "canChandelierStay", "(Lnet/minecraft/block/Block;I)Z", false));
+						LabelNode label = new LabelNode();
+						list.add(new JumpInsnNode(IFEQ, label));
+						list.add(new InsnNode(ICONST_1));
+						list.add(new InsnNode(IRETURN));
+						list.add(label);
+						/*ALOAD 5
+					    INSTANCEOF lotr/common/block/LOTRBlockOrcChain
+					    IFEQ L9
+					    ICONST_1
+					    IRETURN
+					   L9*/
+						
+						method.instructions.insert(jumpnode.label.getNext(), list);
+						log.info(coreprefix+": Patched LOTRBlockChandelier.canBlockStay()");
+						return;
+					}
+				}
+			}
+		}
+		
+		
+	}
+	
+	static void transformBlockFire(ClassNode classNode) {
+		for(MethodNode method : classNode.methods) {
+			if(method.name.equals(obf ? "a" : "updateTick") && method.desc.equals(obf ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V")) {
+				
+				for(AbstractInsnNode node : method.instructions.toArray()) {
+					if(node.getOpcode() == INVOKEVIRTUAL) {
+						MethodInsnNode mnode = (MethodInsnNode) node;
+						if(mnode.name.equals(obf ? "a" : "getBlock") && mnode.desc.equals(obf ? "(III)Laji;" : "(III)Lnet/minecraft/block/Block;") && mnode.owner.equals(obf ? "ahb" : "net/minecraft/world/World")) {
+							LabelNode label = new LabelNode();
+							InsnList list = new InsnList();
+							list.add(new InsnNode(DUP)); // duplicate block on stack
+							list.add(new FieldInsnNode(GETSTATIC, "lotr/common/LOTRMod", "hearth", "Lnet/minecraft/block/Block;"));
+							list.add(new JumpInsnNode(IF_ACMPNE, label));
+							
+							list.add(new InsnNode(RETURN));
+							list.add(label);
+							method.instructions.insert(node, list);
+							log.info(coreprefix+": Patched BlockFire.updateTick()");
+							break;
+						}
+					}
+				}
+			}
+		}
+		
+		
 	}
 }

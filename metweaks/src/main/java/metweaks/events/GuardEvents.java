@@ -6,6 +6,8 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import cpw.mods.fml.relauncher.ReflectionHelper;
+import lotr.client.gui.LOTRGuiButtonOptions;
+import lotr.client.gui.LOTRGuiHiredFarmer;
 import lotr.client.gui.LOTRGuiHiredInteract;
 import lotr.client.gui.LOTRGuiHiredNPC;
 import lotr.client.gui.LOTRGuiHornSelect;
@@ -78,8 +80,8 @@ public class GuardEvents {
 	
 	
 	@SuppressWarnings("unchecked")
-	@SubscribeEvent
-	public void onInitGui(InitGuiEvent.Pre event) {
+	//@SubscribeEvent
+	public static void handleInitGui(InitGuiEvent.Pre event) {
 		if(MeTweaksConfig.toggleGuardModeHorn && event.gui instanceof LOTRGuiHornSelect) {
 			
 				int ySize = 113+35;
@@ -118,6 +120,17 @@ public class GuardEvents {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
+	@SubscribeEvent
+	public void onPostInitGui(InitGuiEvent.Post event) {
+		if(ASMConfig.guardsAdvancedSettings && event.gui instanceof LOTRGuiHiredFarmer) {
+			LOTRGuiHiredFarmer gui = (LOTRGuiHiredFarmer) event.gui;
+			int midX = gui.guiLeft + gui.xSize / 2;
+			LOTRGuiButtonOptions buttonAdvanced = new LOTRGuiButtonOptions(4, midX - 80, gui.guiTop + 192, 160, 20, StatCollector.translateToLocal("lotr.gui.warrior.sethome"));
+			event.buttonList.add(buttonAdvanced);
+		}
+	}
+	
 	static Field field_theEntity = ReflectionHelper.findField(LOTRGuiNPCInteract.class, "theEntity");
 	
 	@SubscribeEvent
@@ -145,6 +158,23 @@ public class GuardEvents {
 					Minecraft.getMinecraft().displayGuiScreen(new GuiHiredTransfer(npc));
 					
 				}
+			}
+		}
+		
+		if(ASMConfig.guardsAdvancedSettings && event.gui instanceof LOTRGuiHiredFarmer && event.button.id == 4) {
+			LOTRGuiHiredFarmer gui = (LOTRGuiHiredFarmer) event.gui;
+			Minecraft.getMinecraft().thePlayer.closeScreen();
+			LOTREntityNPC npc = gui.theNPC;
+			
+			
+			if(npc.hiredNPCInfo.guardMode) {
+				ClientEvents.actionBar(StatCollector.translateToLocal("lotr.gui.warrior.setHomeTip"), false, 120*20, null, true);
+				GuardEvents.guardHomePosTicks = 120*20;
+				GuardEvents.guardHomePos = npc.getHomePosition();
+				GuardEvents.guardHomeEntityID = npc.getEntityId();
+			}
+			else {
+				ClientEvents.actionBar(StatCollector.translateToLocal("lotr.gui.farmer.requireFarmmode"), false, 80, null, true);
 			}
 		}
 	}

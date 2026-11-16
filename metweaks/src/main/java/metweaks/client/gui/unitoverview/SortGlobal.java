@@ -184,6 +184,13 @@ public class SortGlobal implements Comparator<Entry> {
 			}
 		});
 		
+		sorters.add(new Sorter(columnMount) {
+			public int compare(Entry o1, Entry o2) {
+				int result = Integer.compare(o1.mount, o2.mount);
+				return col_asc[columnMount] ? result : -result;
+			}
+		});
+		
 		
 		
 		

@@ -8,7 +8,6 @@ import static metweaks.core.ClassTransformer.*;
 import static metweaks.core.ClassHandler.*;
 
 import org.objectweb.asm.tree.*;
-
 import metweaks.ASMConfig;
 import metweaks.guards.customranged.CustomRanged;
 
@@ -224,6 +223,8 @@ public class TCallsRanged {
     		classNode.methods.remove(methodToRemove);
 			log.info(coreprefix+": Removed LOTREntityAIRangedAttack.continueExecuting()");
     	}
+    	
+
     }
 	
 	static void transformLOTRContainerHiredWarriorInventory(ClassNode classNode) {

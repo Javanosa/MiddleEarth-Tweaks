@@ -2,26 +2,18 @@ package metweaks.proxy;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Map;
-
-import cpw.mods.fml.relauncher.ReflectionHelper;
 import metweaks.MeTweaks;
 import metweaks.MeTweaksConfig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.management.UserList;
-import net.minecraft.server.management.UserListOps;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.StatCollector;
 
 public class UpdateCheck extends Thread {
-	
-	private static Field field_opmap;
 	
 	public static boolean canNotify(EntityPlayer player) {
 		MinecraftServer server = MinecraftServer.getServer();
@@ -30,72 +22,38 @@ public class UpdateCheck extends Thread {
 			return true;
 		}
 		else {													
-			UserListOps ops = server.getConfigurationManager().func_152603_m();
-			
-			if(field_opmap == null)
-				field_opmap = ReflectionHelper.findField(UserList.class, new String[] {"field_152696_d", "d"});
-				
-			try {
-				@SuppressWarnings("rawtypes")
-				Map map = (Map) field_opmap.get(ops);
-				boolean notify = map != null && map.containsKey(player.getUniqueID().toString());
-				
-				if(notify) field_opmap = null;
-				return notify;
-			} 
-			catch (Exception e) {
-				e.printStackTrace();
-			}
+
+			return server.getConfigurationManager().func_152596_g(player.getGameProfile());
 		}
-		return false;
+		
+	}
+	
+	public static boolean remoteAvailable;
+	
+	public static boolean canNotifyClient() {
+		MinecraftServer server = MinecraftServer.getServer();
+		if(server != null && server.isServerRunning() && server.isSinglePlayer()) {
+			return false;
+		}
+		return !remoteAvailable;
 	}
 	
 	
 	
-	/*
 	
-	if has op or singleplayer or everyone?
-	reset updatecheck every 3 days (for servers that dont restart)
-	dont stop after one player sent, keep things in a map
-	
-	if client has metweaks
-	
-	sent packet to client to tell them that i have sent the info
-	
-	
-	
-	
-	
-	
-	#1 if client on multiplayer server, show update info if:
-	- server has no metweaks
-	- server has up to date metweaks
-	
-	#2 if client on multiplayer server, show update info if:
-	- server has no metweaks
-	- or server has up to date metweaks
-	- or server has outdated metweaks {
-	 		but update info disabled
-	 		but you are not op
-	 		"can show update" on join, can only run once
-	 }
-	 
-	 
-	 
-	 #1A on server, write to log at server done if update info enabled
-	 send to player if singleplayer or op (use cache)
-	 reset update check every 3 days
-	 
-	 #4 client shows info only, for servers it does print to log
-	 
-	*/
 	
 	public static String LATEST;
 	public static String DOWNLOAD_URL;
+	public static String LATEST_TOS;
+	public static String DOWNLOAD_URL_TOS;
 	
 	public UpdateCheck(String name) {
 		super(name);
 		start();
+	}
+	
+	public static boolean hasUpdate(boolean tos) {
+		return (tos ? LATEST_TOS : LATEST) != null;
 	}
 
 	public static void checkForUpdate() {
@@ -103,14 +61,16 @@ public class UpdateCheck extends Thread {
 		new UpdateCheck(MeTweaks.MODNAME+" UpdateCheck");
 	}
 	
-	public static IChatComponent notifyUpdate() {
+	public static IChatComponent notifyUpdate(boolean tos) {
 		
 		
-		ChatComponentText text = new ChatComponentText(StatCollector.translateToLocalFormatted("metweaks.updateAvaible", LATEST));
-		ClickEvent click = new ClickEvent(ClickEvent.Action.OPEN_URL, DOWNLOAD_URL);
+		ChatComponentText text = new ChatComponentText(StatCollector.translateToLocalFormatted("metweaks.updateAvaible", tos ? LATEST_TOS : LATEST));
+		ClickEvent click = new ClickEvent(ClickEvent.Action.OPEN_URL, tos ? DOWNLOAD_URL_TOS : DOWNLOAD_URL);
         text.getChatStyle().setChatClickEvent(click);
 		LATEST = null;
 		DOWNLOAD_URL = null;
+		LATEST_TOS = null;
+		DOWNLOAD_URL_TOS = null;
 		return text;
 	}
 
@@ -129,6 +89,9 @@ public class UpdateCheck extends Thread {
 		    BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream()), 1024);
 		    String str_latest = reader.readLine();
 		    String str_download = reader.readLine();
+		    
+		    String str_latest_tos = reader.readLine();
+		    String str_download_tos = reader.readLine();
 		    reader.close();
 		    
 		    request.disconnect();
@@ -139,13 +102,22 @@ public class UpdateCheck extends Thread {
 		    	if(needsUpdate(MeTweaks.VERSION, str_latest.trim())) {
 		        	LATEST = str_latest;
 		        	DOWNLOAD_URL = str_download.trim();
+		        	
+		        	if(str_latest_tos != null && str_download_tos != null) {
+			        	if(needsUpdate(MeTweaks.VERSION, str_latest_tos.trim())) {
+			        		LATEST_TOS = str_latest_tos;
+				        	DOWNLOAD_URL_TOS = str_download_tos.trim();
+			        	}
+		        	}
 		        }
 		        else if(MeTweaksConfig.debug >= 1) {
 		        	System.out.println("Everything up to date.");
 		        }
 		    	
-		    	if(MeTweaksConfig.debug >= 1)
+		    	if(MeTweaksConfig.debug >= 1) {
 		    		System.out.println("Latest: "+LATEST+" Current: "+MeTweaks.VERSION+" Download: "+DOWNLOAD_URL);
+		    		System.out.println("TOS: Latest: "+LATEST_TOS+" Download: "+DOWNLOAD_URL_TOS);
+		    	}
 		    }
 		    else {
 		    	throw new Exception("Request return is empty");

@@ -86,7 +86,7 @@ public class CommandConquestClear extends CommandBase {
 	
 			if(radial) {
 				float value = conqZone.getConquestStrength(faction, world);
-				//System.out.println("v "+value);
+				
 				LOTRConquestGrid.doRadialConquest(world, conqZone, null, null, faction, value, value);
 				langkey += ".radial";
 			}

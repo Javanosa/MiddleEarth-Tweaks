@@ -1,8 +1,26 @@
-Source Code MiddleEarth-Tweaks 1.5.2
+Source Code MiddleEarth-Tweaks 1.6.22
 
 Libraries to build (into the libs folder):
-	- Lord of the rings mod for 1.7.10 (36.15)
-	- CustomNPC+ for 1.7.10 (1.9.1 to 1.9.3)
-	- Chisel for 1.7.10 (2.9.5.11)
+- LOTRMod-v36.15-dev
+- fastutil
+- Chisel-2.9.5.11-dev
+- libs.jar contains:
+	- astikoor-1.7.10-1.0.0-dev
+	- CustomNPC-Plus-1.9.3-dev
+	- MorePlayerModels-Plus-4.2-dev
+	- etfuturum-2.6.2-dev
+	- angelica-1.0.0-beta68a-dev
+	- angelica 2.0.0-dev / embed-org.embeddedt.celeritas:celeritas-common-2.5.4-GTNH-dev
 	
 See [License](https://github.com/Javanosa/MiddleEarth-Tweaks/blob/main/License.md) for more info
+
+Build Jar:
+- just once if you havnt used forgegralde 1.7.10 before:
+	- /gradlew setupDecompWorkspace
+	- /gradlew eclipse
+- /gradlew build
+
+Run in Dev Environment:
+- /gradlew runClient
+
+If you have not installed forgegradle 1.7.10 prior to 2022, you may need to use a forgegradle alternative.

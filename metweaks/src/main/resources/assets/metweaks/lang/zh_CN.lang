@@ -1,3 +1,7 @@
+# yet untranslated
+gui.close=Close
+gui.unitoverview.cMount=Mount
+
 gui.closeDontShowAgain=不再显示
 gui.openConfig=打开设置
 gui.openConfig2=打开%1$s

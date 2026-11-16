@@ -1,0 +1,712 @@
+1.6.22
+- Fixed NPE in ItemUseHandler
+- Fixed Farview Crash with Angelica 2.2.22+ because they changed the class type of ChunkTracker now multiple times.
+- Fixed Vertical Beam Slab Name in NEI
+- Reduced the Block Registry Spam for auto registered Block Types
+- Fixed Netherlicious & Enderlicious crashing with Vertical Slab Items and fixed their subtypes count (you will see some Duplicates removed)
+- Added Option to still show protection warnings when using items like food, ranged-weapons and sword-blocking etc.
+	- (metweaks-ASM.properties -> "bannerProtectionVerbose")
+- Important Note: If you have been crashing with Angelica 2.2.31+ and LOTRMod recently, delete the file lotr\common\coremod\RandomTexturePatchCheck.class in LOTRMod+v36.15.jar using 7zip or WinRar
+
+1.6.21
+- Fixed Farview Crash with Angelica and Hodgepodge newer than hodgepodge-2.7.100 and angelica-2.1.49
+- New Column Mount/Rider in Unit Overview
+- Unit Tracking State is now saved between restarts
+- Fixed Crash with /help
+- Option to turn off the PlayerDetails API Error Spam
+	- (metweaks-ASM.properties -> "mutePlayerDetailsApiSpam")
+- Updated Chinese translation by ArchiDreamZ
+
+1.6.20
+- Fixed Chisel Crash from Compile Error
+
+1.6.19
+- Ghost Hits Fixed
+	- no more "ghost hits" by doing the distance check more similar to the clientside
+	- (metweaks-ASM.properties -> "interactReachFix")
+	- configurable reach buffers
+	- option to give players reach distance feedback
+	- fully serverside
+	
+- 50 - 200ms latency improvement for players in singleplayer and multiplayer
+	- Earlier Packet Processing
+		- 50ms improvement due to the server processing player input sooner
+		- This effect can be 100ms+ in pvp, as there is 50ms less time when the server processes the attack packet from the attacker
+		  and another 50ms less time when the target player replies with the new position (knockback)  
+		- This also fixes glitches with lotr gates where the surrounding gate blocks are delayed
+		- Also for the client, 1-2 frames less latency for things that dont require a tick (tested at 60 fps)
+		- Optional for Client or Server Side
+		- (metweaks-ASM.properties -> "earlyPacketProcessing")
+	- Players tick before other entities
+		- On busy server its easy to assume significant delay from Pathfinding and Base Entity Ticks
+		- Players may end up at the end of the tick list
+		- On very busy servers this can cause a delay of 50ms
+		- Serverside
+		- (metweaks-ASM.properties -> "prioritizePlayerTicks")
+	- Even while most of the delays are usually less than 50ms, they usually round up to 50ms due to client tick sync, as 10ms can cause the data to fall into the timeframe of the next tick
+	- These improvements dont affect your internet connection and also work in singleplayer
+	
+- Mounts and crouching players should no longer stutter when wandering slowly
+	- Lower Threshold for sending updated Entity Positions and Rotations
+	- Also fixes swimming entities stuttering
+	- Serverside
+	- (metweaks-ASM.properties -> "entityPosRotationThreshold")
+	
+- Smooth Entity Head Yaw Movement
+	- Like back in the day (1.2.5 and older)
+	- Clientside
+	- (metweaks-ASM.properties -> "smoothHeadYawMovement")
+	
+- Smoother Entity Movement
+	- Disabled Broken Client Prediction for Living Entity Movement similar to how modern mc versions do
+	- Base Patch from Hodgepodge (by JohnButlerThird & KAIIIAK), I made it compartible with lotr mod
+	- I dont recommend using this without the latency improvements
+	- Added Hybrid mode for latency-smoothness tradeoff
+	- Clientside
+	- (metweaks-ASM.properties -> "smoothEntityMovement")
+	
+- No TCP Delay (Packets are sent right away without being queued)
+	- Drastically improves Ping
+	- While many mods already have this, its a rather easy patch and i thought i would add it so its automatically enabled for everyone
+	- No TCP Delay needs to enabled on both connection endpoints for the best effect (server & client)
+	- Optional for Client and Server
+	- (metweaks-ASM.properties -> "noTCPDelay")
+	
+- Option to make most armor sets maxable again (default disabled)
+	- Due to Forge, armor absorbed much less damage if its durability was too low, making low durability armor sets useless in lategame.
+	- Serverside
+	- (metweaks-ASM.properties -> "armorMaintainProtectionPercent")
+	
+- Returning from Hired Inventory to Unit Overview no longer resets the cursor position and entry order
+- Fixed Farview Incompatibility with Angelica (work for 2.0+ now)
+- Added Chinese Translation (by ArchiDreamZ)
+- Fixed Ranged Weapon Replacement for Easterling Fire Throwers
+- Replaced Ranged Weapon Delay if not their default, should now be atleast the weapon category default delay
+	- If a NPC shoots an arrow every 20 ticks, but the common delay for arrows is 30 ticks, then the ranger is 1.5 times faster
+	- Previously this meant all weapons you equip at them would be faster. The new option limits the speedup to 1.0, so it would be atleast the default weapon delay.
+	- I believe this would result in better balance
+	- (metweaks-ASM.properties -> "guardsDynamicAttackDelayRanged")
+- Update Notifications now also work clientside when playing on a server
+	- If you notice duplicate notifications, check if the server version has atleast this update, to let the client know if there was a serverside update available
+- Update Notifications on TOS show the latest approved version instead
+- Config Notice to ensure compartible settings for TOS
+	- You no longer have to manually change the files and can just click confirm in the GUI
+	- Config -> General -> Show TOS Notice
+- Synced Config Confirm can now also apply changes to metweaks-ASM.properties
+- Added more comments to metweaks-ASM.properties
+- Increased duration limit for /entityeffect
+- Fixed Open Link GUI Button Positons
+	- (metweaks-ASM.properties -> "fixOpenLinkGUI")
+- Option to unlock all waypoints regardless of enemy control (default disabled)
+	- Required on Client and Server
+	- (metweaks-ASM.properties -> "unlockEnemyWaypoints")
+- Fixed Player Death Location Log not working in multiplayer
+- The changes should not affect performance negatively, please message me if they do!
+
+v1.6.18
+- Hireable Ents
+	- Ents can now be hired with Golden Ent Draughts (20% chance)
+	- Requires +600 Alignment and Pledged to Fangorn 
+	- (metweaks-ASM.properties -> "hireableEnts")
+
+- New Sweep Attack for Ents (AoE Ability)
+	
+- Option to turn off firespeard for hearth's to allow small & decorative fireplaces (default disabled, supplied by PT400C)
+	- (metweaks-ASM.properties -> "hearthFireDoesntSpread")
+	- Otherwise if you build fireplaces, make sure there is are solid non-burnable blocks in the corners to avoid fire spread
+
+v1.6.17
+- New Throwable Toggle for Spears (G key)
+	- Works clientside (serverside is only required to be able to open gates with spears)
+	- (metweaks-ASM.properties -> "throwableSpearToggle")
+	- This helps in situations like:
+		- You click at an NPC to trade or to talk and accidently throw the spear
+		- You try to open a gate and throw the spear
+		- etc.
+
+- Fellowship Friendly Fire Patches
+	- Players can no longer hit other player mounts if pvp is prevented in the shared fellowship
+	- Hired Units with neutral relation can no longer accidently hit each other if the fellowship has unit friendly fire disabled
+	- Your Rhino Riders can now safely ride together with other players units
+	- (metweaks-ASM.properties -> "fellowshipFFPatches")
+
+- Fixed extreme client lag caused by Fireworks (without removing them)
+- Invisibility and sneaking now works also works for all lotr and vanilla mobs (default disabled)
+	- (metweaks-ASM.properties -> "fixInvisibility")
+	
+- Fixed Mounted Ranger North Banner not occuring in invasions
+- Fixed new year specials not working because i made a typo
+- Fixed shooting entity being invulnerable by its own projectiles, due to ticksInAir not checked.
+
+
+v1.6.16
+- Fixed NPE in Explosion Physics Entity
+- Added Option Config > Explosion Physics > Play Block Sounds
+- Fix Fire not working for Explosions when ParticleFactor is 0
+- Fixed placing Chandeliers at any kind of bar not working
+- Improved Render Performance of Physic Entities
+- Fixed local settings not returning to default in case of a servercrash in singleplayer
+- LOTR's Rhun Fire now also renders when kicked away by explosion
+
+v1.6.15
+- Chandeliers can now be placed on the bottom of iron bars and et futurum chains (default disabled)
+	- (metweaks-ASM.properties -> "etFuturumCompatibility")
+- Fixed category and name being swapped for Shadow Size Config Option
+- Option to increase max miniquest tasks per faction: Config > Misc > Max Miniquests Per Faction
+- Option to make Mercenary Captains aggressive: metweaks-ASM.properties -> "captainsAttack" (default disabled)
+- Healthbar now correctly positions for Speech, Custom Names and Player Name when rotated
+- Corrected bannerProtectionPatches sometimes not being applied
+- /selector @e now shows entities ordered by amount
+- More Mounted Banner Bearers (default disabled)
+ 	- Dúnedain Banner Rider
+	- Southron Champion Banner Rider
+	- Golden Easterling Banner Rider
+	- (metweaks-ASM.properties -> "moreMountedBannerBearers")
+- ExplosionPhysics correctly calculates raycast density for explosion damage
+- Fixed NPE in disconnect logger
+- Fixed lotr coremod detection in metweaks
+- Minor performance speedup of Hired Unit Count Overlay
+
+v1.6.14
+- Added Explosion Physics
+	Setup:
+	- Main Feature Toggle: (metweaks-ASM.properties -> "explosionPhysics")
+	- Default World Settings: Config > Explosion Physics
+	- Local World Settings: Command /explosionphysics
+- Added mounted banner bearers for Rohan
+	- (metweaks-ASM.properties -> "mountedBannerBearers")
+	- disable when playing on TOS
+- Fixed Performance for LOTR Holidays checks (more FPS during weather storms etc.)
+	- Holiday Effects can now be disabled in (metweaks-ASM.properties -> "lotrHolidays")
+- Fixed Crash when using ME-Tweaks without LOTR
+	- Does any submod/addon remove the lotr class transformer?
+
+v1.6.12
+- Vertical Models should now also work for Chisel Slabs in Inventory
+- Fixed Vertical Model being incompatible with Optifine's Natural Textures
+
+v1.6.11
+- Fixed Crash with Chisel Mod and Vertical Slabs
+- Added Logging for Hired Unit Transfer
+	- (metweaks-ASM.properties -> "logHiredTransfer")
+- Farview: Use FastUtil Implementation if Hodgepodge Mod loaded
+
+
+v1.6.10
+- Banner Protection Patches:
+	- You no longer can place block adjacently to an empty plate or vessel, when you only have Food & Drink Perm
+	- You can now eat and drink, use bows, spears and horns properly inside protected areas. Also without perm denied spam.
+	- Mugs and Entjars now properly visually revert after interacting with them
+	- Itemframes, Paintings, Rugs, Banners, Leash Knots and minecarts can no longer be broken by:
+		- A non permitted player using a projectile (like bow)
+		- Explosions (unless the player has banner permission, hired units dont count here)
+		- An npc shooting a projectile at them
+	- Prevents Farmland from being broken by NPCc's or unpermitted players within protection
+	- Option to let NPC's still break these things if they have permission, including some explosions by them
+		- (metweaks-ASM.properties -> "permNpcAllowDestroyNonLiving")
+	- Fixed Large Fireballs ignoring banner protection
+	- All Patches are only regarding Protected Areas and are Serverside.
+	- (metweaks-ASM.properties -> "bannerProtectionPatches")
+
+- Added Hired Unit Count Overlay
+	- Will now show the number of hireds loaded (clientside)
+	- May be also usefull to keep track of your numbers when hiring units (e.g. how many more until i have 50)
+	- Customization of colors, icon, position and scale in Config -> HUD Elements
+	- To disable background set color to #00000000 (100% transparent black)
+	- To disable icon set icon blank
+
+- Fixed entites or hired npcs set on fire by burning arrows even without friendly fire
+	- This also fixes bypassing some banner protection like killing rugs or banners with firedamage
+	- Part of (metweaks-ASM.properties -> "projectilePatches")
+- Added config "projectilePatchesReqClient" for projectile patches which require the metweaks client
+	- The config "projectilePatches" can now be used on the server without requiring metweaks
+- Added option to log your current location:
+	- On Death (The server only logs deaths, as it cannot miss deaths like the client could)
+	- When disconnected from server (for example idle or timeout and you died
+	- (metweaks-ASM.properties -> "logPlayerDeathLocations")
+	- If died during a crash you can find your location in the crash report in
+		- Affected level
+			- All players
+				- EntityClientPlayerMP with your username should contain the location
+				
+				
+- Fixed crash in ally projectile pass handling
+- Fixed a bug in farview upon changing dimension
+
+
+v1.6.9
+- Fixed Optifine's Default and Smooth updateRenderers Return Values, increasing fps drastically if there are no chunk updates
+	- (metweaks-ASM.properties -> "renderPerformance")
+- Farview Additions:
+	- /cfarview keepTiles 
+		- Controls whether Tile Entities like Beacons are kept in cache after rejoining the world
+		- Default disabled as it may not be compatible with other mods, yet to be tested
+	- /cfarview threshold <chunks>
+		- Unloads chunks only if above the threshold. 
+		- Uses /cfarview <viewdistance> to determine from what distance to unload them from
+		- Common values may be 1000 - 5000, 0 disables the feature (default disabled)
+	- Recommendation for /cfarview <viewdistance> changed to 3-4 times your renderdistance, atleast for smaller values
+	- Some more options that are experimental
+	- Now also caches lotr biome variants
+- Farview Implementation:
+	- Added Compatibility with FastCraft (Encrypted code is a nightmare)
+		- Now using FastCraft's FastLongHashMap instead of MET's Modified Vanilla one
+		- /cfarview useFastCraft to toggle
+	- Faster check for unloadable chunks
+	- Fixed Entities being unclickable after getting added to a chunk and then not readded to the new one
+	- Fixed a minor bug in the command
+- Balancing for Camouflage Units like Rangers:
+	- Enemies can now target them if:
+		- They are attacked by them already
+		- From an Invasion
+		- (metweaks-ASM.properties -> "revengeCamouflageTargetChance")
+	- Set Chance to 0 to disable the feature (default is 0)
+- Added biome aliases for northlands & northernForests for lotr event control commands
+
+		
+	
+
+v1.6.8
+- You can now customize the spawning of invasions, bandits and travellingtraders
+	- Everything can be setup individually for each world and biome
+	- /lotrinvasions
+		- Add, remove, list or change chance of invasions
+	- /banditchance
+		- get or set chance
+	- /travellingtrader
+		- add, remove or list travellingtraders
+	
+	- Feature toggle: (metweaks-ASM.properties -> "lotrEventControl")
+	
+- You can now view significantly farer than the server's viewdistance (default off)
+	- New Client Side Command /cfarview (Until i maybe add a gui)
+	- Command Options:
+		- "keep" - keeps the previous world in memory after rejoining a server
+		- <distance in chunks> - sets the chunks to keep, recommened to be double your desired viewdistance
+		- "-1"	- Sets the distance to infinite, possibly usefull when commonly moving between locations that are very far every
+		- Use /cfarview without options to disable / enable the feature
+		
+	- To load all areas just walk around
+	- This feature does not affect server or network performance
+	- Nothing saved to disk or copyable, fully clientside, just keeping chunks in memory.
+	- Its now possible to bypass the hard limit of 15 chunks on servers
+	- If you have any concerns please reach out to me
+	
+	- Feature toggle: (metweaks-ASM.properties -> "farView")
+
+v1.6.7
+- Players dont freeze for 10+ seconds anymore when joining a server (LOTR Bug)
+- ET Futurum Ores now properly smelt in LOTR Forges (default: false)
+	- (metweaks-ASM.properties -> "etFuturumCompatibility")
+- Fixed Error with Dorwinion Ranged AI
+- Fixed Registry Error
+
+v1.6.6
+- Fixed Crash with Riders avoid Suffocating in Blocks
+
+v1.6.5
+- Fixed Startup Crash when CustomNPCs without Horse Carts is installed (Java's Classloading can be weird)
+
+v1.6.4
+- FastTravel Improvements:
+	- Added FastTravelEvent (https://github.com/Javanosa/MiddleEarth-Tweaks/blob/main/MeTweaksAPI.java#L104)
+	- Custom NPCs and Horse Carts can now fast travel with you
+	- (metweaks-ASM.properties -> "moreEvents")
+- Added Experimental projectile settings for npcs to play around with
+	- (metweaks-ASM.properties -> "npcDamageFactorProjectiles")
+		- 200% would make damage equal to when player would shoot them
+		- for equality to melee reduction(75%) would be 150%
+		- damage is scaled depending on projectiles as difference between player vs npc varies alot
+	- (metweaks-ASM.properties -> "npcCriticalProjectileChance")
+		- 90% would make damage equal to when player would shoot them
+		- for equality to melee reduction(75%) would be 65%
+	- (metweaks-ASM.properties -> "projectileFlagsHiredsOnly")
+	
+- Fixed block registry names again, yes make a backup pls
+
+v1.6.3
+- Fixed several ET Futurum Slab not having a vertical variant or with more subtypes than needed
+- Vertical Slabs now use registry instead of localized name
+- As always make a world backup in the case of such block changes
+- Player Tablist changes
+	- Fixed player names on the tablist overflowing
+	- Empty slots arent rendered anymore (if you need the option to see max players all the time let me know)
+		- (metweaks-ASM.properties -> "tabListShowMaxPlayers")
+	- Slots are ordered by color and name (TOS admins would show at the top etc.)
+	- fully clientside only
+	- (metweaks-ASM.properties -> "tabListChanges")
+- Added Option (metweaks-ASM.properties -> "fixGuiGameOver")
+- Config -> Mountspeed -> Modify Mountspeed is now disabled by default
+	- It still may make sense to enable it on servers with lag issues
+- Updated russian translation (provided by Kostja / Turgon)
+- Fixed minor icon overflow in unit overview with russian translation
+
+v1.6.2
+- Option to make Hireds conquer for their own Faction
+	- Config -> Misc -> Hireds Conquer For Their Faction
+- Made Set/Show Farming Location Feature available for Farmers
+- NPC Home Setup now properly ignores torches / flowers / crops
+- Fixed Riders avoid suffocating in blocks not working correctly if the entity eye position is right at the vertical edge of a block
+- Fixed Riders avoid suffocating and Guardmode for Mounted NPCs AI not applying for new entities as rider isnt known yet at time of check
+- Half Troll Additions:
+	- (metweaks-ASM.properties -> "halfTrollAdditions")
+	- Added Alignment Area in FarHarad Forest for Half-trolls
+	- Added Half-troll Stone Thrower (requires pledge) + mounted variant, spawning, invasion etc.
+- Fixed Entities not hitable after respawn (Vanilla Bug)
+	- (metweaks-ASM.properties -> "entityTrackerPatches")
+- Fixed Deathscreen buttons unclickable after rescaling window (Vanilla Bug)
+- Minor mistake in stairs subtypes count (nothing serious)
+
+v1.6.1
+- Added Wool Stairs
+- Added Bark Stairs
+- Added Bark Walls (Branches)
+- Added Option to scale Healthbar
+- Added Option to only hide/show the healthbar of players of a specific fellowship
+- MeTweaks Stair Blocks allow 2 subtypes to save blockid space
+- Fixed a bug that would unintentionally register beam slabs when bark slabs are enabled (serious)
+- Conquest decay is now synced in multiplayer and properly reset before connecting to any server
+- Some improvements to conquestdecay and its command
+- Improvements to SyncedConfig
+- As always make a backup of your world before testing out new blocks
+- All blocks can be disabled
+
+v1.6.0
+- Allied NPC projectiles pass through allied NPC's
+	- only medium sized entities
+	- currently includes rider
+	- intentionally dont pass players or other creatures
+	- (metweaks-ASM.properties -> "allyProjectilesPassAllies")
+	
+- Projectiles shot while riding will no more get stuck in the mount
+- Fixed Projectiles floating in the air or incorrect positions
+- Fixed Projectiles being invisible
+- Fixed unable to pickup Projectiles
+- Fixed Projectile lifetime not saving (therefore not despawning if area commonly loaded and unloaded)
+- Fixed Projectiles vanishing in the ground or even going through solid blocks (spear/axe)
+- Fixed Piercing Projectiles to absorb correctly and end up at correct position (unfinished)
+	- if you didnt knew yet, you can pierce multiple creatures with one thrown spear/axe
+	- All bug fixes are controlled by:
+	- (metweaks-ASM.properties -> "projectilePatches")
+	
+- Option to force them to absorbe instead of pierce through targets
+	- (metweaks-ASM.properties -> "alwaysAbsorbPiercingProjectiles")
+
+- /give now accepts multiple players
+	- (metweaks-ASM.properties -> "giveManyCommand")
+	
+- FishHooks no more hover in the air anymore when fishing
+
+v1.5.2
+- Better Slab and Vertical Slab Culling
+- Class Preloading for less laggy early game on the cost of game startup time
+	- MeTweaks Classes only for now.
+	- (metweaks-ASM.properties -> "preloadClasses")
+- Major Code Restructuring
+- Minor completion for guardsEquipDurabilityMode
+- /conquestdecay now accepts values with decimal places. 
+	- Computed as 1 each <decaytime>
+	- Use 0 to disable decay
+- File to run in Development Environment now included
+- Completions for metweaks-ASM.properties in terms of patch info
+- Fix Crash without lotr when mounting horse
+
+v1.5.1
+- Shears are an actual tool now, to be able to break wool slabs quickly too. New ToolClass "shears"
+	- (metweaks-ASM.properties -> "improveBlockBreakSpeeds")
+- Slab and their vertical variants now can burn as they are supposed to
+- Removed empty attribute line for Hoe's and Shears's
+- Added missing lang keys for barkblocks in lotrfa
+- Few Bug Fixes
+
+v1.5.0
+- Added Bark, Beam and Wool Slabs
+	- As always make a world backup when adding new blocks!
+	- All Blocks can be disabled in Config > Blocks
+	- Beam Slabs copy the direction of the ascending beam block
+	- Also adds their vertical variants
+	- Bark & Beam Slabs require Bark Blocks to be enabled
+- Fixed mismatching langkeys for bark blocks
+- Fixed Mirror Vertical Slabs Mode turning off unexpectedly
+
+v1.4.7
+- Fixed Incompartiblities with LOTRFA
+- Player Armor is now calculated correctly for healthbars
+- Added option to only show healthbar on Hireds and Players
+- Other Bug Fixes
+
+v1.4.6
+- Fixed several issues with Ent-Draughts, Mugs and Stews when stacked
+	- (metweaks-ASM.properties -> "patchDraughtUse")
+- Draught Effects can be stacked now (+50% increase)
+	- (metweaks-ASM.properties -> "draughtStackEffectsIncrease")
+- Draughts can be stacked now
+	- (metweaks-ASM.properties -> "draughtMaxStacksize")
+- Enhanced Stew Stacksizes
+	- (metweaks-ASM.properties -> "stewMaxStacksize")
+- Fixed Crash upon losing connection to server while being in Unit Inventory wrapped by Unit Overview
+- Fixed /entitystack not working with hired units
+- Random Bug fixes
+
+v1.4.5
+- Added Unit Tracker to avoid loss of units during travel (F7 + U key)
+	-> (Config > Misc > Unit Tracking)
+	- Far -> teleport before unload
+	- Near -> teleport before invisible to client (avoids recreating entity on client)
+- Added functional Sorting to the Unit Overview (U key)
+- Added counting for riders and archers to Unit Overview
+- Unit Counts will now only be showed if above zero
+- Reduced Loss, Exceptions or Duping of units upon teleporting to their Owner
+ 	-> (metweaks-ASM.properties -> "fixTeleportToHiringPlayer")
+- Added Vertical Slab blocks render and name for WAILA
+- Fixed some Column handling in Unit Overview
+- Unit Overview now shows mounted weapon if avaible
+- Unit Overview now hides melee weapons of ranged only units
+	-> (metweaks-ASM.properties -> "unitOverviewHideMeleeForRangedOnly")
+- API Additions:
+	- Added getRangedOnlyEntities() to handle whether an entity will show only a ranged weapon in the unit overview
+	- Added getRangedEntities() to handle whether an entity counts as archer or not
+- completed missing asm config info
+
+
+
+v1.4.4
+- Fixed Mounts running away or keep walking (Config > Misc > Fix Mounts Running Away)
+- Mass Transfer Units and whole Companies to other Players
+- Reduced Warg/Spider Rider FallDamage (Config > Misc > Reduce Warg/Spider Rider Falldamage)
+- Fixed Crash with ET Futurum > 2.6.0
+- Fixed Error when using guards advanced settings
+- Fixed Crash when Rider out of height limit bounds
+- Changed some default settings
+- Added option to disable Unitoverview, AdventureModePatches
+	-> (metweaks-ASM.properties -> "unitOverview", "adventureModePatches")
+- Fixed mounted entity not getting ignored when using Healthbar "Show Mouse Over"
+- Fixed Transfer Gui triggering when using the other buttons
+
+
+v1.4.3
+- You can now Transfer Warrios and Farmers to other Players
+
+v1.4.2
+- Made plates & spears applyable for ranged units
+- Added velocity improvements for pebbles, plates etc. aswell
+- Randomly Enchanted Ranged NPC Weapons
+	-> (metweaks-ASM.properties -> "randomEnchRangedNpcWeapons")
+- Added durability usage for ranged weapons if not their default
+	1. Durability Mode
+		-> (metweaks-ASM.properties -> "guardsEquipDurabilityMode")
+	2. Choose whether broken weapons should be removed or kept
+		-> (metweaks-ASM.properties -> "guardsEquipRemoveBroken")
+	3. How much durability can they use?
+		-> (metweaks-ASM.properties -> "guardsEquipDurabilityFactor")
+- Ranged AI on mount will properly handle axes, firepots etc.
+- Fixed delayed sync in moverange for ranged ai if a new weapon was applied
+- Added missing ASM info
+- Added updateMoveRange() to API
+
+v1.4.1
+- Ranged AI Improvements
+	- Fix NPCs shooting above targets
+	- Fix Performance and Following for ranged NPCs on horse
+	- Several enhancements for the AI itself
+	-> (metweaks-ASM.properties -> "aiRangedImprovements")
+	
+- Balance for Upgraded Ranged Weapons at Units (configurable)
+	for different weapon types than their default:
+	1. Delay Multiplier
+		-> (metweaks-ASM.properties -> "guardsAttackDelayFactorRanged")
+	2. Option to use dynamic or weapons default delay
+		-> (metweaks-ASM.properties -> "guardsDynamicAttackDelayRanged")
+	3. Lower chance for darts to be poisened if not used by Taurethrim
+	
+- Fix block and item use when setting guard home
+- Updated Portuguese Translation (provided by Juh)
+- A few more bug fixes
+
+v1.4
+- Upgradeable Ranged Weapons for Units
+	-> (metweaks-ASM.properties -> "guardsEquipRanged")
+	1. Ammo Ranges and Attackspeed gets automatically balanced
+	2. No hardcoded Projectiles anymore, enchantments now work
+	3. You can spawn Bosses with various op ranged weapons
+	4. Improved velocity to avoid missing targets
+	5. Ability to restrict which ranged weapon types can be equipped
+		-> (metweaks-ASM.properties -> "guardsLockCategoryRanged")
+	6. Permission of Termites 
+		-> (metweaks-ASM.properties -> "guardsEquipAllowTermites")
+		
+- Unit Overview
+	1. Easy mass assignment
+	2. Ability to see melee weapons of rangers / high elves all the time
+	3. Summary about number of warriors, banner bearers and farmhands
+	4. Shows equipment penalties like poor protection
+	5. Inventory of warriors and farmers
+	6. Rightclick an entry to highlight the npc
+	7. Click on their items to edit their inventory
+	8. See their armor protection
+	
+- Improvements for Adventure Mode & Compartibility for Hoe's
+- Added Portuguese Translation (provided by Juh)
+- Improved Vertical Slab culling with stairs
+- Fixed MeTweaks Config Change Confirm for big GUI scale
+- Prevents metweaks keys from triggering when F3 keybind is used
+
+
+v1.3.11
+- Added Hoe's as an actual Tool like in Modern Minecraft. Can now be used to harvest Hay, Thatch, Reed and Wattle-&-Daub Blocks.
+- Fixed (metweaks-ASM.properties -> "tauredainPoisonDartChance" not saving correctly, MAKE SURE TO CHANGE THAT SETTING TO 10 (percent) IF YOU PREVIOUSLY DIDNT CHANGED IT
+- Fixed ME-Tweaks Status Message fading out two times faster than intended. (Let me know if the speed is fine now)
+
+v1.3.10
+- Fixed Orc Bombardiers destroying blocks within evil bannerprotection  (metweaks-ASM.properties -> "npcExplosionProtection")
+- Added Axe as tool for Melon, Reed, Thatch and Wattle-&-Daub blocks (metweaks-ASM.properties -> "improveBlockBreakSpeeds")
+- Foods like Berries can now be consumed faster to balance their low saturation. Makes them an actual an option for lategame again. (metweaks-ASM.properties -> "foodConsumeDurations")
+- Improved Patch for "Npc's offering a quest but were not showing the exclamation mark"
+- Tauredain Blowgunners now have a low chance of shooting a poisened dart. (metweaks-ASM.properties -> "tauredainPoisonDartChance")
+- Added an option to disable Tin, Copper and Silver Oregen (metweaks-ASM.properties -> "disableTinCopperSilverGen")
+- Added command /guardmodehorn as serverside only opportunity
+- Fixed Breakspeed for many vertical slabs
+- Improved health bar visibility for "Show Mouse Over" and "Only Injured".
+- Added missing name in title of config change confirm gui
+- Made Command Feedback translations all serverside
+- Added "Dim" argument to /selector
+- API Additions:
+	- Added setConsumeDuration() for ItemFood classes that you cant modify
+
+v1.3.9
+- LOTR Bug Fix: Npc's offering a quest but were not showing the exclamation mark (metweaks-ASM.properties -> "fixQuestofferSync")
+- LOTR Bug Fix: Attacks from NPCs of the Harad Continent are not sluggish anymore (metweaks-ASM.properties -> "fixSluggishHaradAttack")
+- message "bed respawn point set" is now a client side translation
+- Added customizeable player health bar color for better distinguish between NPCs (HealthBar -> Color Player)
+- Healthbar no more renders in front of MorePlayerModels chat bubbles
+
+v1.3.8
+- Fix Healthbar rendering too low on players
+- Fix Healthbar rendering over custom npc's chat messages
+- Added Midges to healthbar blacklist
+- Note: if you want to reduce healthbars a bit, you can enable "Only Injured" in Healthbar category
+
+v1.3.7
+- Now only applies the patch "Guardmode For Mounted NPCs" at mounts that need it
+- Add new feature to sync settings between mount and rider when controling guardmode, guardrange and wanderrange. Can be seperately enabled! 
+	* (In lotr vanila this caused wargs to attempt to walk to you and to their home at the same time, fixed now)
+	* Option can be found in metweaks-ASM.properties -> guardsSyncSettings
+- Added option to show speed and jump as meters/s (Config -> Healthbar -> Show Speed & Jump as Meters)
+- Fixed crash
+- Fixed clientside issue with guardmode horn display
+- Added setGuardRange() to the api to only modify the field
+- Fixed a few more bugs
+
+v1.3.6
+- Added /entityteleport <selector> cursor, which teleports entities to where you look at
+- Added #alive and #tamed entity groups for the selector
+- Added /entitystack command to attach entities together, with parameter disattach to undo
+- Added german translation
+- Added russian translation (provided by Kostja / Turgon)
+- Added missing translation keys
+- Minor bug fixes
+
+v1.3.5
+- Added new command /entityeffect <selector> [effect] [duration] [strength] [ambient] or <clear>
+	- names for effects instead of id's and tabcompletion (id's still also work!)
+	- ambient flag makes particles much less annoying
+	- Always overrides effect now (instead of having to remove the effect first like in vanilla)
+	- As always the commands can all be disabled
+- Nearby AI Conquest only happens if nearby players are pledged and have conquest enabled
+	- Added new settings "Global" to ignore the conditions above.
+- Updated several modification info for ASM-Config
+- API Additions:
+	- Added renameConfigProperty() since Forge's one doesnt work properly
+	- Added selectEntities() to select Entities based on command arguments
+
+v1.3.4
+- Added AI Conquest (default disabled, can be enabled in (Config > AI Conquest > Enable AI Conquest)
+- Added Fangorn Tree Penalty Alignment Threshold to allow builders to use wood (Config > Misc > Fangorn Tree Pentalty Threshold)
+
+v1.3.3
+- New Command /entitykill <selector> <force | drop>
+- New Command /entitytp <selector> <selector teleportTo> or specific [x] [y] [z]
+- New Command /selector to show selector info
+- Reenabled cansee cache
+
+v1.3.2
+- Added Option to Config > HUD Elements > "Change Ring Writing Radius"
+- Minor loading improvements
+
+v1.3.1
+- Riders now avoid suffacting in Blocks (Config > Misc > Riders Avoid Suffocating in Blocks)
+- Added Option to disable Alignment Bar completely (no cpu wasted)
+- Fix minor bug which lets you set a home when they arent in guardmode
+
+v1.3.0
+- New Features:
+	- Move around LOTR Compass free and effortless
+	- Move around Quest Tracker
+	- Adjust MiddleEarth Tweaks Status Message Position
+	- Check out new config option "HUD Elements"
+- Fixed startup crash if lotr mod missing
+
+v1.2.0
+- New Features: 
+	- Toggle Guardmode Horn and Settings
+	- Fix LOTR Bug: Mounted NPCs didnt stay in their Home Range, Guardmode now also finally works on mounts!
+	- Added Entity Blacklist for Health Bar
+- Bug Fixes:
+	- Reset action bar on world change
+	- Npc-Set-Home stopped listening if clicked in air while sneaking (annoying if target block out of range)
+	- Fix farmhands affected by advanced guardmode
+
+v1.1.0
+- Major Configchanges - CHECK YOUR CONFIG!
+- Advanced GuardMode:
+	- Configure WanderRange
+	- Show/Set Home Location
+	- Configure AiRange, AmmoRange and IgnoreSight
+	- Autoscale with Guard and WanderRange
+	- Unlock higher ranges with LvL
+	- New Config Category "Guards", and (guardsWanderRange, guardsAdvancedSettings) in the ASM config
+- Prevent autoboxing for performance gains in various situations
+- Fix HiredUnits showing healthbar when they shouldnt
+- Healthbar now remembers being on or off
+- Add option ShowTips to General Config
+- Fix VerticalSlabs Registry names and crash if localizedName is missing for block
+
+v1.0.5
+- Added Command /conqclear <faction> with optional parameters: <radial> [x] [z]
+- Fixed Closed Woodbeam Block Names
+- ASMConfig is little faster now
+
+v1.0.4
+- Added option to disable Structures in asmconfig
+- Fixed Healthbar ignoring horsearmor values
+
+v1.0.3
+- Added synced option to disable new feature "Mirror verticalslab when placed on the side of another"
+- Fixed Status HUD
+- Fixed Update Check
+
+v1.0.2
+- Added 48 additional Vertical Slabs when running the game with the Chisel Mod
+- Compartibility added for Chisel Slabs (incomplete)
+- QOL: Placing Vertical Slabs on the side of other Vertical Slabs will mirror them.
+- Great improvements of placing verticals overall
+- Fix Status message appear at wrong y in survival
+- Better codewise flexibility of Vertical Slabs
+- Fix isolating features
+- Fix Hashing for Vertical Slabs
+- API:
+	- addVerticalSlabFalling(Block slab, int subtypes)
+	- setVerticalSlab(World world, int x, int y, int z, Block slab, int subtype, int facing, int flags)
+	- getMetaForVertical(int subtype, int facing)
+	- Some minor bug fixes
+
+
+v1.0.1
+- HUD: 
+	- Better canSeeEntity Check & Fixed not visible throught grass
+	- Health Bar Size scales with max health
+	- Fix OnlyInjured not working
+	- Reduced health precision, i consider it easier to read, but tell me if you like higher precision
+- Added UpdateChecker and Config Option to disable
+- Fixed minor details in Config
+- Added addVerticalSlab() to API

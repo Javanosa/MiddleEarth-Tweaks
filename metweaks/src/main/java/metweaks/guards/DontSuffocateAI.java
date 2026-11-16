@@ -1,11 +1,13 @@
 package metweaks.guards;
 
+import lotr.common.entity.npc.LOTRNPCMount;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
+import net.minecraft.world.chunk.Chunk;
 
 public class DontSuffocateAI extends EntityAIBase {
 	
@@ -17,32 +19,52 @@ public class DontSuffocateAI extends EntityAIBase {
 		mount = creature;
 	}
 	
-	public static boolean onAllCreatures = false;
+	//public static boolean onAllCreatures = false;
 
 	public static void applyDontSuffocate(Entity mount) {
-		if(mount.riddenByEntity != null && !mount.worldObj.isRemote 
-			&& mount instanceof EntityCreature && mount.riddenByEntity instanceof EntityCreature) {
-			EntityCreature creature = (EntityCreature) mount;
-			creature.tasks.addTask(3, new DontSuffocateAI(creature));
-			
+		if(!mount.worldObj.isRemote && (mount instanceof LOTRNPCMount)) {
+			if(mount instanceof EntityCreature) {
+				EntityCreature creature = (EntityCreature) mount;
+				creature.tasks.addTask(3, new DontSuffocateAI(creature));
+			}
 		}
 	}
 	
 	public boolean isSuffocating() {
 		Entity rider = mount.riddenByEntity;
-		int y = MathHelper.floor_double((rider.getEyeHeight() - 0.05F) + rider.posY);
-		if(y >= 0 && y < 256) {
+		float eyeHeight = rider.getEyeHeight();
+		int topY = MathHelper.floor_double((eyeHeight + 0.05F) + rider.posY);
+		int lowY = MathHelper.floor_double((eyeHeight - 0.05F) + rider.posY);
+		if(lowY >= 0 && topY < 256) {
+
+
 			double posX = rider.posX;
 			double posZ = rider.posZ;
 			float width = rider.width * 0.8F;
+			boolean sameY = topY == lowY;
+			/*
+			// checking only 4 corners of head at eye position, this is done for -0.05 and +0.05 in vanilla, we just safe some performance
+			// a patch to track the result of Entity.isEntityInsideOpaqueBlock() is likely "better"
 			for (int side = 0; side < 4; side++) {
-				 int x = MathHelper.floor_double(posX + (((side & 1) - 0.5F) * width));
-			     int z = MathHelper.floor_double(posZ + (((side >> 1 & 1) - 0.5F) * width));
-			     if(rider.worldObj.getChunkFromBlockCoords(x, z).getBlock(x & 15, y, z & 15).isNormalCube()) {
-			    	 
-			    	 return true;
-			     }
+				int x = MathHelper.floor_double(posX + (((side & 1) - 0.5F) * width));
+				int z = MathHelper.floor_double(posZ + (((side >> 1 & 1) - 0.5F) * width));
+				if(rider.worldObj.getChunkFromBlockCoords(x, z).getBlock(x & 15, topY, z & 15).isNormalCube()) {
+
+					return true;
+				}
 			}
+			*/
+
+			// slower but needed if eye position is vertically very close to the edge of a block
+			for (int side = 0; side < 4; side++) {
+				int x = MathHelper.floor_double(posX + (((side & 1) - 0.5F) * width));
+				int z = MathHelper.floor_double(posZ + (((side >> 1 & 1) - 0.5F) * width));
+				Chunk chunk = rider.worldObj.getChunkFromBlockCoords(x, z);
+				if(chunk.getBlock(x & 15, topY, z & 15).isNormalCube() || (!sameY && chunk.getBlock(x & 15, lowY, z & 15).isNormalCube())) {
+					return true;
+				}
+			}
+
 		}
 		return false;
 	}
@@ -98,7 +120,7 @@ public class DontSuffocateAI extends EntityAIBase {
 
 	@Override
 	public boolean shouldExecute() {
-		if(mount.riddenByEntity != null && nextPath < mount.ticksExisted && isSuffocating()) {
+		if(mount.riddenByEntity != null && mount.riddenByEntity instanceof EntityCreature && nextPath < mount.ticksExisted && isSuffocating()) {
 			nextPath = mount.ticksExisted + 80; // 4 seconds
 			return true;
 		}

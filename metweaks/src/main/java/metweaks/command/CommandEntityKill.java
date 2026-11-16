@@ -48,6 +48,7 @@ public class CommandEntityKill extends CommandBase {
 		switch(deathMethod) {
 			case 0:
 				entity.setDead();
+				entity.worldObj.updateEntityWithOptionalForce(entity, true);
 				break;
 			case 1:
 				entity.attackEntityFrom(DamageSource.outOfWorld, Float.MAX_VALUE);
@@ -56,6 +57,8 @@ public class CommandEntityKill extends CommandBase {
 				((EntityLivingBase) entity).setHealth(0);
 				break;
 		}
+		
+		
 	}
 
 	@Override

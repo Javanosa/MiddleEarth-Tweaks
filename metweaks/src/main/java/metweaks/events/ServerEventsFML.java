@@ -12,11 +12,18 @@ import metweaks.ASMConfig;
 import metweaks.MeTweaks;
 import metweaks.MeTweaksConfig;
 import metweaks.block.VerticalSlab;
+import metweaks.command.CommandConquestDecay;
 import metweaks.command.CommandEntityStack;
+import metweaks.features.LOTRDateCache;
 import metweaks.features.PlayerRidingTracker;
+import metweaks.features.ThrowableSpearState;
 import metweaks.features.UnitMonitor;
+import metweaks.network.NetworkHandler;
+import metweaks.network.SyncConquestDecayPacket;
+import metweaks.network.UpdateAvailablePacket;
 import metweaks.proxy.UpdateCheck;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 public class ServerEventsFML {
 	
@@ -29,6 +36,10 @@ public class ServerEventsFML {
 	public void onServerTick(ServerTickEvent event) {
 		if(MeTweaks.lotr && MeTweaksConfig.fixMountsRunningAway) {
 			PlayerRidingTracker.processEvent(true);
+		}
+		
+		if(MeTweaks.lotr && ASMConfig.lotrHolidays == 1) {
+			LOTRDateCache.updateDates();
 		}
 	}
 	
@@ -44,6 +55,8 @@ public class ServerEventsFML {
 		EntityPlayer player = event.player;
 		if(MeTweaksConfig.verticalSlabs)
 			VerticalSlab.setVerticalMode(player, false);
+		if(MeTweaks.lotr && ASMConfig.throwableSpearToggle)
+			ThrowableSpearState.setThrowableMode(player, true);
 		if(MeTweaks.lotr && MeTweaksConfig.unitTracking)
 			UnitMonitor.setUnitTrackingMode(player, 0); // unset
 		if(ASMConfig.entityStackCommand && CommandEntityStack.entitystack_states != null)
@@ -55,7 +68,12 @@ public class ServerEventsFML {
 	@SubscribeEvent
 	public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
 		if(MeTweaksConfig.updateCheck && UpdateCheck.LATEST != null && UpdateCheck.canNotify(event.player)) {
-			event.player.addChatMessage(UpdateCheck.notifyUpdate());
+			event.player.addChatMessage(UpdateCheck.notifyUpdate(false));
+			NetworkHandler.networkWrapper.sendTo(new UpdateAvailablePacket(), (EntityPlayerMP) event.player);
+		}
+		
+		if(MeTweaksConfig.conquestDecay != 3600 && CommandConquestDecay.syncConqDecay()) {
+			NetworkHandler.networkWrapper.sendTo(new SyncConquestDecayPacket(), (EntityPlayerMP) event.player);
 		}
 	}
 	

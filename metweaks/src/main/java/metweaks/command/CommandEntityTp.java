@@ -58,6 +58,8 @@ public class CommandEntityTp extends CommandBase {
 			tpEntity(entity.ridingEntity, x, y, z, yaw, pitch, dim);
 			return;
 		}
+		
+		//entity.travelToDimension(dim);
 
 		
 		if(entity instanceof EntityPlayerMP) {
@@ -76,7 +78,14 @@ public class CommandEntityTp extends CommandBase {
 		entity.motionZ = 0;
 		entity.onGround = true;
 		
+		/*if(entity instanceof EntityLiving) {
+			((EntityLiving) entity).getNavigator().clearPathEntity();
+		}*/
+		
 		entity.worldObj.updateEntityWithOptionalForce(entity, false);
+		
+		// avoid extreme movements from collision
+		//entity.setInWeb();
 		
 	}
 
@@ -156,7 +165,7 @@ public class CommandEntityTp extends CommandBase {
 			x = destination.posX;
 			y = destination.posY;
 			z = destination.posZ;
-			dim = destination.dimension;
+			//dim = destination.dimension;
 			
 		} 
 		else if(args.length >= offset + 1 && args[offset].equalsIgnoreCase("cursor")) {
@@ -202,7 +211,7 @@ public class CommandEntityTp extends CommandBase {
 				}
 				
 				
-				dim = self.dimension;
+				//dim = self.dimension;
 				
 				
 				
@@ -216,6 +225,15 @@ public class CommandEntityTp extends CommandBase {
 			sender.addChatMessage(new ChatComponentText(CommandEntitySelector.getSelectorTip()));
 			throw new CommandException(getCommandUsage(sender));
 		}
+		
+		/*if(args.length >= offset + 4) {
+			dim = parseInt(sender, args[offset+3]);
+			if(dim != Integer.MAX_VALUE) {
+				if(MinecraftServer.getServer().worldServerForDimension(dim) == null) {
+					throw new CommandException(StatCollector.translateToLocalFormatted("commands.generic.dim.notFound", dim));
+				}
+			}
+		}*/
 
 		
 

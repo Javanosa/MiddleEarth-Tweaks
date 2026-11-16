@@ -10,9 +10,13 @@ import java.util.Set;
 import cpw.mods.fml.client.config.IConfigElement;
 import lotr.common.entity.npc.LOTRNPCMount;
 import lotr.common.item.LOTRPoisonedDrinks;
+import lotr.common.quest.LOTRMiniQuest;
 import metweaks.features.ModifierHandler;
 import metweaks.features.ModifierHandler.MountData;
+import metweaks.features.ThrowableSpearState;
+import metweaks.features.UnitMonitor;
 import metweaks.guards.GuardsAdvSettingsConfig;
+import metweaks.physics.ExplosionPhysicsSettings;
 import metweaks.potion.LOTRPotionPoisonKillingFlex;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
@@ -37,12 +41,13 @@ public class MeTweaksConfig {
 	public static String CATEGORY_MISC;
 	public static String CATEGORY_HUDELEMENTS;
 	public static String CATEGORY_AICONQUEST;
+	public static String CATEGORY_EXPLOSION_PHYSICS;
 	
 	static final Set<ConfigCategory> categories = new HashSet<ConfigCategory>();
 	
 	static final Map<Class<? extends EntityLivingBase>, MountData> mountcache = new HashMap<>();
 	// values
-	public static boolean modifySpeed = true;
+	public static boolean modifySpeed = false;
 	public static boolean useGlobalSpeed = true;
 	public static double globalSpeedMax = 0.2;
 	public static double globalSpeedMin = 0;
@@ -59,6 +64,9 @@ public class MeTweaksConfig {
 	public static boolean woolSlabs = true;
 	public static boolean barkSlabs = true;
 	public static boolean beamSlabs = true;
+	public static boolean barkWalls = true;
+	public static boolean barkStairs = true;
+	public static boolean woolStairs = true;
 	
 	
 	public static boolean updateCheck = true;
@@ -86,8 +94,12 @@ public class MeTweaksConfig {
 	public static float aiConqFactorAlly = 0.0f;
 	public static boolean enforceAIConquest = false;
 	
+	public static boolean hiredsConquerForTheirFaction = true;
+	public static int tosNotice = 2;
+	public static String reenableNoticeTime;
+	
 	public static boolean unrestricted() {
-		return !verticalSlabs && killPotionID == 30 && !ASMConfig.guardsEquipRanged && !woolSlabs && !(barkBlocks && (barkSlabs || beamSlabs));
+		return !verticalSlabs && killPotionID == 30 && !ASMConfig.guardsEquipRanged && !woolSlabs && !woolStairs && !(barkBlocks && (barkSlabs || beamSlabs || barkWalls || barkStairs));
 	}
 	
 	public static void checkPotionID() {
@@ -157,6 +169,7 @@ public class MeTweaksConfig {
 		CATEGORY_MISC = addCategory("misc", null);
 		CATEGORY_HUDELEMENTS = addCategory("hudelements", "Move around compass, quest tracker, metweaks status message");
 		CATEGORY_AICONQUEST = addCategory("aiconquest", null);
+		CATEGORY_EXPLOSION_PHYSICS = addCategory("explosionphysics", "global default world settings");
 		
 		load();
 	}
@@ -244,10 +257,10 @@ public class MeTweaksConfig {
 
 		
 		
-		debug = config.get(CATEGORY_GENERAL, "DebugLVL", debug, "0 = None, 1 = Minor, 2 = Middle, 3 = High", 0, 3).getInt();
+		debug = config.get(CATEGORY_GENERAL, "DebugLVL", debug, "0 = None, 1 = Minor, 2 = Moderate, 3 = High", 0, 10).getInt();
 		showTips  = config.get(CATEGORY_GENERAL, "Show Tips", showTips).getBoolean();
-		
-		
+		tosNotice = config.get(CATEGORY_GENERAL, "Show TOS Notice", tosNotice, "0 = Disabled, 1 = Enables on demand, 2 = Enabled").getInt();
+		reenableNoticeTime = config.get(CATEGORY_GENERAL, "Reenable Notice Time", "0").setShowInGui(false).getString();
 		
 		List<String> ord = new ArrayList<>(2);
 		ord.add("Modify Mountspeed");
@@ -275,12 +288,26 @@ public class MeTweaksConfig {
 		fixMountsRunningAway = config.get(MISC, "Fix Mounts Running Away", fixMountsRunningAway).setRequiresWorldRestart(true).getBoolean();
 		reduceWargSpiderFalldamage = config.get(MISC, "Reduce Warg/Spider Rider Falldamage", reduceWargSpiderFalldamage).getBoolean();
 		unitTracking = config.get(MISC, "Unit Tracking", unitTracking, "Use F7 + Unit Overview Key. Keeps Units from getting lost").getBoolean();
+		if(MeTweaks.lotr && unitTracking) {
+			UnitMonitor.clientUnitTracking = UnitMonitor.prevClientUnitTracking = config.get(MISC, "Unit Tracking State", 0, "0 = Off, 1 = Far, 2 = Near", 0, 2).setRequiresWorldRestart(true).getInt();
+		}
+		
+		hiredsConquerForTheirFaction = config.get(MISC, "Hireds Conquer For Their Faction", hiredsConquerForTheirFaction).getBoolean();
+		
+		
 		mirrorVerticalSlabs = config.get(CATEGORY_BLOCKS, "Mirror VerticalSlabs", mirrorVerticalSlabs, "Mirror VerticalSlab if placed on the side of another").getBoolean();
 		
 		aiConquest = config.get(CATEGORY_AICONQUEST, "Enable AI Conquest", aiConquest, "NPCs will conquest on their own").getBoolean();
 		enforceAIConquest = config.get(CATEGORY_AICONQUEST, "Global", enforceAIConquest, "Ignore players not having pledged and conquest kills enabled").getBoolean();
 		aiConqFactorEnemy = (float) config.get(CATEGORY_AICONQUEST, "Factor Enemy", aiConqFactorEnemy).getDouble();
 		aiConqFactorAlly = (float) config.get(CATEGORY_AICONQUEST, "Factor Ally", aiConqFactorAlly).getDouble();
+		
+		if(MeTweaks.lotr && ASMConfig.throwableSpearToggle) {
+			ThrowableSpearState.loadConfig();
+		}
+		
+		if(MeTweaks.lotr)
+			LOTRMiniQuest.MAX_MINIQUESTS_PER_FACTION = config.get(MISC, "Max Miniquests Per Faction", LOTRMiniQuest.MAX_MINIQUESTS_PER_FACTION).getInt();
 		
 		if(modifySpeed) {
 			String MOUNTSPEEDS = CATEGORY_MOUNTSPEEDS;
@@ -312,7 +339,10 @@ public class MeTweaksConfig {
 			
 			beamSlabs = config.get(CATEGORY_BLOCKS, "WoodBeamSlabs", beamSlabs, "Requires BarkBlocks").setRequiresMcRestart(true).getBoolean();
 			barkSlabs = config.get(CATEGORY_BLOCKS, "BarkSlabs", barkSlabs, "Requires BarkBlocks").setRequiresMcRestart(true).getBoolean();
+			barkWalls = config.get(CATEGORY_BLOCKS, "BarkWalls", barkWalls, "Requires BarkBlocks").setRequiresMcRestart(true).getBoolean();
+			barkStairs = config.get(CATEGORY_BLOCKS, "BarkStairs", barkStairs, "Requires BarkBlocks").setRequiresMcRestart(true).getBoolean();
 			woolSlabs = config.get(CATEGORY_BLOCKS, "WoolSlabs", woolSlabs).setRequiresMcRestart(true).getBoolean();
+			woolStairs = config.get(CATEGORY_BLOCKS, "WoolStairs", woolStairs).setRequiresMcRestart(true).getBoolean();
 			startup = false;
 		}
 		
@@ -320,6 +350,9 @@ public class MeTweaksConfig {
 		
 		if(MeTweaks.lotr && ASMConfig.guardsWanderRange && ASMConfig.guardsAdvancedSettings)
 			GuardsAdvSettingsConfig.loadConfig();
+		if(ASMConfig.explosionPhysics) {
+			ExplosionPhysicsSettings.loadConfig();
+		}
 		
 		MeTweaks.proxy.loadClientConfig();
 		

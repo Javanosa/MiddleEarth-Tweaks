@@ -2,13 +2,13 @@
 {
   "modid": "metweaks",
   "name": "MiddleEarth Tweaks",
-  "description": "Vertical Slabs, /conquestDecay, Ally Conquest Fix, Better Guardmode, Healthbar, Control Mountspeeds, very customizable\n\nSupport for The Lord of The Rings Mod Legacy",
+  "description": "Unitoverview, Unitcounts Overlay, AI Conquest, Better Guardmode, Explosionphysics, Farview, Vertical slabs, Hireable Ents, Halftroll Additions, Ally Aid Conquest Fix, Mounted Bannerbearers, Less Latency, very customizeable\n\nMade for the Lord of the Rings Mod Legacy",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
   "authorList": ["Jonosa/Verse"],
-  "credits": " ",
+  "credits": "Translators: ArchiDreamZ (Chinese), Kostya (Russian), Juh (Portuguese)",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

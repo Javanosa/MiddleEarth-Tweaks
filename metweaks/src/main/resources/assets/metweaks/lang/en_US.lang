@@ -1,3 +1,40 @@
+gui.unitoverview.cMount=Mount
+
+gui.close=Close
+gui.closeDontShowAgain=Dont Show Again
+gui.openConfig=Open Config
+gui.openConfig2=Open %1$s
+
+lotr.achievement.hireEnt.title=The Last March Of The Ents
+lotr.achievement.hireEnt.desc=Hire an Ent with Golden Ent-Draughts
+chat.lotr.requirePledge=You need to be pledged to %s to perform this action
+
+metweaks.throwablespear.display=Throwable Spears
+key.togglethrowablespear=Toggle Throwable Spears
+
+lotr.unit.RohirrimBanner_Horse=Rohan Banner Rider
+lotr.unit.RangerNorthBanner_Horse=Dúnedain Banner Rider
+lotr.unit.SouthronChampionBanner_Horse=Champion Banner Rider
+lotr.unit.EasterlingGoldWarriorBanner_Horse=Golden Banner Rider
+
+entity.lotr.ChampionBannerBearer.name=Southron Champion Banner Bearer
+entity.lotr.RhunGoldBannerBearer.name=Golden Easterling Banner Bearer
+
+commands.metweaks.invalidbiome=Invalid biome "%1$s"
+commands.metweaks.invalidchance=Invalid chance "%1$s"
+commands.metweaks.invalidtrader=Invalid trader "%1$s"
+commands.metweaks.travellingtrader.add=Added Travelling Trader %1$s to %2$s
+commands.metweaks.travellingtrader.addfail=Couldn't add Travelling Trader
+commands.metweaks.travellingtrader.remove=Removed Travelling Trader %1$s from %2$s
+commands.metweaks.travellingtrader.removefail=Couldn't remove Travelling Trader
+commands.metweaks.travellingtrader.list=--- Traders for '%1$s' ---
+commands.metweaks.lotrinvasions.list=--- Invasions for '%1$s' ---
+commands.metweaks.banditchance.set=Set Banditchance for biome '%1$s' to '%2$s'
+commands.metweaks.banditchance.get=Banditchance for biome '%1$s' is '%2$s'
+
+entity.lotr.HalfTrollStoneThrower.name=Half-troll Stone Thrower
+lotr.unit.HalfTrollStoneThrower_Rhino=Stone Thrower Rider
+
 # LOTRFA Block extensions
 tile.log.12.name=Elm Wood Bark
 tile.log.13.name=Rowan Wood Bark
@@ -15,6 +52,8 @@ metweaks.unittracking.display=Unit Tracking
 # whitespaces matter!
 metweaks.verticalprefix=Vertical 
 metweaks.slabprefix= Slab
+metweaks.wallprefix= Wall
+metweaks.stairsprefix= Stairs
 
 gui.transfer.btn=Transfer
 gui.transfer.title=Transfer to Player
@@ -49,6 +88,7 @@ gui.unitoverview.cType=Type
 gui.unitoverview.cCompany=Company
 gui.unitoverview.cArmor=Armor
 
+
 gui.configconfirm.title=MiddleEarth-Tweaks Config Change Confirm
 gui.configconfirm.info=The following settings will be adjusted to play on this server
 gui.configconfirm.config=Config
@@ -66,6 +106,7 @@ gui.guardmodehorn.display=Guardmode -
 
 lotr.gui.warrior.performanceWarn=High ranges are very demanding
 lotr.gui.warrior.requireGuardmode=Guard Mode needs to be enabled
+lotr.gui.farmer.requireFarmmode=Farm Mode needs to be enabled
 lotr.gui.warrior.setHomeTip=[Rightclick + Sneak] to set home
 
 metweaks.updateAvaible=§7MiddleEarth Tweaks §a%1$s§7 is available §f§n[Click to Download]
@@ -123,6 +164,7 @@ metweaks.config.blocks=Blocks
 metweaks.config.misc=Misc
 metweaks.config.hudelements=HUD Elements
 metweaks.config.aiconquest=AI Conquest
+metweaks.config.explosionphysics=Explosion Physics
 
 
 tile.log.oak.bark.name=Oak Bark

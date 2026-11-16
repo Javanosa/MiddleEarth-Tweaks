@@ -34,57 +34,58 @@ public class HooksGuardMode {
 		}
 		
 		setGuardModeEnter(npc, enabled);
-		    
+		
 		// process mount
-	    if(npc.ridingEntity != null && npc.ridingEntity instanceof LOTREntityNPC) {
-	    	setGuardModeEnter((LOTREntityNPC) npc.ridingEntity, enabled);
-	    }
+		if(npc.ridingEntity != null && npc.ridingEntity instanceof LOTREntityNPC) {
+			setGuardModeEnter((LOTREntityNPC) npc.ridingEntity, enabled);
+		}
 	}
 	
 	public static void setGuardModeEnter(LOTREntityNPC npc, boolean enabled) {
 		LOTRHiredNPCInfo info = npc.hiredNPCInfo;
-		
+
 		boolean warrior = info.getTask() == Task.WARRIOR && ASMConfig.guardsWanderRange;
 		info.guardMode = enabled;
-	    if (enabled) {
-	      int x = MathHelper.floor_double(npc.posX);
-	      int y = MathHelper.floor_double(npc.posY);
-	      int z = MathHelper.floor_double(npc.posZ);
-	      
-	      int distance = warrior ? HiredInfoAccess.getWanderRange(info) : info.getGuardRange();
-	      
-	      npc.setHomeArea(x, y, z, distance);
-	      
-	      // set guardrange or maxRange to aiRange, and checksight to false if wanderrange > guardrrange
-	      if(warrior && ASMConfig.guardsAdvancedSettings && GuardsAdvSettingsConfig.autoScaleAiRange)
-	    	  autoScaleAiRange(info, npc);
-	    
-	    } else {
-	      npc.detachHome();
-	      
-	      // set default aiRange, checkSight to true
-	      if(warrior && ASMConfig.guardsAdvancedSettings && GuardsAdvSettingsConfig.autoScaleAiRange)
-	    	  setDefaultAiRange(npc);
-	    }
+		if(enabled) {
+			int x = MathHelper.floor_double(npc.posX);
+			int y = MathHelper.floor_double(npc.posY);
+			int z = MathHelper.floor_double(npc.posZ);
+
+			int distance = warrior ? HiredInfoAccess.getWanderRange(info) : info.getGuardRange();
+
+			npc.setHomeArea(x, y, z, distance);
+
+			// set guardrange or maxRange to aiRange, and checksight to false if wanderrange > guardrrange
+			if(warrior && ASMConfig.guardsAdvancedSettings && GuardsAdvSettingsConfig.autoScaleAiRange)
+				autoScaleAiRange(info, npc);
+
+		}
+		else {
+			npc.detachHome();
+
+			// set default aiRange, checkSight to true
+			if(warrior && ASMConfig.guardsAdvancedSettings && GuardsAdvSettingsConfig.autoScaleAiRange)
+				setDefaultAiRange(npc);
+		}
 	}
 	
 	public static void setGuardRangeEnter(LOTREntityNPC npc, int range) {
 		LOTRHiredNPCInfo info = npc.hiredNPCInfo;
-		
+
 		HiredInfoAccess.setGuardRange(info, range);
-	    if (info.guardMode) {
-	      
-	      int x = MathHelper.floor_double(npc.posX);
-	      int y = MathHelper.floor_double(npc.posY);
-	      int z = MathHelper.floor_double(npc.posZ);
-	      boolean warrior = info.getTask() == Task.WARRIOR && ASMConfig.guardsWanderRange;
-	      int distance = warrior ? HiredInfoAccess.getWanderRange(info) : range;
-	      npc.setHomeArea(x, y, z, distance);
-	      
-	      // set guardrange or maxRange to aiRange, and checksight to false if wanderrange > guardrrange
-	      if(warrior && ASMConfig.guardsAdvancedSettings && GuardsAdvSettingsConfig.autoScaleAiRange)
-	    	  autoScaleAiRange(info, npc);
-	    }
+		if(info.guardMode) {
+
+			int x = MathHelper.floor_double(npc.posX);
+			int y = MathHelper.floor_double(npc.posY);
+			int z = MathHelper.floor_double(npc.posZ);
+			boolean warrior = info.getTask() == Task.WARRIOR && ASMConfig.guardsWanderRange;
+			int distance = warrior ? HiredInfoAccess.getWanderRange(info) : range;
+			npc.setHomeArea(x, y, z, distance);
+
+			// set guardrange or maxRange to aiRange, and checksight to false if wanderrange > guardrrange
+			if(warrior && ASMConfig.guardsAdvancedSettings && GuardsAdvSettingsConfig.autoScaleAiRange)
+				autoScaleAiRange(info, npc);
+		}
 	}
 	
 	public static void setGuardRange(int range, LOTREntityNPC npc) {
@@ -96,41 +97,39 @@ public class HooksGuardMode {
 			}
 			
 			setGuardRangeEnter(npc, range);
-			    
+		
 			// process mount
-		    if(npc.ridingEntity != null && npc.ridingEntity instanceof LOTREntityNPC) {
-		    	setGuardRangeEnter((LOTREntityNPC) npc.ridingEntity, range);
-		    }
+			if(npc.ridingEntity != null && npc.ridingEntity instanceof LOTREntityNPC) {
+				setGuardRangeEnter((LOTREntityNPC) npc.ridingEntity, range);
+			}
 		//}
 	}
 	
 	public static void autoScaleAiRange(LOTRHiredNPCInfo info, LOTREntityNPC npc) {
-		
 		ExtraHiredData ext = ExtraHiredData.load(npc);
-    	
-    	
-    	int guardRange = info.getGuardRange();
-    	int wanderRange = HiredInfoAccess.getWanderRange(info);
-    	
-    	boolean ignore = guardRange < wanderRange;
-    	if(ext.ignoreSight != ignore) {
-    		ext.setIgnoreSight(ignore, npc);
-	    	
-    	}
-    	
-	    if(GuardsAdvSettingsConfig.allowAiRangeModify) {
-	    	byte aiRange = (byte) Math.min(Math.max(guardRange, wanderRange), ExtraHiredData.getMax(ExtraHiredData.getBonus(npc), ext.aiRangeDef));
+
+		int guardRange = info.getGuardRange();
+		int wanderRange = HiredInfoAccess.getWanderRange(info);
+
+		boolean ignore = guardRange < wanderRange;
+		if(ext.ignoreSight != ignore) {
+			ext.setIgnoreSight(ignore, npc);
+
+		}
+
+		if(GuardsAdvSettingsConfig.allowAiRangeModify) {
+			byte aiRange = (byte) Math.min(Math.max(guardRange, wanderRange), ExtraHiredData.getMax(ExtraHiredData.getBonus(npc), ext.aiRangeDef));
 			if(aiRange != ext.aiRange) {
 				ext.setAiRange(aiRange, npc);
-				
+
 			}
 		}
 		// aiRangeMax
 		// aiRangeDef (need it for aiRangeMax)
 		// aiRange (dont need it?)
-		
-		// npc.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(Math.smaller(Math.bigger(guardRange, wanderRange), aiRangeMax));
-		
+
+		// npc.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(Math.min(Math.max(guardRange, wanderRange), aiRangeMax));
+
 		// guardRange
 		// wanderRange
 	}
@@ -139,17 +138,14 @@ public class HooksGuardMode {
 		// aiRangeDef
 		// ignoreSight only to prevent an uneccessary check (optional)
 		ExtraHiredData ext = ExtraHiredData.load(npc);
-    	
-    	if(ext.ignoreSight) {
-    		ext.setIgnoreSight(false, npc);
-	    	
-	    	
-    	}
-    	
-    	if(ext.aiRange != ext.aiRangeDef) {
-    		ext.setAiRange(ext.aiRangeDef, npc);
-    		
-    	}
+
+		if(ext.ignoreSight) {
+			ext.setIgnoreSight(false, npc);
+		}
+
+		if(ext.aiRange != ext.aiRangeDef) {
+			ext.setAiRange(ext.aiRangeDef, npc);
+		}
 	}
 	
 	
@@ -163,11 +159,12 @@ public class HooksGuardMode {
 				HooksGuardMode.setWanderRange(npc, value);
 				break;
 			case 4:
+				if(!ASMConfig.guardsAdvancedSettings) return;
 				
-					HiredAdvInfoPacket packet = new HiredAdvInfoPacket(npc);
-					NetworkHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) npc.hiredNPCInfo.getHiringPlayer());
-					if(MeTweaksConfig.debug >= 2)
-						System.out.println("Send HiredAdvInfoPacket");
+				HiredAdvInfoPacket packet = new HiredAdvInfoPacket(npc);
+				NetworkHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) npc.hiredNPCInfo.getHiringPlayer());
+				if(MeTweaksConfig.debug >= 2)
+					System.out.println("Send HiredAdvInfoPacket");
 		
 				break;
 			case 6:
@@ -196,11 +193,11 @@ public class HooksGuardMode {
 					byte bonus = ExtraHiredData.getBonus(npc);
 					System.out.println("");
 					System.out.println("UnlockLVL: "+GuardsAdvSettingsConfig.aiRangeUnlockLvL+" IgnoreSight: "+ext.ignoreSight+" Bonus: "+bonus);
-				    System.out.println("AI C: "+ext.aiRange+" Def:"+ext.aiRangeDef+" Max:"+ExtraHiredData.getMax(bonus, ext.aiRangeDef));
-				    System.out.println("Ammo C: "+ext.ammoRange+" Def:"+ext.ammoRangeDef+" Max:"+ExtraHiredData.getMax(bonus, ext.ammoRangeDef));
-				    System.out.println("IgnoreSight: "+!NpcReflectionAccess.getCheckSight(npc)+" AmmoRange: "+NpcReflectionAccess.getAmmoRange(npc)+" AiRange: "+npc.getEntityAttribute(SharedMonsterAttributes.followRange).getBaseValue());
+					System.out.println("AI C: "+ext.aiRange+" Def:"+ext.aiRangeDef+" Max:"+ExtraHiredData.getMax(bonus, ext.aiRangeDef));
+					System.out.println("Ammo C: "+ext.ammoRange+" Def:"+ext.ammoRangeDef+" Max:"+ExtraHiredData.getMax(bonus, ext.ammoRangeDef));
+					System.out.println("IgnoreSight: "+!NpcReflectionAccess.getCheckSight(npc)+" AmmoRange: "+NpcReflectionAccess.getAmmoRange(npc)+" AiRange: "+npc.getEntityAttribute(SharedMonsterAttributes.followRange).getBaseValue());
 				}
-			    break;
+				break;
 		}
 		
 	}
@@ -214,34 +211,30 @@ public class HooksGuardMode {
 		sliderWanderRange.setSliderValue(HiredInfoAccess.getWanderRange(gui.theNPC.hiredNPCInfo));
 		buttonList.add(sliderWanderRange);
 		HiredInfoAccess.setSliderWanderRange(gui, sliderWanderRange);
-	      
+		
 		if(ASMConfig.guardsAdvancedSettings) {
 			LOTRGuiButtonOptions buttonAdvanced = new LOTRGuiButtonOptions(4, midX - 80, gui.guiTop + 122, 160, 20, StatCollector.translateToLocal("lotr.gui.warrior.advanced"));
 			buttonList.add(buttonAdvanced);
-			
 		}
 		
-		
-	      squadronNameField.yPosition = gui.guiTop + 160;
-	      buttonTeleport.yPosition = gui.guiTop + 184;
-	      
+		squadronNameField.yPosition = gui.guiTop + 160;
+		buttonTeleport.yPosition = gui.guiTop + 184;
+
 	}
 	
 	public static void updateWarriorScreen(LOTRGuiHiredWarrior gui) {
 		LOTRGuiSlider sliderWanderRange = HiredInfoAccess.getSliderWanderRange(gui);
-		 sliderWanderRange.visible = gui.theNPC.hiredNPCInfo.isGuardMode();
-	      if (sliderWanderRange.dragging) {
-	        int i = sliderWanderRange.getSliderValue();
-	        HooksGuardMode.setWanderRange(gui.theNPC, i);
-	        gui.sendActionPacket(sliderWanderRange.id, i);
-	      } 
+		sliderWanderRange.visible = gui.theNPC.hiredNPCInfo.isGuardMode();
+		if(sliderWanderRange.dragging) {
+			int i = sliderWanderRange.getSliderValue();
+			HooksGuardMode.setWanderRange(gui.theNPC, i);
+			gui.sendActionPacket(sliderWanderRange.id, i);
+		} 
 	}
 	
 	
 	
 	public static void writeToNBT(LOTRHiredNPCInfo info, NBTTagCompound data) {
-		
-		
 		if(info.isActive && info.getTask() == Task.WARRIOR) {
 			data.setInteger("WanderRange", HiredInfoAccess.getWanderRange(info));
 			if(ASMConfig.guardsAdvancedSettings && HiredInfoAccess.getExt(info) != null/*info.ext != null*/) {
@@ -255,19 +248,16 @@ public class HooksGuardMode {
 	public static void readFromNBT(LOTRHiredNPCInfo info, NBTTagCompound data) {
 		// prevent this read for unnecessary load
 		if(info.isActive && info.getTask() == Task.WARRIOR) {
-			if(data.hasKey("WanderRange"))
+			if(data.hasKey("WanderRange")) {
 				//info.wanderRange = data.getInteger("WanderRange");
 				HiredInfoAccess.setWanderRange(info, data.getInteger("WanderRange"));
-			
+			}
 			
 			if(ASMConfig.guardsAdvancedSettings && (GuardsAdvSettingsConfig.allowAiRangeModify || GuardsAdvSettingsConfig.allowAmmoRangeModify || GuardsAdvSettingsConfig.allowCheckSightModify)) {
-				
-				
+
 				ExtraHiredData ext = new ExtraHiredData();
 				ext.readNBT(HiredInfoAccess.getNPC(info), data);
 				HiredInfoAccess.setExt(info, ext);
-				
-				
 			}
 		}
 	}
@@ -283,7 +273,7 @@ public class HooksGuardMode {
 				int guardRange = npc.hiredNPCInfo.getGuardRange();
 				
 				boolean inRange = entity.getHomePosition().getDistanceSquared(x, y, z) < (guardRange * guardRange);
-				//System.out.println("InRange: "+inRange);
+				
 				return inRange;
 			}
 		}
@@ -296,7 +286,7 @@ public class HooksGuardMode {
 		npc.setHomeArea(MathHelper.floor_double(npc.posX), MathHelper.floor_double(npc.posY), MathHelper.floor_double(npc.posZ), wanderRange);
 		// set guardrange or maxRange to aiRange, and checksight to false if wanderrange > guardrrange
 		if(ASMConfig.guardsAdvancedSettings && GuardsAdvSettingsConfig.autoScaleAiRange)
-	    	 autoScaleAiRange(npc.hiredNPCInfo, npc);
+			autoScaleAiRange(npc.hiredNPCInfo, npc);
 	}
 	
 	public static void setWanderRange(LOTREntityNPC npc, int wanderRange) {
@@ -307,10 +297,10 @@ public class HooksGuardMode {
 		}
 		
 		setWanderRangeEnter(npc, wanderRange);
-		    
+		
 		// process mount
-	    if(npc.ridingEntity != null && npc.ridingEntity instanceof LOTREntityNPC) {
-	    	setWanderRangeEnter((LOTREntityNPC) npc.ridingEntity, wanderRange);
-	    }
+		if(npc.ridingEntity != null && npc.ridingEntity instanceof LOTREntityNPC) {
+			setWanderRangeEnter((LOTREntityNPC) npc.ridingEntity, wanderRange);
+		}
 	}
 }

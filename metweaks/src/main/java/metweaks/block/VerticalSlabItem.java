@@ -25,8 +25,16 @@ public class VerticalSlabItem extends ItemBlock {
 		int meta = (originmeta & 3) + vslab.offset;
 		//String key = vslab.slab.getUnlocalizedName()+"."+meta+".name";
 		
-		stack.setItemDamage(meta);
+		/*stack.setItemDamage(meta);
 		String key = Item.getItemFromBlock(vslab.slab).getItemStackDisplayName(stack);
+		stack.setItemDamage(originmeta);*/
+		
+		final Item originitem = stack.getItem();
+		Item baseItem = Item.getItemFromBlock(vslab.slab);
+		stack.func_150996_a(baseItem);
+		stack.setItemDamage(meta);
+		String key = baseItem.getItemStackDisplayName(stack);
+		stack.func_150996_a(originitem);
 		stack.setItemDamage(originmeta);
         return (StatCollector.translateToLocal("metweaks.verticalprefix")+StatCollector.translateToLocal(key)).trim();
     }

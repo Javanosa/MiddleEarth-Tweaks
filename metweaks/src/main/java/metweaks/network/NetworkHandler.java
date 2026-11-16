@@ -38,6 +38,16 @@ public class NetworkHandler {
 			
 			}
 			
+			networkWrapper.registerMessage(SyncConquestDecayPacket.Handler.class, SyncConquestDecayPacket.class, 10, Side.CLIENT);
+			
+			
+			if(ASMConfig.throwableSpearToggle) {
+				networkWrapper.registerMessage(SyncThrowableSpearPacket.Handler.class, SyncThrowableSpearPacket.class, 11, Side.SERVER);
+			}
+			
+			if(MeTweaksConfig.updateCheck) {
+				networkWrapper.registerMessage(UpdateAvailablePacket.Handler.class, UpdateAvailablePacket.class, 12, Side.CLIENT);
+			}
 		}
 	}
 }

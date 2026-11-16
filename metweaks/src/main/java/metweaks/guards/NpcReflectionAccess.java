@@ -7,6 +7,7 @@ import cpw.mods.fml.relauncher.ReflectionHelper;
 import lotr.common.entity.ai.LOTREntityAINearestAttackableTargetBasic;
 import lotr.common.entity.ai.LOTREntityAIRangedAttack;
 import lotr.common.entity.npc.LOTREntityCorsair;
+import lotr.common.entity.npc.LOTREntityEasterlingFireThrower;
 import lotr.common.entity.npc.LOTREntityElf;
 import lotr.common.entity.npc.LOTREntityHobbitBounder;
 import lotr.common.entity.npc.LOTREntityLossarnachAxeman;
@@ -116,6 +117,9 @@ public class NpcReflectionAccess {
 		else if(npc instanceof LOTREntityLossarnachAxeman) {
 			field = lossarnach_rangedAttack;
 		}
+		else if(npc instanceof LOTREntityEasterlingFireThrower) {
+			aiRangedAttack = ((LOTREntityEasterlingFireThrower) npc).rangedAttackAI;
+		}
 		else {
 			@SuppressWarnings("unchecked")
 			List<EntityAITaskEntry> tasks = npc.tasks.taskEntries;
@@ -130,8 +134,13 @@ public class NpcReflectionAccess {
 		if(field != null) {
 			try {
 				aiRangedAttack = field.get(npc);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
+			}
+			
+			if(!(aiRangedAttack instanceof LOTREntityAIRangedAttack)) {
+				return null;
 			}
 		}
 		

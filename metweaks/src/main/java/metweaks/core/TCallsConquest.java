@@ -8,7 +8,6 @@ import static metweaks.core.ClassTransformer.*;
 import static metweaks.core.ClassHandler.*;
 
 import org.objectweb.asm.tree.*;
-
 import metweaks.ASMConfig;
 import metweaks.MeTweaksConfig;
 import metweaks.network.SyncedConfig;
@@ -315,11 +314,86 @@ public class TCallsConquest {
      	     			list.add(new InsnNode(ARETURN));
      	     			list.add(label);
      					method.instructions.insert(node, list);
-     					log.info(coreprefix+": FMLHandshakeClientState$WAITINGSERVERCOMPLETE.Patched accept()");
+     					log.info(coreprefix+": Patched FMLHandshakeClientState$WAITINGSERVERCOMPLETE.accept()");
      					return;
      				}
      			}
      		}
+    	}
+    }
+    
+    static void transformLOTRPlayerData(ClassNode classNode) {
+    	
+    	
+    	for(MethodNode method : classNode.methods) {
+    		if(ASMConfig.hiredsConquerForTheirFaction && method.name.equals("addAlignment") && method.desc.equals("(Lnet/minecraft/entity/player/EntityPlayer;Llotr/common/fac/LOTRAlignmentValues$AlignmentBonus;Llotr/common/fac/LOTRFaction;Ljava/util/List;DDD)Llotr/common/fac/LOTRAlignmentBonusMap;")) {
+    			int varConquerFaction = method.maxLocals;
+    			boolean addedVar = false;
+    			
+    			for(AbstractInsnNode node : method.instructions.toArray()) {
+     				if(!addedVar && node.getOpcode() == ASTORE && ((VarInsnNode) node).var == 16) { // List<LOTRFaction> killBonuses
+     					method.maxLocals++;
+     					InsnList list = new InsnList();
+     					list.add(new VarInsnNode(ALOAD, 0)); // playerdata (this)
+     					list.add(new VarInsnNode(ALOAD, 2)); // source
+     					list.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(HooksLOTR.class), "getConquerFaction", "(Llotr/common/LOTRPlayerData;Llotr/common/fac/LOTRAlignmentValues$AlignmentBonus;)Llotr/common/fac/LOTRFaction;", false));
+     					list.add(new VarInsnNode(ASTORE, varConquerFaction));
+     					method.instructions.insert(list);
+     					addedVar = true;
+     				}
+     				else if(addedVar && node.getOpcode() == INVOKEVIRTUAL && ((MethodInsnNode) node).name.equals("getPledgeFaction")) {
+     					method.instructions.remove(node.getPrevious()); // remove "this" from stack
+     					method.instructions.set(node, new VarInsnNode(ALOAD, varConquerFaction));
+     					log.info(coreprefix+": Patched LOTRPlayerData.addAlignment()");
+     					break;
+     				}
+     			}
+     		}
+    		else if(ASMConfig.moreEvents && method.name.equals("fastTravelTo") && method.desc.equals("(Llotr/common/world/map/LOTRAbstractWaypoint;)V")) {
+    			LabelNode skipLabel = null;
+    			
+    			for(AbstractInsnNode node : method.instructions.toArray()) {
+    				if(node.getOpcode() == ASTORE && ((VarInsnNode) node).var == 11) { // init of Set<EntityLiving> removes
+    					AbstractInsnNode newInsn = node.getPrevious().getPrevious().getPrevious();
+    					if(newInsn.getOpcode() == NEW) { // expecting no other nodes in between
+    						InsnList list = new InsnList();
+    						LabelNode label = new LabelNode();
+         					list.add(new VarInsnNode(ALOAD, 2)); // player
+         					list.add(new VarInsnNode(ALOAD, 1)); // waypoint
+         					list.add(new VarInsnNode(ALOAD, 10)); // toTransport
+         					list.add(new VarInsnNode(ALOAD, 9)); // entities
+         					list.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(HooksLOTR.class), "onFastTravelTransport", 
+         						"(Lnet/minecraft/entity/player/EntityPlayer;Llotr/common/world/map/LOTRAbstractWaypoint;Ljava/util/Set;Ljava/util/List;)Z", false));
+         					list.add(new JumpInsnNode(IFEQ, label));
+         					list.add(new InsnNode(RETURN)); // event canceled
+         					list.add(label);
+         					method.instructions.insertBefore(newInsn, list);
+         					//break;
+    					}
+    				}
+    				else if(node.getOpcode() == INSTANCEOF && ((TypeInsnNode) node).desc.equals("lotr/common/world/map/LOTRCustomWaypoint")) { // replace label that directs to end with out label
+    					AbstractInsnNode jumpInsn = node.getNext();
+    					if(jumpInsn.getOpcode() == IFEQ) { // expecting no other nodes in between
+    						skipLabel = new LabelNode();
+    						method.instructions.set(jumpInsn, new JumpInsnNode(IFEQ, skipLabel));
+    					}
+    				}
+    				else if(skipLabel != null && node.getOpcode() == INVOKESTATIC && ((MethodInsnNode) node).name.equals("logTravel")) { // add the new label here and add the event after
+    					InsnList list = new InsnList();
+    					list.add(skipLabel);
+    					list.add(new VarInsnNode(ALOAD, 2)); // player
+    					list.add(new VarInsnNode(ALOAD, 1)); // waypoint
+    					list.add(new VarInsnNode(ILOAD, 12)); // i / x
+    					list.add(new VarInsnNode(ILOAD, 14)); // j / y
+    					list.add(new VarInsnNode(ILOAD, 13)); // k / z
+    					list.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(HooksLOTR.class), "onFastTravelSuccess", 
+    						"(Lnet/minecraft/entity/player/EntityPlayer;Llotr/common/world/map/LOTRAbstractWaypoint;III)V", false));
+    					method.instructions.insert(node, list);
+    					log.info(coreprefix+": Patched LOTRPlayerData.fastTravelTo()");
+    					break;
+    				}
+    			}
+    		}
     	}
     }
 }

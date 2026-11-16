@@ -6,7 +6,9 @@ import lotr.common.entity.ai.LOTREntityAIHorseMoveToRiderTarget;
 import lotr.common.entity.ai.LOTREntityAIRangedAttack;
 import lotr.common.entity.animal.LOTREntityHorse;
 import lotr.common.entity.npc.LOTREntityNPC;
+import metweaks.ASMConfig;
 import metweaks.core.HooksAiRanged;
+import metweaks.features.halftroll.LOTREntityHalfTrollThrower;
 import metweaks.guards.NpcReflectionAccess;
 import metweaks.guards.customranged.CustomRanged.Category;
 import net.minecraft.entity.Entity;
@@ -84,6 +86,7 @@ public class HorseMoveToRiderTargetAiFix extends EntityAIBase {
 			if(category != null && category != Category.SPEAR) {
 				return true;
 			}
+			
 			// we would have to check SPEAR for melee weapon too. Too much.
 			
 			/*ItemStack ranged = npc.npcItemsInv.getStackInSlot(2); // slot for ranged weapon without copy
@@ -96,6 +99,9 @@ public class HorseMoveToRiderTargetAiFix extends EntityAIBase {
 			}
 			}*/
 		} 
+		else if(ASMConfig.halfTrollAdditions && npc instanceof LOTREntityHalfTrollThrower && ((LOTREntityHalfTrollThrower) npc).isThrowingRocks()) {
+			return true;
+		}
 		return false;
 	}
 	

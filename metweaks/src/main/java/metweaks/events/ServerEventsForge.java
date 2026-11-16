@@ -6,12 +6,16 @@ import metweaks.MeTweaks;
 import metweaks.MeTweaksConfig;
 import metweaks.command.CommandEntityStack;
 import metweaks.features.AIConquest;
+import metweaks.features.CaptainsSeekTargets;
+import metweaks.features.HireableEnts;
 import metweaks.features.SleepHandler;
 import metweaks.features.ItemUseHandler;
 import metweaks.features.ModifierHandler;
+import metweaks.features.PlayerDeathLogger;
 import metweaks.guards.DontSuffocateAI;
 import metweaks.guards.MountStayHomeAI;
 import metweaks.guards.customranged.HorseMoveToRiderTargetAiFix;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -26,8 +30,12 @@ public class ServerEventsForge {
 	
 	@SubscribeEvent
 	public void onLivingDeath(LivingDeathEvent event) {
-		if(MeTweaksConfig.aiConquest && !event.entity.worldObj.isRemote) {
+		if(MeTweaksConfig.aiConquest && !event.entity.worldObj.isRemote && MeTweaks.lotr) {
 			AIConquest.handleLivingDeath(event);
+		}
+		
+		if(ASMConfig.logPlayerDeathLocations && event.entityLiving instanceof EntityPlayer) {
+			PlayerDeathLogger.logDeath(event.entityLiving);
 		}
 	}
 	
@@ -36,8 +44,6 @@ public class ServerEventsForge {
 		if(MeTweaksConfig.alwaysSetBedSpawn || (MeTweaks.lotr && MeTweaksConfig.checkBedUnsafe))
 			SleepHandler.handlePlayerSleep(event);
 	}
-	
-	
 	
 	
 	@SubscribeEvent
@@ -62,6 +68,8 @@ public class ServerEventsForge {
 			ModifierHandler.checkspeedmods(event.target, event.target.worldObj, true);
 		if(ASMConfig.entityStackCommand && !event.entityPlayer.worldObj.isRemote)
 			CommandEntityStack.processInteract(event);
+		
+		
 	}
 	
 	
@@ -81,6 +89,16 @@ public class ServerEventsForge {
 			
 			if(ASMConfig.aiRangedImprovements)
 				HorseMoveToRiderTargetAiFix.apply(event.entity);
+			
+			
+			if(ASMConfig.captainsAttack) {
+				CaptainsSeekTargets.handle(event.entity);
+			}
+			if(ASMConfig.hireableEnts) {
+				HireableEnts.handle(event.entity);
+			}
+			
+			
 		}
 	}
 }

@@ -5,10 +5,8 @@ import java.util.Random;
 
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import lotr.common.LOTRCreativeTabs;
 import metweaks.MeTweaksConfig;
 import metweaks.proxy.CommonProxy;
 import net.minecraft.block.Block;
@@ -37,16 +35,6 @@ public class MeTweaksSlab  extends BlockSlab {
 	public boolean isWoodBeam;
 	public MeTweaksSlab secondary;
 	
-	public static CreativeTabs tabTemp;
-	
-	public void setCreativeTabsLOTR() {
-		if(tabTemp == null)
-		try {
-			tabTemp = ReflectionHelper.getPrivateValue(LOTRCreativeTabs.class, null, "tabBlock");
-		} catch (Exception e) {}
-		setCreativeTab(tabTemp);
-	}
-	
 	public MeTweaksSlab getBeamSlab(int rotation) {
 		boolean hasPart1 = renderMetaOffset == 0;
 		// we want part1
@@ -54,31 +42,6 @@ public class MeTweaksSlab  extends BlockSlab {
 			return hasPart1 ? this : secondary;
 		}
 		return hasPart1 ? secondary : this;
-	}
-
-	private String getRegName(int index) {
-		String add = index > 1 ? "slab"+index : "slab_";
-		
-		String name = GameData.getBlockRegistry().getNameForObject(fullBlock);
-		name = name.replaceFirst("^minecraft\\:", "");
-		name = name.replaceFirst("\\:tile\\.", "_");
-		name = name.replace(':', '_');
-		return add+name;
-		
-		/*
-		String unlocalized = null;
-		try {
-			unlocalized = (String) field_unlocalizedName.get(fullBlocks[0]);
-			
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		if(unlocalized != null) {
-			return add + unlocalized.replace(":", "_");
-		}
-		return null;*/
 	}
 	
 	/*static IdentityHashMap<Block, Object> blockInfo;
@@ -144,11 +107,13 @@ public class MeTweaksSlab  extends BlockSlab {
             
         
         
-        String name = getRegName(index);
+        String name = BlocksCore.getRegName(index > 1 ? "slab"+index : "slab_", full, false);
 		
 		setBlockName(name);
 		GameRegistry.registerBlock(this, MeTweaksSlabItem.class, name);
-		System.out.println("Registering..."+name+" "+getIdFromBlock(this)+" > "+GameData.getBlockRegistry().getNameForObject(full));
+		
+		//System.out.println("Registering..."+name+" "+getIdFromBlock(this)+" > "+GameData.getBlockRegistry().getNameForObject(full));
+		BlocksCore.addInfo(name+" "+GameData.getBlockRegistry().getNameForObject(full));
     }
 	
 	

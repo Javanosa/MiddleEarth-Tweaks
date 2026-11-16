@@ -10,14 +10,9 @@ public class GuiCheckBox extends GuiButton {
 		super(buttonId, x, y, widthIn, heightIn, buttonText);
 	}
 	
-	
-	
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY) {
 		if(!visible) return;
-		
-        
-        
         
         // draw outlines
         if(checked)  {

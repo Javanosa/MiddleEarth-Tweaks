@@ -1,16 +1,7 @@
 package metweaks.events;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.regex.Pattern;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
@@ -23,79 +14,59 @@ import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import cpw.mods.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import cpw.mods.fml.common.network.FMLNetworkEvent.ClientDisconnectionFromServerEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.ReflectionHelper;
-import gnu.trove.map.TIntByteMap;
-import gnu.trove.map.TIntIntMap;
-import gnu.trove.map.TIntObjectMap;
-import gnu.trove.map.hash.TIntByteHashMap;
-import gnu.trove.map.hash.TIntIntHashMap;
-import gnu.trove.map.hash.TIntObjectHashMap;
-import lotr.client.LOTRSpeechClient;
-import lotr.common.LOTRLevelData;
 import lotr.common.LOTRMod;
-import lotr.common.LOTRReflection;
-import lotr.common.entity.animal.LOTREntityHorse;
-import lotr.common.entity.npc.LOTREntityNPC;
-import lotr.common.entity.npc.LOTREntityNPCRideable;
-import lotr.common.entity.npc.LOTREntityWarg;
-import lotr.common.entity.npc.LOTRNPCMount;
-import lotr.common.fellowship.LOTRFellowshipClient;
-import lotr.common.item.LOTRItemMountArmor;
-import lotr.common.item.LOTRWeaponStats;
 import metweaks.ASMConfig;
 import metweaks.MeTweaks;
-import metweaks.MeTweaksAPI;
 import metweaks.MeTweaksConfig;
 import metweaks.block.VerticalSlab;
 import metweaks.client.healthbar.RenderHealthBar;
 import metweaks.client.Keys;
 import metweaks.client.LOTRGuiElements;
+import metweaks.client.gui.GuiTOSNotice;
+import metweaks.client.gui.GuiTabListOverlay;
+import metweaks.client.gui.GuiUnitCountsOverlay;
 import metweaks.client.gui.unitoverview.GuiUnitOverview;
-import metweaks.core.Hooks;
+import metweaks.core.HooksNetwork;
+import metweaks.features.Getters;
 import metweaks.features.ItemUseHandler;
-import metweaks.features.ModifierHandler;
+import metweaks.features.LOTRDateCache;
+import metweaks.features.PlayerDeathLogger;
 import metweaks.features.PlayerRidingTracker;
+import metweaks.features.ThrowableSpearState;
 import metweaks.features.UnitMonitor;
 import metweaks.network.GuardsOverviewActionPacket;
 import metweaks.network.NetworkHandler;
+import metweaks.network.SyncThrowableSpearPacket;
 import metweaks.network.SyncUnitTrackingModePacket;
 import metweaks.network.SyncVerticalModePacket;
 import metweaks.network.SyncedConfig;
+import metweaks.proxy.UpdateCheck;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiConfirmOpenLink;
+import net.minecraft.client.gui.GuiGameOver;
 import net.minecraft.client.gui.GuiIngame;
-import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.culling.Frustrum;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.settings.GameSettings;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
-import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
+import net.minecraft.event.ClickEvent;
+import net.minecraft.event.HoverEvent;
 import net.minecraft.item.ItemSlab;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
-import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import static metweaks.client.healthbar.HealthBarConfig.*;
 
@@ -104,6 +75,8 @@ public class ClientEvents {
 	
 	// states / temp
 	private static boolean sendVerticalStateJoin;
+	private static int connectedTick = -1;
+	
 	private static boolean sendKeyBindTip = true;
 	public static int nextCanSeeCacheClear; // private?
 	
@@ -171,12 +144,15 @@ public class ClientEvents {
 	
 	@SubscribeEvent
 	public void onClientConnect(ClientConnectedToServerEvent event) {
+		connectedTick = 0;
 		//if(MeTweaksConfig.verticalSlabs && VerticalSlab.clientVertical)
 			sendVerticalStateJoin = true;
 		
 		nextCanSeeCacheClear = 0;
 		
-		
+		if(!event.isLocal) {
+			MeTweaksConfig.conquestDecay = 3600; // reset 
+		}
 		
 		
 	}
@@ -184,24 +160,56 @@ public class ClientEvents {
 	// revert changes from custom server config
 	@SubscribeEvent
 	public void onClientDisconnect(ClientDisconnectionFromServerEvent event) {
+		connectedTick = -1;
 		MeTweaksConfig.checkPotionID();
 		MeTweaksConfig.mirrorVerticalSlabs = SyncedConfig.prevMirrorVerticalSlabs;
 		// reset actionbar
 		stateTime = 0;
 		
+		boolean saveConf = false;
+		
 		// this isnt good :(
 		if(prevRenderHealth != renderHealth) {
 			MeTweaksConfig.config.get(MeTweaksConfig.CATEGORY_HUD, "Enable Health Bar", true).set(renderHealth);
-			MeTweaksConfig.config.save(); // we rely on mark dirty?
-			
-			
+			saveConf = true;
 			prevRenderHealth = renderHealth;
 		}
+		
+		if(ThrowableSpearState.prevClientThrowable != ThrowableSpearState.clientThrowable) {
+			MeTweaksConfig.config.get(MeTweaksConfig.CATEGORY_MISC, "Throwable Spears", true).set(ThrowableSpearState.clientThrowable);
+			saveConf = true;
+			ThrowableSpearState.prevClientThrowable = ThrowableSpearState.clientThrowable;
+		}
+		
+		if(MeTweaksConfig.unitTracking && MeTweaks.lotr && UnitMonitor.prevClientUnitTracking != UnitMonitor.clientUnitTracking) {
+			MeTweaksConfig.config.get(MeTweaksConfig.CATEGORY_MISC, "Unit Tracking State", 0, "0 = Off, 1 = Far, 2 = Near", 0, 2).set(UnitMonitor.clientUnitTracking);
+			saveConf = true;
+			UnitMonitor.prevClientUnitTracking = UnitMonitor.clientUnitTracking;
+			
+		}
+		
+		if(saveConf) MeTweaksConfig.config.save(); // we rely on mark dirty?
 		
 		if(MeTweaks.lotr && MeTweaksConfig.fixMountsRunningAway) {
 			PlayerRidingTracker.map.clear();
 			
 		}
+		
+		if(ASMConfig.logPlayerDeathLocations) {
+			logDisconnect();
+		}
+		
+		
+	}
+	
+	public static void logDisconnect() {
+		if(MinecraftServer.getServer() != null && MinecraftServer.getServer().isServerRunning()) {
+			return;
+		}
+		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+		if(player == null) return;
+		
+		FMLLog.getLogger().info(player.getCommandSenderName()+" logget out in "+player.worldObj.provider.getDimensionName()+" at "+MathHelper.floor_double(player.posX)+" "+MathHelper.floor_double(player.posY)+" "+MathHelper.floor_double(player.posZ));
 	}
 	
 	@SubscribeEvent
@@ -231,14 +239,37 @@ public class ClientEvents {
 			
 		}
 		
+		if(ASMConfig.throwableSpearToggle && Keyboard.isKeyDown(Keys.toggleThrowableSpear.getKeyCode()) && !f3) {
+			Minecraft mc = Minecraft.getMinecraft();
+			
+				
+				boolean state = ThrowableSpearState.clientThrowable = ! ThrowableSpearState.clientThrowable;
+				ThrowableSpearState.setThrowableMode(mc.thePlayer, state);
+				
+				
+				if(!mc.isSingleplayer()) {
+					if(MeTweaksConfig.debug >= 2)
+						FMLLog.getLogger().info("send status to server: throwablespear="+state);
+					
+					NetworkHandler.networkWrapper.sendToServer(new SyncThrowableSpearPacket(state));
+					
+				}
+				
+				actionBar(StatCollector.translateToLocal("metweaks.throwablespear.display"), state, 35, null, false); // "Throwable Spears"
+			
+		}
+		
 		if(Keys.toggleHealth.isPressed() && !f3) {
+			
+			
+			
 			
 			renderHealth = !renderHealth;
 			actionBar(StatCollector.translateToLocal("metweaks.healthbar.display"), renderHealth, 30, null, false); // "HealthBar"
 		}
 		
 		if(MeTweaks.lotr && Keys.openUnitOverview.isPressed() && !f3) {
-			if(Keyboard.isKeyDown(Keyboard.KEY_F7)/* || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL)*/) {
+			if(Keyboard.isKeyDown(Keyboard.KEY_F7)) {
 				
 				Minecraft mc = Minecraft.getMinecraft();
 				int state = ++UnitMonitor.clientUnitTracking;
@@ -285,13 +316,25 @@ public class ClientEvents {
 	private static Field field_remainingHighlightTicks;
 	private static int toolTipTime;
 	
+	public static boolean openTosHintGUI;
+	private static boolean showTOSNotice = true;
+	
+	
 	@SubscribeEvent
 	public void onClientTick(ClientTickEvent event) {
 		if(MeTweaks.lotr) {
+			if(ASMConfig.lotrHolidays == 1) {
+				LOTRDateCache.updateDates();
+			}
+			
 			GuardEvents.handleClientTick(event);
 			
 			if(MeTweaksConfig.fixMountsRunningAway) {
 				PlayerRidingTracker.processEvent(false);
+			}
+			
+			if(GuiUnitCountsOverlay.unitcountsEnabled && event.phase == Phase.START) {
+				GuiUnitCountsOverlay.tick();
 			}
 		}
 		
@@ -316,8 +359,80 @@ public class ClientEvents {
 			nextCanSeeCacheClear--;
 		}
 		
+		if(connectedTick != -1 && event.phase == Phase.END && Minecraft.getMinecraft().thePlayer != null) {
+			connectedTick++;
+
+			
+			// Update Message: TOS or General
+			if(connectedTick == 5) { // 0.25 seconds
+				
+				if(MeTweaksConfig.updateCheck && UpdateCheck.canNotifyClient()) {
+					boolean tos = connectedToTOS();
+					if(UpdateCheck.hasUpdate(tos)) {
+						Minecraft.getMinecraft().thePlayer.addChatMessage(UpdateCheck.notifyUpdate(tos));
+					}
+				}
+			}
+			// TOS Info
+			if(connectedTick == 400) { // 20s
+				if(showTOSNotice && MeTweaksConfig.tosNotice >= 2 && connectedToTOS()) {
+					
+					
+					showTOSNoticeChat();
+					showTOSNotice = false;
+				}
+			}
+			
+			if(connectedTick >= 400) {
+				connectedTick = -1;
+			}
+		}
+		
+		if(openTosHintGUI) {
+			openTosHintGUI = false;
+			Minecraft.getMinecraft().displayGuiScreen(new GuiTOSNotice());
+			
+		}
+		
+		if(ASMConfig.logPlayerDeathLocations && event.phase == Phase.END) {
+			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+			if(player != null) {
+				if(player.deathTime == 1)
+					PlayerDeathLogger.logDeath(player);
+			}
+			
+		}
 		
 		
+	}
+	
+	private void showTOSNoticeChat() {
+		ClickEvent click = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/cShowTOSNotice");
+		HoverEvent hover = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ChatComponentText("Click Here"));
+		ChatComponentText title = new ChatComponentText("Tip: MiddleEarth Tweaks requires adjusted settings to work properly on TOS ");
+		title.getChatStyle().setColor(EnumChatFormatting.LIGHT_PURPLE).setChatClickEvent(click).setChatHoverEvent(hover);;
+		
+		
+		
+		
+		ChatComponentText btn = new ChatComponentText("[click to resolve]");
+		btn.getChatStyle().setColor(EnumChatFormatting.WHITE).setUnderlined(true);
+		
+		
+		/*ChatComponentText msg = new ChatComponentText("MiddleEarth Tweaks requires adjusted settings to work properly on TOS ");
+		msg.getChatStyle().setColor(EnumChatFormatting.RED);
+        title.appendSibling(msg);*/
+        title.appendSibling(btn);
+		
+		Minecraft.getMinecraft().thePlayer.addChatMessage(title);
+	}
+	
+	private boolean connectedToTOS() {
+		ServerData serverData = Minecraft.getMinecraft().func_147104_D();
+		if(serverData != null && !Minecraft.getMinecraft().isSingleplayer()) {
+			return "lotr.g.akliz.net".equals(serverData.serverIP);
+		}
+		return false;
 	}
 	
 	
@@ -330,6 +445,10 @@ public class ClientEvents {
 			actionBar(StatCollector.translateToLocalFormatted("metweaks.healthbar.tip", GameSettings.getKeyDisplayString(Keys.toggleHealth.getKeyCode())), false, 80, null, true);
 			sendKeyBindTip = false;
 		}
+		
+		if(MeTweaks.lotr && GuiUnitCountsOverlay.unitcountsEnabled)
+			GuiUnitCountsOverlay.render(event.resolution);
+		
 		
 		if(stateTime > 0) {
 			
@@ -451,7 +570,17 @@ public class ClientEvents {
 				}
 			}
 			
-			if(MeTweaksConfig.unitTracking && UnitMonitor.clientUnitTracking != 0) {
+			if(ASMConfig.throwableSpearToggle && !ThrowableSpearState.clientThrowable) {
+				ThrowableSpearState.setThrowableMode(Minecraft.getMinecraft().thePlayer, false);
+				
+				if(!Minecraft.getMinecraft().isSingleplayer()) {
+					if(MeTweaksConfig.debug >= 2)
+						FMLLog.getLogger().info("send throwablespear status to server on join");
+					NetworkHandler.networkWrapper.sendToServer(new SyncThrowableSpearPacket(false));
+				}
+			}
+			
+			if(MeTweaksConfig.unitTracking && MeTweaks.lotr && UnitMonitor.clientUnitTracking != 0) {
 				UnitMonitor.setUnitTrackingMode(Minecraft.getMinecraft().thePlayer, UnitMonitor.clientUnitTracking);
 				
 				if(!Minecraft.getMinecraft().isSingleplayer()) {
@@ -460,6 +589,9 @@ public class ClientEvents {
 					NetworkHandler.networkWrapper.sendToServer(new SyncUnitTrackingModePacket(UnitMonitor.clientUnitTracking));
 				}
 			}
+			
+			
+
 		}
 		
 
@@ -478,6 +610,58 @@ public class ClientEvents {
 			MeTweaksConfig.load(); 
 			if(MeTweaksConfig.debug >= 1)
 				FMLLog.getLogger().info(MeTweaks.MODNAME + " config changed");
+		}
+	}
+	
+	static Field field_enableTicks;
+	
+	@SubscribeEvent
+	public void onInitGui(InitGuiEvent.Pre event) {
+		if(ASMConfig.fixGuiGameOver && event.gui instanceof GuiGameOver) {
+			if(field_enableTicks == null) {
+				field_enableTicks = ReflectionHelper.findField(GuiGameOver.class, "field_146347_a");
+			}
+			try {
+				field_enableTicks.setInt(event.gui, 0);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if(MeTweaks.lotr) {
+			GuardEvents.handleInitGui(event);
+		}
+	}
+	
+	@SubscribeEvent
+	public void onRenderGameOverlay(RenderGameOverlayEvent.Pre event) {
+		if(ASMConfig.tabListChanges && event.type == ElementType.PLAYER_LIST) {
+			GuiTabListOverlay.instance.renderPlayerlist(event.resolution.getScaledWidth());
+			event.setCanceled(true);
+		}
+		
+		
+	}
+	
+	
+	
+	@SuppressWarnings("unchecked")
+	@SubscribeEvent
+	public void onGuiInit(InitGuiEvent.Post event) {
+		if(ASMConfig.fixOpenLinkGUI && event.gui.getClass() == GuiConfirmOpenLink.class) {
+			List<GuiButton> buttons = event.buttonList;
+			int left = (event.gui.width / 2) - buttons.size() * 52;
+			for(GuiButton btn : buttons) {
+				btn.xPosition = left;
+				left += 105;
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void onPlayerAttack(AttackEntityEvent event) {
+		if(ASMConfig.smoothEntityMovement > 1 && HooksNetwork.specialDebugMode >= 6 && event.target instanceof EntityLivingBase) {
+			Getters.cmTick((EntityLivingBase) event.target, ASMConfig.smoothEntityMovement - 1);
 		}
 	}
 	

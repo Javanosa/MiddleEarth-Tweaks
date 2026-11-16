@@ -39,6 +39,8 @@ public class UnitMonitor {
 	
 	
 	public static int clientUnitTracking;
+	public static int prevClientUnitTracking;
+	
 	public static TObjectIntMap<UUID> modesUnitTracking = new TObjectIntHashMap<>();
 	
 	public static TIntIntMap failedTeleports = new TIntIntHashMap();

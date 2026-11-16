@@ -24,7 +24,7 @@ public class PositionGenFix  {
         return findRandomTargetBlock(creature, horizontalRange, yRange, tempVector, true);
     }
     
-    // performance loos of a loop that is barely used
+    // performance loss of a loop that is barely used
     // performance loss by vector objects, input could be ints and output chunkcoordinates
     // fix not leaving home area when inside home and have to avoid that pos (make a very small buffer? dont just kill the home verifiy to prevent issues)
     // fix min distance sometimes too low so they dont move

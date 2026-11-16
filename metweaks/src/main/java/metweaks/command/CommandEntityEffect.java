@@ -170,7 +170,7 @@ public class CommandEntityEffect extends CommandBase {
 					duration = 0;
 				}
 				else {
-					duration = parseIntBounded(sender, length, 0, 1000000);
+					duration = parseIntBounded(sender, length, 0, (int) (Integer.MAX_VALUE * 0.05));
 					if(!instant) {
 						duration *= 20;
 					}

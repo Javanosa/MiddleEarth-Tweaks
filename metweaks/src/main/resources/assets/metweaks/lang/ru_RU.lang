@@ -1,104 +1,144 @@
 # yet untranslated
-tile.lotr:woodBeamS.12.name=Closed Rohan Wood Beam
-tile.lotr:woodBeamS.13.name=Closed Gold-trimmed Rohan Wood Beam
+gui.close=Close
+gui.unitoverview.cMount=Mount
 
-metweaks.unittracking.near=Near
-metweaks.unittracking.display=Unit Tracking
+gui.closeDontShowAgain=Dont Show Again
+gui.openConfig=Open Config
+gui.openConfig2=Open %1$s
+
+lotr.achievement.hireEnt.title=The Last March Of The Ents
+lotr.achievement.hireEnt.desc=Hire an Ent with Golden Ent-Draughts
+chat.lotr.requirePledge=You need to be pledged to %s to perform this action
+
+metweaks.throwablespear.display=Throwable Spears
+key.togglethrowablespear=Toggle Throwable Spears
+
+metweaks.config.explosionphysics=Explosion Physics
+lotr.unit.RohirrimBanner_Horse=Rohan Banner Rider
+lotr.unit.RangerNorthBanner_Horse=Dúnedain Banner Rider
+lotr.unit.SouthronChampionBanner_Horse=Champion Banner Rider
+lotr.unit.EasterlingGoldWarriorBanner_Horse=Golden Banner Rider
+
+entity.lotr.ChampionBannerBearer.name=Southron Champion Banner Bearer
+entity.lotr.RhunGoldBannerBearer.name=Golden Easterling Banner Bearer
+
+commands.metweaks.invalidbiome=Invalid biome "%1$s"
+commands.metweaks.invalidchance=Invalid chance "%1$s"
+commands.metweaks.invalidtrader=Invalid trader "%1$s"
+commands.metweaks.travellingtrader.add=Added Travelling Trader %1$s to %2$s
+commands.metweaks.travellingtrader.addfail=Couldn't add Travelling Trader
+commands.metweaks.travellingtrader.remove=Removed Travelling Trader %1$s from %2$s
+commands.metweaks.travellingtrader.removefail=Couldn't remove Travelling Trader
+commands.metweaks.travellingtrader.list=--- Traders for '%1$s' ---
+commands.metweaks.lotrinvasions.list=--- Invasions for '%1$s' ---
+commands.metweaks.banditchance.set=Set Banditchance for biome '%1$s' to '%2$s'
+commands.metweaks.banditchance.get=Banditchance for biome '%1$s' is '%2$s'
+
+entity.lotr.HalfTrollStoneThrower.name=Half-troll Stone Thrower
+lotr.unit.HalfTrollStoneThrower_Rhino=Stone Thrower Rider
+
+tile.lotr:woodBeamS.12.name=Закрытая роханская балка
+tile.lotr:woodBeamS.13.name=Закрытая позолоченая роханская балка
+
+metweaks.unittracking.near=Около
+metweaks.unittracking.display=Отслеживание наемников
 
 # whitespaces matter!
-metweaks.verticalprefix=Vertical 
-metweaks.slabprefix= Slab
+metweaks.verticalprefix=Вертикальная 
+metweaks.slabprefix= (Плита)
+metweaks.wallprefix= (Ограда)
+metweaks.stairsprefix= (Ступеньки)
 
-gui.transfer.btn=Transfer
-gui.transfer.title=Transfer to Player
-gui.transfer.sent=%1$s sent %3$s to you
-gui.transfer.sentMany=%1$s sent %2$s Units to you
-gui.transfer.sentCompany=%1$s sent Company "%3$s" with %2$s Units to you
-gui.transfer.warning=Are you sure you want to transfer this unit?
-gui.transfer.warning.mount=This unit's mount will be transferred too
-gui.transfer.warning.rider=This unit's rider will be transferred too
-gui.transfer.reply1=Invalid Player
-gui.transfer.reply2=Cannot be the same Player
+gui.transfer.btn=Передать
+gui.transfer.title=Передать игроку
+gui.transfer.sent=%1$s передал вам %3$s
+gui.transfer.sentMany=%1$s передал вам %2$s НПС
+gui.transfer.sentCompany=%1$s передал вам эскадрон "%3$s" с %2$s НПС
+gui.transfer.warning=Вы уверены, что хотите передать этих НПС?
+gui.transfer.warning.mount=Ездовое животное так же будет передано
+gui.transfer.warning.rider=Всадник так же будет передан
+gui.transfer.reply1=Некорректный игрок
+gui.transfer.reply2=Вы не можете передать НПС самому себе
 gui.transfer.reply3=Failed Command Requirements
-gui.transfer.reply4=No Units found
-gui.transfer.page0=This Unit
-gui.transfer.page2=Selection
-gui.transfer.choose=Choose
-gui.transfer.selected=%1$s Units selected
+gui.transfer.reply4=Не обнаружено НПС
+gui.transfer.page0=Этот НПС
+gui.transfer.page2=Выбранные НПС
+gui.transfer.choose=Выбрать
+gui.transfer.selected=%1$s НПС выбрано
 
-key.openUnitOverview=Open Unit Overview
-gui.unitoverview.title=Unit Overview  §7(Leftclick on Inv = Open, Rightclick = Show)
-gui.unitoverview.filters=Filters: Company
-gui.unitoverview.columns=Columns:
-gui.unitoverview.warriors=Warriors
-gui.unitoverview.farmers=Farmers
-gui.unitoverview.showNpc=Showing %1$s
+key.openUnitOverview=Открыть меню НПС
+gui.unitoverview.title=Меню НПС §7(ЛКМ = открыть инвентарь НПС, ПКМ = выделить НПС)
+gui.unitoverview.filters=Фильтр: Эскадрон
+gui.unitoverview.columns=Столбцы:
+gui.unitoverview.warriors=Воины
+gui.unitoverview.farmers=Фермеры
+gui.unitoverview.showNpc=Выделен НПС: %1$s
 
-gui.unitoverview.cIndex=Index
-gui.unitoverview.cBlocks=Blocks
-gui.unitoverview.cInv=Inventory
-gui.unitoverview.cLvl=Lvl
-gui.unitoverview.cName=Name
-gui.unitoverview.cType=Type
-gui.unitoverview.cCompany=Company
-gui.unitoverview.cArmor=Armor
+gui.unitoverview.cIndex=Номер
+gui.unitoverview.cBlocks=Расстояние
+gui.unitoverview.cInv=Инвентарь
+gui.unitoverview.cLvl=Уровень
+gui.unitoverview.cName=Имя
+gui.unitoverview.cType=Тип
+gui.unitoverview.cCompany=Эскадрон
+gui.unitoverview.cArmor=Броня
 
-gui.configconfirm.title=MiddleEarth-Tweaks Config Change Confirm
-gui.configconfirm.info=The following settings will be adjusted to play on this server
-gui.configconfirm.config=Config
-gui.configconfirm.server=Server
-gui.configconfirm.you=You
+gui.configconfirm.title=MiddleEarth-Tweaks подтвердить измение конфига
+gui.configconfirm.info=Для игры на этом сервере будут изменены следующие настройки
+gui.configconfirm.config=Конфиг
+gui.configconfirm.server=Сервер
+gui.configconfirm.you=Вы
 
 # first part, like "home set to [coords]"
-lotr.gui.warrior.notifyhome=Home set to
-gui.guardmodehorn.tip=[Rightclick + Sneak] for settings
-gui.guardmodehorn.keep=Keep
-gui.guardmodehorn.change=Change
-gui.guardmodehorn.title=Guardmode Horn Settings
-gui.guardmodehorn.info=Values to apply at Hireds on Use
-gui.guardmodehorn.display=Guardmode - 
+lotr.gui.warrior.notifyhome=Точка установлена
+gui.guardmodehorn.tip=[ПКМ + Shift] для настройки
+gui.guardmodehorn.keep=Вкл.стражу
+gui.guardmodehorn.change=Настроить
+gui.guardmodehorn.title=Рог стражи
+gui.guardmodehorn.info=Настройки режима стражи НПС
+gui.guardmodehorn.display=Режим стражи - 
 
-lotr.gui.warrior.performanceWarn=High ranges are very demanding
-lotr.gui.warrior.requireGuardmode=Guard Mode needs to be enabled
-lotr.gui.warrior.setHomeTip=[Rightclick + Sneak] to set home
+lotr.gui.warrior.performanceWarn=Большая дальность очень требовательна
+lotr.gui.warrior.requireGuardmode=Необходимо вкл. режим стражи
+lotr.gui.warrior.setHomeTip=[ПКМ + shift] для установки точки стражи
 
-metweaks.updateAvaible=§7MiddleEarth Tweaks §a%1$s§7 is available §f§n[Click to Download]
-tile.bed.respawnSet=respawn point set
+metweaks.updateAvaible=§7MiddleEarth Tweaks §a%1$s§7 доступно §f§n[Скачать]
+tile.bed.respawnSet=Точка спавна установлена
 
-commands.guardmodehorn.requireHorn=You need to hold a Horn of Command
-commands.guardmodehorn.converted=Converted§7 - Install §aMiddleEarth-Tweaks §7for more options
-commands.entityeffect.requireAlive=Entity needs to be alive
-commands.entityeffect.notFound=Effect '%1$s' not found
-commands.generic.notAnEntity=Can only use this at yourself as an entity
-commands.selector.selfRequireEntity=@s (@self) needs to be an entity
-commands.selector.missingCloseBracket=Missing closing square brackets [] at: %1$s
-commands.selector.missingOpenBracket=Expected opening square brackets [] at: %1$s
-commands.selector.unknownGroup=Unknown Entity Group "%1$s"
-metweaks.healthbar.tip=Press %1$s to toggle HealthBar
-metweaks.healthbar.display=HealthBar
-metweaks.healthbar.speed=Скорост
-metweaks.healthbar.jump=Скок
-metweaks.verticalslabs.tip=Sneak to use facing
-metweaks.verticalslabs.tooltip=Press %1$s for vertical
-metweaks.verticalslabs.display=Vertical Slabs
-commands.entitystack.cancel=Aborting stacking...
-commands.entitystack.defmount=Click at entity to define mount
-commands.entitystack.defrider=Click at entity to define rider
-commands.entitystack.requirePlayer=Sender needs to be a player
-commands.entitystack.dimChange=Dimension change detected, aborting...
-commands.entitystack.missing=The entity appears to be missing or unloaded, aborting...
-commands.entitystack.success=Stacked %1$s + %2$s
-commands.entitystack.dismount=Click at entity to dismount
-commands.entitystack.failDismount=Unable to dismount entity
-commands.entitystack.successDismount=Dismounted %1$s
-
-
+commands.guardmodehorn.requireHorn=Вы должны держать рог для выполнения этой команды
+commands.guardmodehorn.converted=Конвертировано§7 - Установите §aMiddleEarth-Tweaks §7для большей информации
+commands.entityeffect.requireAlive=Сущность должна быть жива
+commands.entityeffect.notFound=Эффект '%1$s' не найден
+commands.generic.notAnEntity=Вы можете использовать это на себе, как на сущности
+commands.selector.selfRequireEntity=@s (@self) необходимо быть сущностью
+commands.selector.missingCloseBracket=Отсутствуют квадратные скобки [] в: %1$s
+commands.selector.missingOpenBracket=Отсутсвутют квадратные скобки [] в: %1$s
+commands.selector.unknownGroup=Неизвестная группа сущностей "%1$s"
+metweaks.healthbar.tip=Нажмите %1$s ,чтобы вкл. шкалу здоровья
+metweaks.healthbar.display=Шкала здоровья
+metweaks.healthbar.speed=Скорость
+metweaks.healthbar.jump=Прыжок
+metweaks.verticalslabs.tip=Крадитесь для изменения направления
+metweaks.verticalslabs.tooltip=Нажмите %1$s, чтобы перевернуть
+metweaks.verticalslabs.display=Вертикальные плиты
+commands.entitystack.cancel=Прекращение объединения...
+commands.entitystack.defmount=Нажмите на ездовое животное
+commands.entitystack.defrider=Нажмите на НПС, которое будет наездником
+commands.entitystack.requirePlayer=Оправитель должен быть игроком
+commands.entitystack.dimChange=Изменено измерение, прекращение объединения...
+commands.entitystack.missing=Похоже сущность отсутствует или же выгружена, прекрашение...
+commands.entitystack.success=Объединены %1$s + %2$s
+commands.entitystack.dismount=Нажмите на сущность, чтобы спешить ее
+commands.entitystack.failDismount=Невозможно спешить сущность
+commands.entitystack.successDismount=Сущность %1$s спешена
 
 
 
-Commands.generic.entity.notFound=Моб не найден
+
+
+Commands.generic.entity.notFound=Сущность не найдена
 Commands.generic.dim.notFound=Измерение %1$s не существует
-Commands.selector.unknownArgValue=Неизвестное значение аргумента "%1$s" по адресу: %2$s
+Commands.selector.unknownArgValue=Неизвестное значение "%1$s" по адресу: %2$s
 Commands.selector.unknownArg=Неизвестный аргумент "%1$s" по адресу: %2$s, допустимые аргументы: %3$s
 Commands.selector.unknown=Неизвестный тип объекта "%1$s"
 Commands.selector.invalid=Неверный выбор типа объекта: %1$s
@@ -107,15 +147,15 @@ Commands.conqdecay.disable=Отключено затухание завоева�
 Commands.conqdecay.set=Установить задержку завоевания на %1$s минут
 Commands.conqdecay.info=Спад завоевания составляет %1$s минут
 gui.confirm.restart=Подтвердить и перезапустить игру
-key.togglehealth=Переключить здоровье
+key.togglehealth=Вкл/Выкл дополнительную шкалу здоровья
 key.toggleverticalslabs=Переключить вертикальные плиты
 
 
-metweaks.config.individual-mountspeeds=Изменить скорость мобов
+metweaks.config.individual-mountspeeds=Изменить скорость ездовых животных
 metweaks.config.general=Общие
 metweaks.config.healthbar=Полоса здоровья
 metweaks.config.guards=Стражи
-metweaks.config.mountspeed=Скорость передвижения
+metweaks.config.mountspeed=Скорость ездовых животных
 metweaks.config.blocks=Блоки
 metweaks.config.misc=Разное
 metweaks.config.hudelements=Элементы HUD
@@ -239,7 +279,7 @@ tile.lotr:woodBeam9.13.name=Закрытая балка из кунцового 
 
 
 
-tile.bed.notSafe=Вы не можете сейчас поспать, рядом враги
+tile.bed.notSafe=Вы не можете лечь спать, рядом враги
 
 Commands.metweaks.conqclear=Захват для %1$s пройден в (%2$s, %3$s)
 Commands.metweaks.conqclear.radial=Очищен радиальный захват для %1$s вокруг (%2$s, %3$s)
@@ -248,12 +288,12 @@ lotr.gui.warrior.wanderRange=Диапазон передвижения
 lotr.gui.warrior.followRange=Диапазон ИИ
 lotr.gui.warrior.ammoRange=Дальность атаки
 lotr.gui.warrior.advanced=Дополнительные настройки
-lotr.gui.warrior.sethome=Установить/показать местоположение дома
+lotr.gui.warrior.sethome=Установить/показать точку дома
 lotr.gui.warrior.ignoreSight=Игнорировать в поле зрения
 lotr.gui.warrior.unlockSettings=Для разблокировки требуется уровень %1$s
 lotr.gui.warrior.unlockSettings2=Пределы увеличиваются с уровнем
 
 lotr.gui.hornSelect.guardMode=Переключить режим охраны
-gui.guardmodehorn.autoGuardRange=Диапазон автоматической защиты
+gui.guardmodehorn.autoGuardRange=Диапазон авто.защиты
 
-# Здесь был Костя
+# Здесь был Костя с БД

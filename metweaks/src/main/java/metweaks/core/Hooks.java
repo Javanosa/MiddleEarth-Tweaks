@@ -6,25 +6,35 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import org.lwjgl.opengl.GL11;
+
 import com.google.common.collect.Sets;
 
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
+import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
+import lotr.common.LOTRMod;
+import lotr.common.enchant.LOTREnchantmentHelper;
 import metweaks.ASMConfig;
+import metweaks.MeTweaks;
 import metweaks.MeTweaksConfig;
 import metweaks.block.MeTweaksSlab;
 import metweaks.block.MeTweaksSlabItem;
 import metweaks.block.VerticalSlab;
 import metweaks.events.ClientEvents;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockPane;
 import net.minecraft.block.BlockSlab;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemShears;
@@ -33,6 +43,9 @@ import net.minecraft.item.ItemTool;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
@@ -44,44 +57,22 @@ public class Hooks {
 	public static void warnMissingDiscriminator(String alert, FMLProxyPacket msg) {
 		if(ASMConfig.passMissingDiscriminator == 1) {
 			NetworkManager manager = msg.getOrigin();
-			
 			FMLLog.warning((manager != null ? manager.getSocketAddress() : "" ) + " to " + msg.getTarget() + " - " + alert);
 		}
 	}
 	
 	public static void consumeItem(ItemStack itemstack, EntityPlayer player, ItemStack empty) {
-		//System.out.println(itemstack);
 		if(empty == null) empty = new ItemStack(Items.bowl);
 		int prevSize = itemstack.stackSize;
-	  	itemstack.stackSize = Math.max(1, --prevSize); // avoid getting zero
-	  	
-	  	if(prevSize <= 0) {
-	  		//itemstack.stackSize++;
-	  	//	System.out.println(itemstack);
-	  		player.inventory.setInventorySlotContents(player.inventory.currentItem, empty); 
-	  		
-	  	}
-	  	else if (!player.inventory.addItemStackToInventory(empty)) {
-	    	player.dropPlayerItemWithRandomChoice(empty, false);
-	    } 
+		itemstack.stackSize = Math.max(1, --prevSize); // avoid getting zero
+
+		if(prevSize <= 0) {
+			player.inventory.setInventorySlotContents(player.inventory.currentItem, empty);
+		}
+		else if(!player.inventory.addItemStackToInventory(empty)) {
+			player.dropPlayerItemWithRandomChoice(empty, false);
+		} 
 	}
-	
-	/*public static void consumeItem2(ItemStack itemstack, EntityPlayer player) {
-		//System.out.println(itemstack);
-		ItemStack emptyMug = LOTRItemMug.getVessel(itemstack).getEmptyVessel();
-		int prevSize = itemstack.stackSize;
-	  	itemstack.stackSize = Math.max(1, --prevSize); // avoid getting zero
-	  	
-	  	if(prevSize <= 0) {
-	  		//itemstack.stackSize++;
-	  	//	System.out.println(itemstack);
-	  		player.inventory.setInventorySlotContents(player.inventory.currentItem, emptyMug); 
-	  		
-	  	}
-	  	else if (!player.inventory.addItemStackToInventory(emptyMug)) {
-	    	player.dropPlayerItemWithRandomChoice(emptyMug, false);
-	    } 
-	}*/
 	
 	public static List<PotionEffect> getStackedEffects(float strength, EntityLivingBase entity, List<PotionEffect> effects) {
 		List<PotionEffect> list = new ArrayList<PotionEffect>();
@@ -106,7 +97,7 @@ public class Hooks {
 			if(active != null) {
 				int remain = active.getDuration();
 
-				float factor = ASMConfig.draughtStackEffectsIncrease * 0.01F;//   0.5F;
+				float factor = ASMConfig.draughtStackEffectsIncrease * 0.01F; // 0.5F;
 				if(remain > duration) {
 					duration = remain + (duration * factor);
 				}
@@ -136,9 +127,6 @@ public class Hooks {
 		catch(Exception ec) {
 			ec.printStackTrace();
 		}
-		
-		
-		
 	}
 	
 	public static void setShearsToolClass(ItemShears item) {
@@ -155,12 +143,7 @@ public class Hooks {
 		catch(Exception ec) {
 			ec.printStackTrace();
 		}
-		
-		
-		
 	}
-	
-	
 	
 	public static final TObjectIntMap<Item> consumeDurations = new TObjectIntHashMap<>();
 	
@@ -171,68 +154,64 @@ public class Hooks {
 		return 32;
 	}
 	
-	
-	
-	
-	
 	public static boolean isVerticalMode(EntityPlayer player) {
 		return VerticalSlab.modesVertical.contains(player.getUniqueID());
 	}
 	
 	public static boolean oppositeSlabCheck(Block single_slab, Block double_slab, ItemStack stack, World world, int side, int x, int y, int z) {
 		// make coords local here!
-    	// take block in oppostive direction. See if it can do half to full
-    	switch(side) {
-     		case 0: --y; break;
-     		case 1: ++y; break;
-     		case 2: --z; break;
-     		case 3: ++z; break;
-     		case 4: --x; break;
-     		case 5: ++x; break;
-    	}
-        Block block = world.getBlock(x, y, z);
-        if(block instanceof VerticalSlab) {
-       	 int meta = world.getBlockMetadata(x, y, z);
-       	 
-       	int itemDmg = stack.getItemDamage();
-		int fullblockMetaOffset = 0;
-		
-    	if(VerticalSlab.isMeTweaksSlab(single_slab)) {
-			MeTweaksSlab slab = (MeTweaksSlab) single_slab;
-
-			if(MeTweaksSlabItem.isSlabWoodBeam(slab)) {
-				int ascRotation = MeTweaksSlabItem.getAscRotation(block, meta);
-		        single_slab = slab = slab.getBeamSlab(ascRotation);
-		        
-		        
-		        itemDmg |= ascRotation & 4;
-	        }
-			fullblockMetaOffset = slab.renderMetaOffset;
+		// take block in oppostive direction. See if it can do half to full
+		switch(side) {
+			case 0: --y; break;
+			case 1: ++y; break;
+			case 2: --z; break;
+			case 3: ++z; break;
+			case 4: --x; break;
+			case 5: ++x; break;
 		}
-       	 
-       	 VerticalSlab vertical = (VerticalSlab) block;
-       	 int type = (meta & 3) + vertical.offset;
-        
-        
-	        // do the same double block check again but without side check!
-	        if(vertical.slab == single_slab && type == itemDmg) {
-	        	if(double_slab == null) {
-	        		//System.out.println("Allow half to full opposite");
-	            	return true;
-	        	}
-	        	
-	        	type += fullblockMetaOffset;
-	        	
-	            if (world.checkNoEntityCollision(double_slab.getCollisionBoundingBoxFromPool(world, x, y, z)) && world.setBlock(x, y, z, double_slab, type, 3)) {
-	                												// getBreakSound()
-	            	world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, double_slab.stepSound.func_150496_b(), (double_slab.stepSound.getVolume() + 1F) / 2F, double_slab.stepSound.getPitch() * 0.8F);
-	                --stack.stackSize;
-	                //System.out.println("Place half to full opposite");
-    	            return true;
-	            }
-	            
-	        } 
-        }
+		Block block = world.getBlock(x, y, z);
+		if(block instanceof VerticalSlab) {
+			int meta = world.getBlockMetadata(x, y, z);
+
+			int itemDmg = stack.getItemDamage();
+			int fullblockMetaOffset = 0;
+
+			if(VerticalSlab.isMeTweaksSlab(single_slab)) {
+				MeTweaksSlab slab = (MeTweaksSlab) single_slab;
+
+				if(MeTweaksSlabItem.isSlabWoodBeam(slab)) {
+					int ascRotation = MeTweaksSlabItem.getAscRotation(block, meta);
+					single_slab = slab = slab.getBeamSlab(ascRotation);
+
+
+					itemDmg |= ascRotation & 4;
+				}
+				fullblockMetaOffset = slab.renderMetaOffset;
+			}
+
+			VerticalSlab vertical = (VerticalSlab) block;
+			int type = (meta & 3) + vertical.offset;
+
+
+			// do the same double block check again but without side check!
+			if(vertical.slab == single_slab && type == itemDmg) {
+				if(double_slab == null) {
+					//System.out.println("Allow half to full opposite");
+					return true;
+				}
+
+				type += fullblockMetaOffset;
+
+				if(world.checkNoEntityCollision(double_slab.getCollisionBoundingBoxFromPool(world, x, y, z)) && world.setBlock(x, y, z, double_slab, type, 3)) {
+																						// getBreakSound()
+					world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, double_slab.stepSound.func_150496_b(), (double_slab.stepSound.getVolume() + 1F) / 2F, double_slab.stepSound.getPitch() * 0.8F);
+					--stack.stackSize;
+					//System.out.println("Place half to full opposite");
+					return true;
+				}
+
+			} 
+		}
 		return false;
 	}
 	
@@ -247,163 +226,136 @@ public class Hooks {
 	static boolean sendFacingTip = true;
 	
 	public static boolean verticalAdjacentAndHalfCheck(Block single_slab, Block double_slab, ItemStack stack, EntityPlayer player, World world, int side, int x, int y, int z, float hitX, float hitZ) {
-		
-		
-		
-		
-		
-		
 		// handle placement
 		boolean mirror = false;
 		int shape = 0;
-    	Block block = world.getBlock(x, y, z);
-    	//int meta = world.getBlockMetadata(x, y, z); // not 100% needed but easier
-    	
-    	int itemDmg = stack.getItemDamage();
+		Block block = world.getBlock(x, y, z);
+		//int meta = world.getBlockMetadata(x, y, z); // not 100% needed but easier
+
+		int itemDmg = stack.getItemDamage();
 		int fullblockMetaOffset = 0;
-		
-    	if(VerticalSlab.isMeTweaksSlab(single_slab)) {
+
+		if(VerticalSlab.isMeTweaksSlab(single_slab)) {
 			MeTweaksSlab slab = (MeTweaksSlab) single_slab;
 
 			if(MeTweaksSlabItem.isSlabWoodBeam(slab)) {
 				int ascRotation = MeTweaksSlabItem.getAscRotation(block, world.getBlockMetadata(x, y, z));
-		        single_slab = slab = slab.getBeamSlab(ascRotation);
-		        
-		        
-		        itemDmg |= ascRotation & 4;
-	        }
+				single_slab = slab = slab.getBeamSlab(ascRotation);
+				itemDmg |= ascRotation & 4;
+			}
+
 			fullblockMetaOffset = slab.renderMetaOffset;
 		}
-        
-    	
-    	
-    	
-    
-         if(block instanceof VerticalSlab) {
-        	 int meta = world.getBlockMetadata(x, y, z);
-        	 
-        	 
-        	
-        	 VerticalSlab vertical = (VerticalSlab) block;
-        	 int type = (meta & 3) + vertical.offset;
-        	 shape = meta >> 2;
-        	 
-        	 
-        	 
-        	 
-        	 if(vertical.slab == single_slab && type == (itemDmg) && validVerticalShape(shape, side)) {
-        		if(double_slab == null) {
-        			// allow half to full
-           		 	//System.out.println("Allow half to full side");
-           		 	return true;
-        		}
-        		
-        		type += fullblockMetaOffset;
-        		
-        		
-        		
-        		
-        		
-        		
-        		if(world.checkNoEntityCollision(double_slab.getCollisionBoundingBoxFromPool(world, x, y, z)) 
-        			 && world.setBlock(x, y, z, double_slab, type, 3)) {
-						// getBreakSound
-        			 
+
+		if(block instanceof VerticalSlab) {
+			int meta = world.getBlockMetadata(x, y, z);
+
+			VerticalSlab vertical = (VerticalSlab) block;
+			int type = (meta & 3) + vertical.offset;
+			shape = meta >> 2;
+
+			if(vertical.slab == single_slab && type == (itemDmg) && validVerticalShape(shape, side)) {
+				if(double_slab == null) {
+					// allow half to full
+					//System.out.println("Allow half to full side");
+					return true;
+				}
+
+				type += fullblockMetaOffset;
+
+				if(world.checkNoEntityCollision(double_slab.getCollisionBoundingBoxFromPool(world, x, y, z)) 
+				&& world.setBlock(x, y, z, double_slab, type, 3)) {
+																						// getBreakSound
 					world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, double_slab.stepSound.func_150496_b(), (double_slab.stepSound.getVolume() + 1F) / 2F, double_slab.stepSound.getPitch() * 0.8F);
 					--stack.stackSize;
 					//System.out.println("Place half to full side");
 					return true;
 				}
-        	 }
-        	 
-        	 
-        	 if(MeTweaksConfig.mirrorVerticalSlabs)
-        	 switch(side) {
-        	 	case 0:
-        	 	case 1:
-        	 		mirror = true;
-        	 		break;
-        	 	case 2:
-        	 	case 3:
-        	 		mirror = shape == 1 || shape == 3;
-        	 		break;
-        	 	case 4:
-        	 	case 5:
-        	 		mirror = shape == 0 || shape == 2;
-        	 		break;
-        	 }
-        	 
-        	
-        	
-         }	
-					
-        // gets the position in front of the clicked block        
-         if(oppositeSlabCheck(single_slab, double_slab, stack, world, side, x, y, z)) return true;
+			}
 
-         // regular placement
-         if (!block.isReplaceable(world, x, y, z)) {
-     		
-        	 switch(side) {
-	     		case 0: --y; break;
-	     		case 1: ++y; break;
-	     		case 2: --z; break;
-	     		case 3: ++z; break;
-	     		case 4: --x; break;
-	     		case 5: ++x; break;
-	     	}
-         }
-         
-         
-         
-         
-         
-         if(VerticalSlab.allverticals.containsKey(VerticalSlab.index(single_slab, itemDmg))) {
-	         VerticalSlab vertical = VerticalSlab.allverticals.get(VerticalSlab.index(single_slab, itemDmg));
-	         int type = itemDmg - vertical.offset;
-	         int metadata = vertical.metaState(world, x, y, z, side, type, player, hitX, hitZ);
-	         if(!player.isSneaking()) {
-	        	 if(world.isRemote && MeTweaksConfig.showTips && sendFacingTip && (side > 1 || mirror)) {
-	        		 ClientEvents.actionBar(StatCollector.translateToLocal("metweaks.verticalslabs.tip"), false, 80, null, true);
-	        		 sendFacingTip = false;
-	        	 }
-	        	 if(mirror) {
-		        	 metadata = type + shape * 4;
-		        	 int original = world.getBlockMetadata(x, y, z);
-		             world.setBlockMetadataWithNotify(x, y, z, metadata, 0);
-		             vertical.setBlockBoundsBasedOnState(world, x, y, z);
-		             world.setBlockMetadataWithNotify(x, y, z, original, 0);
-		         }
-	         }
-	        
-	        	 
-	         
-	          
-	         if(world.canPlaceEntityOnSide(vertical, x, y, z, false, side, null, stack)) {
-	        	 if(double_slab == null) {
-	        		 //System.out.println("Allow new placement");
-	        		 return true;
-	        	 }
-	        	 
-	        	 
-	        	 
-	             if(world.setBlock(x, y, z, vertical, metadata, 3)) {
-	            	 /*if(world.getBlock(x, y, z) == vertical) {
-	            		 vertical.onBlockPlacedBy(world, x, y, z, player, stack);
-	            		 vertical.onPostBlockPlaced(world, x, y, z, metadata);
-		             }*/
-		
-		             world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, single_slab.stepSound.func_150496_b(), (single_slab.stepSound.getVolume() + 1F) / 2F, single_slab.stepSound.getPitch() * 0.8F);
-		             --stack.stackSize;
-		             //System.out.println("Place new");
-		             return true;
-	             }
-	             
-	         }
-	         
-	         
-         }
-         //System.out.println("End");
-         return false;
+
+			if(MeTweaksConfig.mirrorVerticalSlabs)
+			switch(side) {
+				case 0:
+				case 1:
+					mirror = true;
+					break;
+				case 2:
+				case 3:
+					mirror = shape == 1 || shape == 3;
+					break;
+				case 4:
+				case 5:
+					mirror = shape == 0 || shape == 2;
+					break;
+			}
+
+
+
+		}	
+
+		// gets the position in front of the clicked block
+		if(oppositeSlabCheck(single_slab, double_slab, stack, world, side, x, y, z)) return true;
+
+		// regular placement
+		if(!block.isReplaceable(world, x, y, z)) {
+			switch(side) {
+				case 0: --y; break;
+				case 1: ++y; break;
+				case 2: --z; break;
+				case 3: ++z; break;
+				case 4: --x; break;
+				case 5: ++x; break;
+			}
+		}
+
+
+
+
+
+		if(VerticalSlab.allverticals.containsKey(VerticalSlab.index(single_slab, itemDmg))) {
+			VerticalSlab vertical = VerticalSlab.allverticals.get(VerticalSlab.index(single_slab, itemDmg));
+			int type = itemDmg - vertical.offset;
+			int metadata = vertical.metaState(world, x, y, z, side, type, player, hitX, hitZ);
+			if(!player.isSneaking()) {
+				if(world.isRemote && MeTweaksConfig.showTips && sendFacingTip && (side > 1 || mirror)) {
+					ClientEvents.actionBar(StatCollector.translateToLocal("metweaks.verticalslabs.tip"), false, 80, null, true);
+					sendFacingTip = false;
+				}
+				
+				if(mirror) {
+					metadata = type + shape * 4;
+					int original = world.getBlockMetadata(x, y, z);
+					world.setBlockMetadataWithNotify(x, y, z, metadata, 0);
+					vertical.setBlockBoundsBasedOnState(world, x, y, z);
+					world.setBlockMetadataWithNotify(x, y, z, original, 0);
+				}
+			}
+
+
+			if(world.canPlaceEntityOnSide(vertical, x, y, z, false, side, null, stack)) {
+				if(double_slab == null) {
+					//System.out.println("Allow new placement");
+					return true;
+				}
+
+
+
+				if(world.setBlock(x, y, z, vertical, metadata, 3)) {
+					/*if(world.getBlock(x, y, z) == vertical) {
+					vertical.onBlockPlacedBy(world, x, y, z, player, stack);
+					vertical.onPostBlockPlaced(world, x, y, z, metadata);
+					}*/
+
+					world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, single_slab.stepSound.func_150496_b(), (single_slab.stepSound.getVolume() + 1F) / 2F, single_slab.stepSound.getPitch() * 0.8F);
+					--stack.stackSize;
+					//System.out.println("Place new");
+					return true;
+				}
+			}
+		}
+		//System.out.println("End");
+		return false;
 	}
 	
 	private static boolean validVerticalShape(int shape, int side) {
@@ -413,7 +365,7 @@ public class Hooks {
 	
 	public static boolean canPlaceVerticalHere(BlockSlab single_slab, World world, int x, int y, int z, int side, EntityPlayer player, ItemStack stack) {
 		return verticalAdjacentAndHalfCheck(single_slab, null, stack, player, world, side, x, y, z, -1, -1);
-    }
+	}
 	
 	public static ItemStack getPickBlock(Block block, MovingObjectPosition target, World world, int x, int y, int z) {
 		int meta = world.getBlockMetadata(x, y, z);
@@ -423,33 +375,33 @@ public class Hooks {
 	}
 	
 	public static void onBlockPlacedByTP(World world, int x, int y, int z, EntityLivingBase entity) {
-		
-        int meta = world.getBlockMetadata(x, y, z);
-        
-        if(meta == 8 || meta == 0) {
-        	int facing = MathHelper.floor_float((entity.rotationYaw * 4F / 360F) + 0.5F) & 3;
-        	
-        	if(facing != 0) {
-	        	switch(facing) {
-		        	case 1: // west
-		    			meta += 3;
-		    			break;
-	        		case 2: // north
-	        			meta += 1;
-	        			break;
-	        		case 3: // east
-	        			meta += 2;
-	        			break;
-	        		// south, do nothing
-	        	}
-	        	
-	        	world.setBlockMetadataWithNotify(x, y, z, meta, 2);
-        	}
-        }
-    }
+
+		int meta = world.getBlockMetadata(x, y, z);
+
+		if(meta == 8 || meta == 0) {
+			int facing = MathHelper.floor_float((entity.rotationYaw * 4F / 360F) + 0.5F) & 3;
+
+			if(facing != 0) {
+				switch(facing) {
+					case 1: // west
+						meta += 3;
+						break;
+					case 2: // north
+						meta += 1;
+						break;
+					case 3: // east
+						meta += 2;
+						break;
+					// south, do nothing
+				}
+
+				world.setBlockMetadataWithNotify(x, y, z, meta, 2);
+			}
+		}
+	}
 
 	public static int onBlockPlacedTP(int side, float hitY, int meta) {
-        // place from side
+		// place from side
 		switch(side) {
 			case 3:
 				meta = 1;
@@ -461,47 +413,55 @@ public class Hooks {
 				meta = 3;
 				break;
 		}
-        // turn side into top and turn top into top
-        if(side != 1 && (hitY > 0.5F || side == 0)) {
-        	meta |= 8;
-        }
-        return meta;
-    }
+		// turn side into top and turn top into top
+		if(side != 1 && (hitY > 0.5F || side == 0)) {
+			meta |= 8;
+		}
+		return meta;
+	}
+	
+	public static void preRenderInvCTM(Block block) {
+		if(block instanceof BlockCarvableSlab) {
+			setBoundsForItemRender(block);
+			GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
+		}
+	}
 	
 	 public static void setBoundsForItemRender(Block block) {
 		
-		if(block.isOpaqueCube())  {
-	    	 block.setBlockBounds(0, 0, 0, 1, 1, 1);
-        }
+		if(block.isOpaqueCube()) {
+			block.setBlockBounds(0, 0, 0, 1, 1, 1);
+		}
 		else if(VerticalSlab.clientVertical) {
 			float offsetX = -0.2f;//0.05f;
-			float offsetY = 0.2f;//0.1f;
-			
-			
-        	/*block.setBlockBounds(
+			//float offsetY = 0.2f;//0.1f;
+			GL11.glTranslatef(offsetX, 0, 0); // 0.03125f
+			block.setBlockBounds(
 					// minX, minY, minZ
-					0+offset, 0+offsetY, 0, 
+					0, 0, 0.5F, 
 					// maxX, maxY, maxZ
-					0.5F+offset, 1+offsetY, 1);*/
-        	//GL11.glTranslatef(0.05f, 0.1f, 0);
-        	
-        	block.setBlockBounds(
+					1, 1, 1);
+			
+			/*block.setBlockBounds(
 					// minX, minY, minZ
 					offsetX, offsetY, 0.5F, 
 					// maxX, maxY, maxZ
-					1+offsetX, 1+offsetY, 1);
-        }
-        else {
-            block.setBlockBounds(0, 0, 0, 1, 0.5F, 1);
-        }
-    }
+					1+offsetX, 1+offsetY, 1);*/
+		}
+		else {
+			block.setBlockBounds(0, 0, 0, 1, 0.5F, 1);
+		}
+	}
 	
 	public static float getReductionTime(long worldTime, long lastChangeTime) {
-		int ticks = (int) (worldTime - lastChangeTime);
 		float decay = MeTweaksConfig.conquestDecay;
-		float seconds = ticks / 20F;
-		if(decay == 0)
+		if(decay == 0) {
 			return 0;
+		}
+		
+		int ticks = (int) (worldTime - lastChangeTime);
+		float seconds = ticks / 20F;
+		
 		if (seconds > decay) {
 			seconds -= decay;
 			//float v = seconds / decay;
@@ -526,9 +486,148 @@ public class Hooks {
 			MeTweaksConfig.conquestDecay = 3600;
 	}
 	
+	public static boolean isServerRunning() {
+		return MinecraftServer.getServer().isServerRunning();
+	}
+	
+	public static boolean canAlloySmelt(ItemStack stack) {
+		return LOTRMod.isOreNameEqual(stack, "oreIron") || LOTRMod.isOreNameEqual(stack, "oreCopper") || LOTRMod.isOreNameEqual(stack, "oreGold");
+	}
+	
+	public static GameData temp_gameData;
+	
+	public static boolean canChandelierStay(Block block, int meta) {
+		return block instanceof BlockPane || (MeTweaks.etfuturum && block instanceof ganymedes01.etfuturum.blocks.BlockChain && meta == 0);
+	}
+	
+	public static boolean stopUpdating(Entity entity, int velocityLifetime) {
+		return entity.worldObj.isRemote && velocityLifetime < entity.ticksExisted;
+	}
 	
 	
 	
+	public static void clampSpeed(Entity entity) {
+		if(!entity.worldObj.isRemote) return;
+		
+		entity.motionX = MathHelper.clamp_double(entity.motionX, -3.9D, 3.9D);
+		entity.motionZ = MathHelper.clamp_double(entity.motionZ, -3.9D, 3.9D);
+		entity.motionY = MathHelper.clamp_double(entity.motionY, -3.9D, 3.9D);
+	}
 	
+	public static boolean suitableDistance(EntityCreature taskOwner, EntityLivingBase target, double maxDistance) {
+
+		double distance = target.getDistanceSq(taskOwner.posX, taskOwner.posY, taskOwner.posZ);
+
+		if(taskOwner.getAITarget() == target) {
+			return true;
+		}
+
+		if(target instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) target;
+
+
+
+			if(player.isSneaking()) {
+				maxDistance *= 0.8;
+			}
+
+			if(player.isInvisible()) {
+				float visibility = player.getArmorVisibility();
+
+				if(visibility < 0.1F) {
+					visibility = 0.1F;
+				}
+
+				maxDistance *= (double) (0.7F * visibility);
+			}
+
+
+
+		}
+
+		if(distance < maxDistance * maxDistance) {
+			return true;
+		}
+		return false;
+	}
+	
+	private static int[] armorUseThresholds; 
+	public static float armorPercentLeft;
+	private static float[] armorUseThresholdFactors;
+	private static int[] protectThresholds;
+	
+	private static String[] armorSlots; 
+	private static boolean evenMode;
+	
+	private static String decimal(float v, float place) {
+		String str = String.valueOf(Math.round(v * place) / place);
+		if(str.endsWith(".0")) {
+			return str.substring(0, str.length() - 2);
+		}
+		return str;
+	}
+	
+	public static int getProcessedArmorDurability(ItemStack stack) {
+		if(armorUseThresholds == null) {
+			// init
+			armorUseThresholds = new int[] {90, 240, 180, 90}; 
+			protectThresholds = new int[] {3, 8, 6, 3};
+			//armorPercentLeft = 1F - Math.min(99, ASMConfig.armorMaintainProtectionPercent) / 100F;
+			armorPercentLeft = Math.max(0.001F, Math.min(100, ASMConfig.armorMaintainProtectionPercent) / 100F);
+			armorUseThresholdFactors = new float[] {90 / armorPercentLeft, 240 / armorPercentLeft, 180 / armorPercentLeft, 90 / armorPercentLeft};
+			
+		}
+		
+		ItemArmor armor = (ItemArmor) stack.getItem();
+		int oldV = armor.getMaxDamage() + 1 - stack.getItemDamage();
+		int newV = oldV;
+		int slot = armor.armorType;
+		int protectThreshold = protectThresholds[slot];
+		
+		// base armor protection enough?
+		boolean maxed = armor.damageReduceAmount >= protectThreshold;
+		if(!maxed) {
+			int enchProtect = LOTREnchantmentHelper.calcCommonArmorProtection(stack);
+			// base armor protection + protection enchantment enough?
+			// otherwise chest if steadfast is applied
+			maxed = armor.damageReduceAmount + enchProtect >= protectThreshold || enchProtect >= 2;
+		}
+		
+		
+		// if armor cannot maintain threshold at given usage percent left
+		if(maxed && stack.getMaxDamage() * armorPercentLeft < armorUseThresholds[slot]) {
+			float percentLeft = 1F - ((float) stack.getItemDamage() / (float) armor.getMaxDamage());
+			// is current use percent left more than configured percent
+			if(percentLeft >= armorPercentLeft) {
+				// tresholds at 1% multiplied with current usage percent left. 
+				// So at configured percentage the armor returns exactly the threshold durability
+				// with more percent above the configured percent the value is a bit above that
+				newV = (int) (armorUseThresholdFactors[slot] * percentLeft);
+			}
+		}
+		
+		// debug
+		if(MeTweaksConfig.debug >= 4) {
+			debugDmgValues(stack, armor, newV, oldV, maxed);
+		}
+		
+		return newV;
+		
+	}
+	
+	private static void debugDmgValues(ItemStack stack, ItemArmor armor, int newV, int oldV, boolean maxed) {
+		if(armorSlots == null)
+			armorSlots = new String[] {"helmet", "chest", "legs", "boots"}; 
+		
+		@SuppressWarnings("unchecked")
+		List<EntityPlayer> list = MinecraftServer.getServer().getConfigurationManager().playerEntityList;
+		for(EntityPlayer player : list) {
+			EnumChatFormatting color = evenMode ? EnumChatFormatting.WHITE : EnumChatFormatting.GRAY;
+			evenMode = !evenMode;
+			player.addChatMessage(new ChatComponentText(color+"%: "+decimal(armorPercentLeft * 100F, 1F)+" Durability at "+decimal(armorPercentLeft * 100F, 1F)+"%: "+decimal(stack.getMaxDamage() * armorPercentLeft, 1F)+" Threshold: "+armorUseThresholds[armor.armorType]));
+			player.addChatMessage(new ChatComponentText(color+armorSlots[armor.armorType]+" Use Left: "+decimal((1F - ((float) stack.getItemDamage() / (float) armor.getMaxDamage())) * 100F, 1F)+"% Threshold100%: "+decimal(armorUseThresholdFactors[armor.armorType], 100F)));
+			player.addChatMessage(new ChatComponentText(color+"Fake Durability: "+newV+" Actual: "+oldV+"/"+stack.getMaxDamage()+" "+(maxed ? "Maxed" : "")));
+		}
+	}
 	
 }

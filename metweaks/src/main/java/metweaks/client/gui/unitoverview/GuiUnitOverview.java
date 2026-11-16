@@ -120,21 +120,22 @@ public class GuiUnitOverview extends GuiScreen {
 	public static final int columnDistance = 5;
 	public static final int columnInventory = 6;
 	public static final int columnLvl = 7;
-	
+	public static final int columnMount = 8;
 	
 	
 	
 	
 	// Disable / Enable Columns
 	GuiCheckBox[] col_checkboxes;
-	static boolean[] col_states = new boolean[8];
+	static boolean[] col_states = new boolean[9];
 	static {
 		Arrays.fill(col_states, true); // all columns are enabled by default
+		//col_states[columnMount] = false;
 	}
 	
 	// Toggle ASC / DESC for columns
 	GuiColumnButton[] col_buttons;
-	static boolean[] col_asc = new boolean[8];
+	static boolean[] col_asc = new boolean[9];
 	
 	GuiCheckBox checkboxWarriors;
 	GuiCheckBox checkboxFarmers;
@@ -149,21 +150,26 @@ public class GuiUnitOverview extends GuiScreen {
 	}
 	
 	public void addColumn(int index, String name) {
-		 addColumn(index, name, null);
+		 addColumn(index, -1, name, null);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void addColumn(int index, String name, IIcon icon) {
-		int sizeX = fontRendererObj.getStringWidth(name) + 10+10;
+	public void addColumn(int index, int width, String name, IIcon icon) {
+		if(width == -1)
+			width = fontRendererObj.getStringWidth(name);
+		int sizeX = width + 10+10;
 		GuiColumnButton button = new GuiColumnButton(4, 0, 70, sizeX, 16, name);
 		button.ascending = col_asc[index];
 		button.visible = col_states[index];
 		button.icon = icon;
+		button.contentWidth = width;
 		buttonList.add(col_buttons[index] = button);
 	}
 	
 	
 	
+	
+	private boolean hasInited;
 	
 	
 	@SuppressWarnings("unchecked")
@@ -199,10 +205,10 @@ public class GuiUnitOverview extends GuiScreen {
 		filtercompany.setMaxStringLength(LOTRSquadrons.SQUADRON_LENGTH_MAX);
 		filtercompany.setFocused(true);
 		
-		col_checkboxes = new GuiCheckBox[8];
+		col_checkboxes = new GuiCheckBox[9];
 		//col_states = new boolean[8];
 		
-		col_buttons = new GuiColumnButton[8];
+		col_buttons = new GuiColumnButton[9];
 		//col_asc = new boolean[8];
 		
 		topStart--;
@@ -232,6 +238,7 @@ public class GuiUnitOverview extends GuiScreen {
 		xStart = addColumnToggle(xStart, yPos, columnCompany, cCompany);
 		xStart = addColumnToggle(xStart, yPos, columnArmor, StatCollector.translateToLocal("gui.unitoverview.cArmor"));
 		xStart = addColumnToggle(xStart, yPos, columnLvl, cLvl);
+		xStart = addColumnToggle(xStart, yPos, columnMount, StatCollector.translateToLocal("gui.unitoverview.cMount"));
 		
 		
 		
@@ -240,14 +247,24 @@ public class GuiUnitOverview extends GuiScreen {
 		addColumn(columnType, cType);
 		addColumn(columnName, cName);
 		addColumn(columnCompany, cCompany);
-		addColumn(columnArmor, "AA", HealthBarConfig.icon_armor.getIconFromDamage(HealthBarConfig.icon_armor_meta));
+		//System.out.println(fontRendererObj.getStringWidth("AA"));
+		addColumn(columnArmor, 12, "AA", HealthBarConfig.icon_armor.getIconFromDamage(HealthBarConfig.icon_armor_meta));
 		addColumn(columnLvl, cLvl);
-		addColumn(columnDistance, "AA", Items.compass.getIconFromDamage(0));
+		addColumn(columnDistance, 12, "AA", Items.compass.getIconFromDamage(0));
 		addColumn(columnInventory, cInv);
+		addColumn(columnMount, 12, "AA", Items.saddle.getIconFromDamage(0));
 		
 		updateColumSelection(false);
 		
-		unitsList.initList();
+		if(!hasInited) {
+			unitsList.initList();
+			hasInited = true;
+		}
+		else {
+			
+			unitsList.updateStatic();
+			unitsList.updateStarts();
+		}
 		
 	}
 	

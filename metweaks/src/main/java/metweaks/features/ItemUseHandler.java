@@ -29,11 +29,12 @@ public class ItemUseHandler {
 	public static final int TURN_OFF_GUARDMODE = 5;
 	
 	public static void handleItemUseStart(PlayerUseItemEvent.Start event) {
-		if(event.item.getItem() == LOTRMod.commandHorn && event.entityPlayer.isSneaking()) {
-			int meta = event.item.getItemDamage();
+		ItemStack item = event.item;
+		if(item != null && item.getItem() == LOTRMod.commandHorn && event.entityPlayer.isSneaking()) {
+			int meta = item.getItemDamage();
 			if(meta == TURN_ON_GUARDMODE || meta == TURN_OFF_GUARDMODE) {
 				if(event.entityPlayer.worldObj.isRemote) {
-					MeTweaks.proxy.openGuiGuardmodeHorn(event.item);
+					MeTweaks.proxy.openGuiGuardmodeHorn(item);
 				}
 				event.setCanceled(true);
 			}
@@ -42,6 +43,9 @@ public class ItemUseHandler {
 	
 	public static void handleItemUseFinish(PlayerUseItemEvent.Finish event) {
 		ItemStack stack = event.item;
+		
+		if(stack == null) return;
+		
 		if(ASMConfig.patchDraughtUse) {
 			Item food = stack.getItem();
 			boolean mug = MeTweaks.lotr && food instanceof LOTRItemMug;
@@ -63,10 +67,10 @@ public class ItemUseHandler {
 			}
 		}
 		
-		if(MeTweaks.lotr && MeTweaksConfig.toggleGuardModeHorn && event.item.getItem() == LOTRMod.commandHorn && !event.entityPlayer.worldObj.isRemote) {
-			int meta = event.item.getItemDamage();
+		if(MeTweaks.lotr && MeTweaksConfig.toggleGuardModeHorn && stack.getItem() == LOTRMod.commandHorn && !event.entityPlayer.worldObj.isRemote) {
+			int meta = stack.getItemDamage();
 			if(meta ==TURN_ON_GUARDMODE || meta == TURN_OFF_GUARDMODE) {
-				ItemStack item = event.item.copy();
+				ItemStack item = stack.copy();
 				String state;
 				if(meta == TURN_ON_GUARDMODE) {
 					item.setItemDamage(TURN_OFF_GUARDMODE);

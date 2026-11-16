@@ -37,6 +37,7 @@ public class ASMConfig {
 		entityKillCommand,
 		entityEffectCommand,
 		entityStackCommand,
+		giveManyCommand,
 		fixSluggishHaradAttack,
 		fixQuestofferSync,
 		foodConsumeDurations,
@@ -45,7 +46,7 @@ public class ASMConfig {
 		disableTinCopperSilverGen,
 		guardsEquipRanged,
 		guardsEquipAllowTermites,
-		guardsDynamicAttackDelayRanged,
+		
 		aiRangedImprovements,
 		guardsEquipRemoveBroken,
 		randomEnchRangedNpcWeapons,
@@ -55,7 +56,56 @@ public class ASMConfig {
 		adventureModePatches,
 		fixTeleportToHiringPlayer,
 		patchDraughtUse,
-		preloadClasses
+		preloadClasses,
+		projectilePatches,
+		projectilePatchesReqClient,
+		alwaysAbsorbPiercingProjectiles,
+		allyProjectilesPassAllies,
+		hiredsConquerForTheirFaction,
+		halfTrollAdditions,
+		entityTrackerPatches,
+		fixGuiGameOver,
+		versionCompat,
+		tabListChanges,
+		tabListShowMaxPlayers,
+		tabListSort,
+		moreEvents,
+		projectileFlagsHiredsOnly,
+		fixServerJoinFreeze,
+		etFuturumCompatibility,
+		farView,
+		lotrEventControl,
+		renderPerformance,
+		checkOptifine,
+		bannerProtectionPatches,
+		permNpcAllowDestroyNonLiving,
+		logPlayerDeathLocations,
+		logHiredTransfer,
+		mountedBannerBearers,
+		moreMountedBannerBearers,
+		explosionPhysics,
+		captainsAttack,
+		throwableSpearToggle,
+		fellowshipFFPatches,
+		fixFireworkLag,
+		fixInvisibility,
+		hireableEnts,
+		hearthFireDoesntSpread,
+		interactReachFix, 
+		interactReachFeedback,
+		unlockEnemyWaypoints,
+		fixOpenLinkGUI,
+		smoothHeadYawMovement,
+		noTCPDelay,
+		earlyPacketProcessing,
+		prioritizePlayerTicks,
+		debugModeCommand,
+		experimentalFeatures,
+		mutePlayerDetailsApiSpam,
+		bannerProtectionVerbose
+		
+		
+		
 		
 		
 		
@@ -64,12 +114,24 @@ public class ASMConfig {
 	public static int tauredainPoisonDartChance, 
 		guardsLockCategoryRanged, 
 		guardsAttackDelayFactorRanged,
+		guardsDynamicAttackDelayRanged,
 		guardsEquipDurabilityMode,
 		guardsEquipDurabilityFactor,
 		draughtStackEffectsIncrease,
 		draughtMaxStacksize,
 		stewMaxStacksize,
-		passMissingDiscriminator;
+		passMissingDiscriminator,
+		npcDamageFactorProjectiles,
+		npcCriticalProjectileChance,
+		revengeCamouflageTargetChance,
+		forceFCV,
+		lotrHolidays,
+		interactReachBuffer,
+		interactReachBufferNoSight,
+		armorMaintainProtectionPercent,
+		entityPosRotationThreshold,
+		smoothEntityMovement
+		;
 	
 	public static Map<String, String> read(File file) {
 		long starttime = System.currentTimeMillis();
@@ -119,6 +181,7 @@ public class ASMConfig {
 	}
 	
 	static Map<String, String> properties;
+	public static Map<String, String> propertiesChange;
 	static List<String> content;
 	static boolean needWrite;
 	
@@ -126,19 +189,25 @@ public class ASMConfig {
 		
 		File file = new File("config", MeTweaks.MODID+"-ASM.properties");
 		properties = read(file);
+		if(propertiesChange != null) {
+			properties.putAll(propertiesChange);
+			needWrite = true;
+		}
 		
 		long starttime2 = System.currentTimeMillis();
 		
 		content = new ArrayList<>();
-		content.add("# ASM Config - You can disable Patches");
-		content.add("# If you encounter any issues please reach out to me");
+		content.add("# ASM Config");
+		content.add("# Wiki: https://javanosa.github.io/wiki   Discord: https://discord.gg/maHfVhGaah");
 		
 		int version = getInt("configversion", 0, true);
 		
 		verticalSlabPlacement = get("verticalSlabPlacement", 
 			"@Inject ItemSlab.onItemUse(ItemStack EntityPlayer World IIIIFFF)Z", 
 			"@Inject ItemSlab.func_150936_a(World IIII EntityPlayer ItemStack)Z",
-			"@Replace BlockSlab.setBlockBoundsForItemRender()V"
+			"@Replace BlockSlab.setBlockBoundsForItemRender()V",
+			"@Inject ItemCarvableSlab.onItemUse(ItemStack EntityPlayer World IIIIFFF)Z",
+			"@Inject CTMRenderer.renderInventoryBlock(Block II RenderBlocks)V"
 		);
 		
 		conquestDecay = get("conquestDecay", 
@@ -173,7 +242,8 @@ public class ASMConfig {
 				"@Inject BlockRotatedPillar.onBlockPlaced(World IIIIFFFI)I", 
 				"for classes: BlockNewLog, BlockOldLog, LOTRBlockWoodBase, LOTRBlockWoodBeam",
 				"@Inject getSubBlocks(Item CreativeTabs List)V",
-				"@Add getPickBlock(MovingObjectPosition World III EntityPlayer)ItemStack"
+				"@Add getPickBlock(MovingObjectPosition World III EntityPlayer)ItemStack",
+				"@Replace LOTRFABlockMultiWoodBeam.getBlockName(I)String"
 		);
 		
 		syncedconfig = get("syncedconfig",
@@ -277,8 +347,12 @@ public class ASMConfig {
 		guardsAttackDelayFactorRanged = getInt("guardsAttackDelayFactorRanged", 100, false, 
 				"Delay Multiplier for different weapon types than their default in percent");
 		
-		guardsDynamicAttackDelayRanged = get("guardsAttackDelayDynamicRanged", 
-				"Dynamic instead of weapons default delay, for different weapon types than their default");
+		guardsDynamicAttackDelayRanged = getInt("guardsAttackDelayDynamicRanged", 2, false, 
+				//"Dynamic instead of weapons default delay, for different weapon types than their default",
+				"For different weapon types than their default",
+				"0 = default weapon delay, 1 = dynamic delay, 2 = dynamic but atleast default delay"
+				
+		);
 		
 		aiRangedImprovements = get("aiRangedImprovements",
 				"@Add LOTREntityAIRangedAttack.hasInit", 
@@ -308,6 +382,8 @@ public class ASMConfig {
 		randomEnchRangedNpcWeapons = get("randomEnchRangedNpcWeapons");
 		
 		hiredTransfer = get("hiredTransfer");
+		
+		logHiredTransfer = get("loghiredTransfer");
 		
 		unitOverview = get("unitOverview");
 		
@@ -339,6 +415,164 @@ public class ASMConfig {
 				"0 = off, 1 = output, 2 = no output");
 		
 		preloadClasses = get("preloadClasses");
+		
+		projectilePatches = get("projectilePatches", 
+			"@Inject EntityTrackerEntry.sendLocationToAllClients(List)V",
+			"@Inject EntityArrow.onUpdate()V",
+			"@Inject LOTREntityProjectileBase.onUpdate()V",
+			"@Inject LOTREntityProjectileBase.readEntityFromNBT(NBTTagCompound)V",
+			"@Inject LOTREntityProjectileBase.writeEntityToNBT(NBTTagCompound)V"
+		);
+		
+		projectilePatchesReqClient = get("projectilePatchesReqClient");
+		
+		alwaysAbsorbPiercingProjectiles = get("alwaysAbsorbPiercingProjectiles", false);
+		allyProjectilesPassAllies = get("allyProjectilesPassAllies", "ally npc vs ally npc only");
+		
+		giveManyCommand = get("giveManyCommand");
+		
+		hiredsConquerForTheirFaction = get("hiredsConquerForTheirFaction",
+				"@Inject LOTRPlayerData.addAlignment(EntityPlayer AlignmentBonus LOTRFaction List DDD)LOTRAlignmentBonusMap",
+				"@Inject LOTREventHandler.onLivingDeath(LivingDeathEvent)V");
+		
+		halfTrollAdditions = get("halfTrollAdditions");
+		
+		entityTrackerPatches = get("entityTrackerPatches",
+			"@Inject EntityPlayerMP.onUpdate()V",
+			"@Inject WorldClient.removeAllEntities()V"
+		);
+		
+		fixGuiGameOver = get("fixGuiGameOver");
+		
+		versionCompat = get("versionCompat", "Turn off if you are not updating metweaks or dont use any metweaks blocks");
+		
+		tabListChanges = get("tabListChanges");
+		
+		tabListShowMaxPlayers = get("tabListShowMaxPlayers");
+		
+		tabListSort = get("tabListSort");
+		
+		moreEvents = get("moreEvents", "Adds new FastTravel Event and processing");
+		
+		npcDamageFactorProjectiles = getInt("npcDamageFactorProjectiles", 100, false, "percent, 100 = disable");
+		npcCriticalProjectileChance = getInt("npcCriticalProjectileChance", 0, false, "percent, 0 = disable");
+		projectileFlagsHiredsOnly = get("projectileFlagsHiredsOnly", false);
+		
+		fixServerJoinFreeze = get("fixServerJoinFreeze");
+		
+		etFuturumCompatibility = get("etFuturumCompatibility", false);
+		
+		farView = get("farView");
+		
+		lotrEventControl = get("lotrEventControl");
+		
+		renderPerformance = get("renderPerformance");
+		
+		checkOptifine = get("checkOptifine");
+		
+		bannerProtectionPatches = get("bannerProtectionPatches", 
+				"Fixes a bunch of banner protection bugs");
+		
+		permNpcAllowDestroyNonLiving = get("permNpcAllowDestroyNonLiving", false, 
+				"Allows NPCs to destroy entities like e.g. ItemFrames through arrows, if they have banner permission");
+		
+		bannerProtectionVerbose = get("bannerProtectionVerbose", false, 
+				"Send Protection Warning when using items like food, ranged-weapons and sword-blocking etc.");
+		
+		revengeCamouflageTargetChance = getInt("revengeCamouflageTargetChance", 0, false, "percent, 0 = disable");
+		
+		logPlayerDeathLocations = get("logPlayerDeathLocations");
+
+		forceFCV = getInt("forceFCV", 0, false);
+		
+		lotrHolidays = getInt("lotrHolidays", 1, false,
+				"Better Performance for LOTR Holiday checks (more FPS during weather storms etc.)",
+				"0 = Patch disabled, 1 = Patch enabled, 2 = Holidays disabled");
+				//"@Replace isNewYearsDay()Z, isAprilFools()Z, isHalloween()Z and isChristmas()Z in LOTRMod Class",
+		
+		mountedBannerBearers = get("mountedBannerBearers", 
+				"Adds Mounted Rohan Banner Bearer");
+				//"@Inject LOTREntityRohanBannerBearer.<init>(World)V");
+		
+		moreMountedBannerBearers = get("moreMountedBannerBearers", false, 
+				"Adds Dúnedain, Southron Champion and Golden Easterling Banner Rider");
+				//"@Inject LOTREntityRangerNorthBannerBearer.<init>(World)V");
+		
+		explosionPhysics = get("explosionPhysics"); 
+				/*"@Inject Explosion.doExplosionA()V", 
+				"@Inject Explosion.doExplosionB(Z)V", 
+				"@Inject NetHandlerPlayClient.handleSpawnObject(S0EPacketSpawnObject)V", 
+				"@Inject BlockFalling.func_149830_m(World III)V", 
+				"@Inject LOTRBlockSlabFalling.tryBlockFall(World III)V", 
+				"@Inject WorldServer.newExplosion(Entity DDDFZZ)Explosion");*/
+		
+		captainsAttack = get("captainsAttack", false, "Makes them attack without being provoked");
+		
+		throwableSpearToggle = get("throwableSpearToggle", "Throwable Toggle for Spears (G key)");
+		
+		fellowshipFFPatches = get("fellowshipFFPatches", 
+				"Fellowship Friendly Fire Patches",
+				"Players can no longer hit other player mounts if pvp is prevented in the shared fellowship",
+				"Hired Units with neutral relation can no longer accidently hit each other if the fellowship has unit friendly fire disabled");
+		
+		fixFireworkLag = get("fixFireworkLag", "Fix extreme client lag caused by Fireworks");
+		
+		fixInvisibility = get("fixInvisibility", false, "Fix Invisibility and sneaking for the target mechanic of all mobs");
+		
+		hireableEnts = get("hireableEnts", "Makes Ents hireable with Golden Ent Draughts (20% chance)");
+		
+		hearthFireDoesntSpread = get("hearthFireDoesntSpread", false);
+		
+		interactReachFix = get("interactReachFix", "no more \"ghost hits\" by doing the distance check more similar to the clientside");
+		
+		interactReachFeedback = get("interactReachFeedback", false, 
+				"Shows players reach values. Orange = above max, red = above buffer. ",
+				"Set debug=2 in metweaks.cfg to see the old lotr value");
+		
+		interactReachBuffer = getInt("interactReachBuffer", 300, false, 
+				"Buffer for latency between server and client. In 1/100 Blocks. Default: 300");
+		
+		interactReachBufferNoSight = getInt("interactReachBufferNoSight", 100, false, 
+				"Used if there are collidable blocks between target and attacker eye pos. In 1/100 Blocks. Default: 100");
+		
+		unlockEnemyWaypoints = get("unlockEnemyWaypoints", false,
+				"Unlock all waypoints regardless of enemy control");
+		
+		fixOpenLinkGUI = get("fixOpenLinkGUI", 
+				"Fix Open Link GUI Button Positons");
+		
+		armorMaintainProtectionPercent = getInt("armorMaintainProtectionPercent", 0, false, 
+				"Specify, to what use percent left low durability armor can still maintain max protection. Allows most armor sets to be maxable. ",
+				"Only for max enchanted armor, so that weak armor stays weak. Values can be seen with DebugLVL = 4 in metweaks.cfg",
+				"0 = Disable");
+		
+		smoothHeadYawMovement = get("smoothHeadYawMovement",
+				"For Living Entities");
+		
+		noTCPDelay = get("noTCPDelay", 
+				"Greatly reduces ping. Packets are sent right away without being queued");
+		
+		earlyPacketProcessing = get("earlyPacketProcessing", 
+				"50 - 200ms latency improvement for players in singleplayer and multiplayer");
+		
+		prioritizePlayerTicks = get("prioritizePlayerTicks",
+				"Players tick before other entities to avoid delay from other base entity ticks or pathfinding");
+		
+		entityPosRotationThreshold = getInt("entityPosRotationThreshold", 1, false, 
+				"Lower Threshold for sending updated Entity Positions and Rotations. 0 = Disable");
+		
+		smoothEntityMovement = getInt("smoothEntityMovement", 1, false, 
+				"Disable Broken Client Prediction for Living Entity Movement similar to how modern mc versions do",
+				"0 = Disable, 1 = Enable, 2+ = Enable Client Prediction On Attack for Number of Ticks");
+		
+		debugModeCommand = get("debugModeCommand");
+		
+		experimentalFeatures = get("experimentalFeatures", false);
+				//"More continuous player updates, can result in 50ms less delay");
+		
+		mutePlayerDetailsApiSpam = get("mutePlayerDetailsApiSpam", false);
+		
+				
 		
 		long endtime2 = System.currentTimeMillis();
 		System.out.println("ASMConfig values in "+ (endtime2 - starttime2) +"ms");

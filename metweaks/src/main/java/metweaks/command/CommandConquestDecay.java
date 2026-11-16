@@ -1,11 +1,15 @@
 package metweaks.command;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 import lotr.common.LOTRLevelData;
 import metweaks.MeTweaksConfig;
+import metweaks.network.NetworkHandler;
+import metweaks.network.SyncConquestDecayPacket;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.StatCollector;
 
 public class CommandConquestDecay extends CommandBase {
@@ -40,14 +44,18 @@ public class CommandConquestDecay extends CommandBase {
 	}
 	
 	private static String fancyRound(float decay) {
-		String decay_str = ""+Math.round(decay * 10.0F) / 10.0F;
-		if(decay_str.endsWith(".0"))
-			return decay_str.substring(0, decay_str.length() - 2);
-		return decay_str;
+		DecimalFormat df = new DecimalFormat("0.###");
+		return df.format(decay);
+	}
+	
+	public static boolean syncConqDecay() {
+		// either not singleplayer or more than one player (lan)
+		return !MinecraftServer.getServer().isSinglePlayer() || MinecraftServer.getServer().getCurrentPlayerCount() > 1;
 	}
 
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
+		
 		if(args.length >= 1) {
 			float decay = 60; // 1 hour
 			if(!args[0].equalsIgnoreCase("reset")) {
@@ -64,6 +72,9 @@ public class CommandConquestDecay extends CommandBase {
 			}
 			MeTweaksConfig.conquestDecay = decay * 60;
 			LOTRLevelData.markDirty();
+			
+			if(syncConqDecay())
+				NetworkHandler.networkWrapper.sendToAll(new SyncConquestDecayPacket());
 		}
 		else {
 			func_152373_a(sender, this, StatCollector.translateToLocalFormatted("commands.conqdecay.info", fancyRound(MeTweaksConfig.conquestDecay / 60F)));

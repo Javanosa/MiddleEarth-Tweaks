@@ -14,6 +14,7 @@ public class GuiColumnButton extends GuiButton {
 	
 	public boolean ascending;
 	public IIcon icon;
+	public int contentWidth;
 	
 	public GuiColumnButton(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText) {
 		super(buttonId, x, y, widthIn, heightIn, buttonText);
@@ -35,7 +36,7 @@ public class GuiColumnButton extends GuiButton {
             int hoverState = getHoverState(field_146123_n);
             GL11.glEnable(GL11.GL_BLEND);
             OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            //GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             drawTexturedModalRect(xPosition, yPosition, 0, 46 + hoverState * 20, width / 2, height);
             drawTexturedModalRect(xPosition + width / 2, yPosition, 200 - width / 2, 46 + hoverState * 20, width / 2, height);
             mouseDragged(mc, mouseX, mouseY);

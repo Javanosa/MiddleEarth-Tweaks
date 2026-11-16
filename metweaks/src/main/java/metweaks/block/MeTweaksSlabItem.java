@@ -56,11 +56,12 @@ public class MeTweaksSlabItem extends ItemSlab {
 		meta = meta + slab.renderMetaOffset;
 		
 		
-		if(slab.isWoodBeam && slab.renderMetaOffset == 0) {
+		if(slab.isWoodBeam && /*slab.renderMetaOffset == 0 && */meta < 12) {
 			// limit to first supported 4 types
 			meta = meta & 3;
 		}
 		stack.setItemDamage(meta);
+		
 		String key = Item.getItemFromBlock(slab.fullBlock).getItemStackDisplayName(stack);
 		stack.setItemDamage(originmeta);
         return (StatCollector.translateToLocal(key) + StatCollector.translateToLocal("metweaks.slabprefix")).trim();
