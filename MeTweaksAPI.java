@@ -1,131 +1,152 @@
 package metweaks;
 
-import java.util.Set;
-
-import javax.annotation.Nullable;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import lotr.common.entity.npc.LOTREntityNPC;
-import metweaks.block.VerticalSlab;
-import metweaks.block.VerticalSlabFalling;
-import metweaks.command.CommandEntitySelector;
-import metweaks.core.Hooks;
-import metweaks.events.ClientEvents;
-import metweaks.guards.customranged.CustomRanged;
-import metweaks.network.GuardsOverviewPacket;
-import net.minecraft.block.Block;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
-
 public class MeTweaksAPI {
-
 	// add vertical manually here...or tell me to add compartility for your Slab class
 	// subtypes is the amount of types your slab instance supports
-	public static void addVerticalSlab(Block slab, int subtypes) {
-		new VerticalSlab(slab, subtypes, 0);
-	}
+	void addVerticalSlab(Block slab, int subtypes);
 	
 	// add vertical manually here...or tell me to add compartility for your Slab class
 	// subtypes is the amount of types your slab instance supports
-	public static void addVerticalSlabFalling(Block slab, int subtypes) {
-		new VerticalSlabFalling(slab, subtypes, 0);
-	}
+	void addVerticalSlabFalling(Block slab, int subtypes);
 	
-	// set stateValue to null if you just wanna output on / off
+	// ME-Tweaks Status Message - Can display Messages like Vertical Slabs ON / OFF
+    // set stateValue null if you just wanna output on / off
+    // set disableState true if you just want to show a message
+    // set ticks 0 to clear
 	@SideOnly(Side.CLIENT)
-	public static void actionBar(String message, boolean stateOnOff, int ticks, @Nullable String stateValue, boolean disableState) {
-		ClientEvents.actionBar(message, stateOnOff, ticks, stateValue, disableState);
-	}
+	void actionBar(String message, boolean stateOnOff, int ticks, @Nullable String stateValue, boolean disableState);
 	
 	// block placement flags like world.setBlock()
-	// direction 0: south 1: west 2: north 3: east
-	// Please use getVerticalSlab() and getMetaForVertical() when placing multiple blocks
-	public static void setVerticalSlab(World world, int x, int y, int z, Block slab, int subtype, int facing, int flags) {
-		VerticalSlab vertical = getVerticalSlab(slab, subtype);
-		world.setBlock(x, y, z, vertical, getMetaForVertical(vertical, subtype, facing), flags);
-	}
+    // direction 0: south 1: west 2: north 3: east
+    // Please use getVerticalSlab() and getMetaForVertical() when placing multiple blocks
+    void setVerticalSlab(World world, int x, int y, int z, Block slab, int subtype, int facing, int flags)
+
+    // meta of the normal slab
+    // direction 0: south 1: west 2: north 3: east
+    int getMetaForVertical(VerticalSlab vertical, int subtype, int facing)
 	
-	// meta of the normal slab
-	// direction 0: south 1: west 2: north 3: east
-	public static int getMetaForVertical(VerticalSlab vertical, int subtype, int facing) {
-		return subtype - vertical.offset + (facing << 2); // same as * 4
-	}
-	
-	public static VerticalSlab getVerticalSlab(Block slab, int meta) {
-		int i = VerticalSlab.index(slab, meta);
-		if(VerticalSlab.allverticals.containsKey(i)) {
-			return VerticalSlab.allverticals.get(i);
-		}
-		return null;
-	}
-	
-	public static void setVerticalMode(EntityPlayer player, boolean enable) {
-		VerticalSlab.setVerticalMode(player, enable);
-		VerticalSlab.clientVertical = enable;
-	}
-	
-	public static boolean isVerticalMode(EntityPlayer player) {
-		return Hooks.isVerticalMode(player);
-	}
+	VerticalSlab getVerticalSlab(Block slab, int meta);
+    
+    void setVerticalMode(EntityPlayer player, boolean enable);
+    
+    boolean isVerticalMode(EntityPlayer player);
 	
 	// returns rgba, works with 6 and 8 digit
-	public static int[] parseHexColor(String hex, int[] rgba_defaults, int defaultalpha) {
-		hex = hex.replace("#", "");
-		int[] color = new int[4];
-		color[3] = defaultalpha; // set default alpha
-		try {
-			for(int i=0; i < Math.min(4, hex.length() >> 1); i++) {
-				
-				color[i] = Integer.valueOf(hex.substring(i << 1, (i << 1) + 2), 16);
-			}
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			System.out.println("Unable to parse color: \""+hex+"\"");
-			return rgba_defaults;
-		}
-		return color;
-	}
+    // rgba_defaults if hex is invalid
+    // defaultAlpha if hex is missing alpha (only 6 digit)
+    int[] parseHexColor(String hex, int[] rgba_defaults, int defaultAlpha);
 	
-	// since forge one's is broken
-	public static void renameConfigProperty(Configuration config, String category, String oldName, String newName) {
-        ConfigCompartiblity.rename(config, category, oldName, newName);
-    }
-	
-	// returns [List<Entity results, int newArgsOffset] 		
-	// newArgsOffset == offsetArgsStart indicates that string isnt a selector
-	public static Object[] selectEntities(int offsetArgsStart, String[] args, ICommandSender sender) {
-		return CommandEntitySelector.selectEntities(offsetArgsStart, args, sender);
-	}
-	
+	// since forge one's doesnt properly work
+    void renameConfigProperty(Configuration config, String category, String oldName, String newName);
+
+    // returns [List<Entity results, int newArgsOffset] 		
+    // newArgsOffset == offsetArgsStart indicates that string isnt a selector
+    Object[] selectEntities(int offsetArgsStart, String[] args, ICommandSender sender);
+
 	// duration in ticks, default is 32
-	// if you have access to the corresponding food class, please override getMaxEatingDuration() instead.
-	public static void setConsumeDuration(Item food, int duration) {
-		Hooks.consumeDurations.put(food, duration);
-	}
-	
-	// updates move range for ranged ai
-	public static void updateMoveRange(LOTREntityNPC npc, float ammoRange) {
-		if(ASMConfig.aiRangedImprovements)
-			CustomRanged.updateMoveRange(npc, ammoRange);
-	}
+    // if you have access to the corresponding food class, please override getMaxEatingDuration() instead.
+    void setConsumeDuration(Item food, int duration);
+
+    // updates move range for ranged ai
+    void updateMoveRange(LOTREntityNPC npc, float ammoRange);
 	
 	// whether an entity will show only a ranged weapon in the unit overview (currently)
-	public static Set<Class<? extends Entity>> getRangedOnlyEntities() {
-		return GuardsOverviewPacket.rangedEntitiesOnly;
+    Set<Class<? extends Entity>> getRangedOnlyEntities();
+	
+    // whether an entity is ranged
+    Set<Class<? extends Entity>> getRangedEntities();
+}
+
+package metweaks.guards;
+
+public class NpcReflectionAccess {
+	// Performance Note: All calls in this class use reflection or iteration
+
+	// sets target ai sight check
+	void setCheckSight(LOTREntityNPC npc, boolean checkSight);
+
+	// returns target ai sight check
+	boolean getCheckSight(LOTREntityNPC npc);
+
+	// set projectile range 
+	void setAmmoRange(LOTREntityNPC npc, byte range);
+
+	// returns projectile range
+	byte getAmmoRange(LOTREntityNPC npc);
+
+	// returns ranged attack ai if exists
+	Object getRangedAttack(LOTREntityNPC npc);
+}
+
+package metweaks.guards;
+
+public class HiredInfoAccess {
+	void setWanderRange(LOTRHiredNPCInfo info, int wanderRange);
+
+	int getWanderRange(LOTRHiredNPCInfo info);
+
+	LOTREntityNPC getNPC(LOTRHiredNPCInfo info);
+
+	// gets extra data of hired, contains defaults for ammoRange/aiRange, and their current ammoRange/checkTargetInSight values
+	ExtraHiredData getExt(LOTRHiredNPCInfo info);
+
+	// used the set the initialized extra data, 
+	void setExt(LOTRHiredNPCInfo info, ExtraHiredData ext);
+
+	// field-change only
+	void setGuardRange(LOTRHiredNPCInfo info, int guardRange);
+}
+
+package metweaks.events;
+// this event will be posted on MinecraftForge.EVENT_BUS
+// Listen to LOTRFastTravelEvent.Transport or LOTRFastTravelEvent.Success, not just LOTRFastTravelEvent
+public class LOTRFastTravelEvent extends Event {
+	public final EntityPlayer player;
+
+	// Target waypoint
+	public final LOTRAbstractWaypoint waypoint;
+
+	public LOTRFastTravelEvent(EntityPlayer player, LOTRAbstractWaypoint waypoint) {
+		this.player = player;
+		this.waypoint = waypoint;
+
 	}
-	
-	// whether an entity is ranged
-	public static Set<Class<? extends Entity>> getRangedEntities() {
-		return GuardsOverviewPacket.rangedEntities;
+
+	@Cancelable
+	public static class Transport extends LOTRFastTravelEvent {
+		// If you want to prevent this fastTravel, event.setCanceled(true);
+		// Nothing has been done yet
+
+		// Add or remove entities here
+		// Ridden mounts that dont have EntityLiving as super class dont travel with you (boats, minecarts)
+		//    However you can manually fastTravel them
+		// This set does NOT contain the player mount, dont add it, it will be handled seperately. 
+		public final Set<EntityLiving> toTransport;
+
+		// All entities of superclass EntityLiving in range of 256 blocks (max viewdistance of 16 chunks) around the player
+		public final List<EntityLiving> nearbyEntities;
+
+		public Transport(EntityPlayer player, LOTRAbstractWaypoint waypoint, Set<EntityLiving> toTransport, List<EntityLiving> nearbyEntities) {
+			super(player, waypoint);
+			this.toTransport = toTransport;
+			this.nearbyEntities = nearbyEntities;
+		}
 	}
-	
-	
-	
-	
+
+	public static class Success extends LOTRFastTravelEvent {
+		// After FastTravel succeeded
+		// You can use this event to print a success message
+		// Or to check/validate things
+
+		public final int x;
+		public final int y;
+		public final int z;
+
+		public Success(EntityPlayer player, LOTRAbstractWaypoint waypoint, int x, int y, int z) {
+			super(player, waypoint);
+			this.x = x;
+			this.y = y;
+			this.z = z;
+		}
+	}
 }
