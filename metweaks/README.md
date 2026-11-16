@@ -1,6 +1,6 @@
-Source Code MiddleEarth-Tweaks 1.6.22
+### Source Code MiddleEarth-Tweaks 1.6.22
 
-Libraries to build (into the libs folder):
+**Libraries to build (into the libs folder):**
 - LOTRMod-v36.15-dev
 - fastutil
 - Chisel-2.9.5.11-dev
@@ -14,13 +14,13 @@ Libraries to build (into the libs folder):
 	
 See [License](https://github.com/Javanosa/MiddleEarth-Tweaks/blob/main/License.md) for more info
 
-Build Jar:
+To Build Jar:
 - just once if you havnt used forgegralde 1.7.10 before:
-	- /gradlew setupDecompWorkspace
-	- /gradlew eclipse
-- /gradlew build
+	- `/gradlew setupDecompWorkspace`
+	- `/gradlew eclipse`
+- `/gradlew build`
 
-Run in Dev Environment:
-- /gradlew runClient
+To Run Dev Environment:
+- `/gradlew runClient`
 
 If you have not installed forgegradle 1.7.10 prior to 2022, you may need to use a forgegradle alternative.
